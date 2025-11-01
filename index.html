@@ -4,138 +4,347 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haarshiith's Portfolio</title>
+    
     <!-- 1. We're loading Tailwind CSS, which handles all the styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* This just sets the default font for the page */
-        body {
-            font-family: 'Inter', sans-serif;
+    
+    <!-- 2. This configures Tailwind to use the 'Inter' font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Using 'slate' for a modern, subtle dark mode
+                        'dark-bg': '#0f172a', // slate-900
+                        'dark-card': '#1e293b', // slate-800
+                        'dark-text-primary': '#f1f5f9', // slate-100
+                        'dark-text-secondary': '#94a3b8', // slate-400
+                        'dark-accent': '#38bdf8', // sky-400
+                    }
+                }
+            },
+            darkMode: 'class',
         }
-        /* Custom scrollbar for a more modern feel */
+    </script>
+    
+    <!-- 3. Custom styles for scrollbar and animations -->
+    <style>
+        /* A more subtle custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1f2937; /* dark-gray */
+            background: var(--tw-bg-dark-bg, #0f172a); 
         }
         ::-webkit-scrollbar-thumb {
-            background: #4b5563; /* medium-gray */
+            background: #334155; /* slate-700 */
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* light-gray */
+            background: #475569; /* slate-600 */
+        }
+
+        /* Base font style */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Subtle fade-in animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Style for the active nav link */
+        .nav-link.active {
+            color: #f1f5f9; /* slate-100 */
+            font-weight: 600;
+        }
+        .nav-link.active .nav-indicator {
+            width: 3rem; /* 12 */
+            height: 2px;
+            background-color: #f1f5f9; /* slate-100 */
         }
     </style>
-    <!-- This configures Tailwind to use the 'Inter' font -->
-    <script>
-        tailwind.config = {
-            theme: {
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                },
-            },
-            darkMode: 'class', // This line enables dark mode
-        }
-    </script>
 </head>
-<body class="bg-gray-900 text-gray-200 antialiased">
 
-    <!-- Main Container -->
-    <div class="max-w-3xl mx-auto px-6 py-16 md:py-24">
+<body class="bg-dark-bg text-dark-text-secondary">
 
-        <!-- Header Section: Name and Bio -->
-        <header>
-            <h1 class="text-4xl md:text-5xl font-bold text-white">
-                Haarshiith
-            </h1>
-            <p class="mt-4 text-xl text-gray-400">
-                I'm a student developer and tech enthusiast. Welcome to my digital space where I showcase my projects and share my journey.
-            </p>
+    <!-- Main Container: Uses Flexbox for the two-column layout on large screens -->
+    <div class="lg:flex min-h-screen">
+
+        <!-- 
+          COLUMN 1: HEADER & NAVIGATION 
+          This column is sticky on desktop (lg:sticky) so it stays put while you scroll.
+        -->
+        <header class="lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-1/3 lg:flex-col lg:justify-between p-8 sm:p-12 lg:p-16">
+            <div>
+                <!-- Your Name -->
+                <h1 class="text-4xl sm:text-5xl font-bold text-dark-text-primary">
+                    Haarshiith
+                </h1>
+                
+                <!-- Your Title / Subtitle -->
+                <h2 class="mt-3 text-2xl font-medium text-dark-text-primary">
+                    Student Developer
+                </h2>
+                
+                <!-- Your Bio -->
+                <p class="mt-4 max-w-xs">
+                    I build accessible and responsive web applications, turning ideas into digital experiences.
+                </p>
+
+                <!-- Navigation Links -->
+                <nav class="hidden lg:block mt-12">
+                    <ul class="space-y-4">
+                        <li>
+                            <a class="nav-link group flex items-center gap-3 text-lg font-medium transition-colors hover:text-dark-text-primary" href="#about">
+                                <span class="nav-indicator h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-dark-text-primary"></span>
+                                <span class="nav-text">About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link group flex items-center gap-3 text-lg font-medium transition-colors hover:text-dark-text-primary" href="#projects">
+                                <span class="nav-indicator h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-dark-text-primary"></span>
+                                <span class="nav-text">Projects</span>
+                            </a>
+                        </li>
+                        <!-- Add more links here (e.g., Experience, Contact) -->
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Social Media Links (at the bottom of the column) -->
+            <div class="mt-8 flex gap-5">
+                <!-- GitHub -->
+                <a href="https://github.com/Haarshiith/" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-dark-text-secondary hover:text-dark-text-primary transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184-.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184-.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
+                </a>
+                <!-- LinkedIn (Add your URL) -->
+                <a href="#" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-dark-text-secondary hover:text-dark-text-primary transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5h-17A2.5 2.5 0 0 0 1 5v14a2.5 2.5 0 0 0 2.5 2.5h17a2.5 2.5 0 0 0 2.5-2.5V5a2.5 2.5 0 0 0-2.5-2.5ZM8 19H5V8h3v11ZM6.5 6.73c-.966 0-1.75-.783-1.75-1.75S5.534 3.23 6.5 3.23s1.75.783 1.75 1.75S7.466 6.73 6.5 6.73ZM19 19h-3v-5.373c0-1.3-.024-2.98-1.815-2.98-1.815 0-2.093 1.417-2.093 2.887V19h-3V8h3v1.397h.044c.422-.8 1.45-1.637 2.912-1.637 3.117 0 3.692 2.05 3.692 4.71V19Z"/></svg>
+                </a>
+                <!-- Email (Add your email) -->
+                <a href="mailto:your-email@example.com" title="Email" class="text-dark-text-secondary hover:text-dark-text-primary transition-colors">
+                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75ZM5.75 6a.75.75 0 0 0-.75.75v.204l6.28 4.71a.75.75 0 0 0 .94 0l6.28-4.71V6.75a.75.75 0 0 0-.75-.75H5.75Z" /><path d="m4.5 8.188 5.74 4.305a2.25 2.25 0 0 0 2.82 0L18.8 8.188V17.25a1.25 1.25 0 0 1-1.25 1.25H5.75A1.25 1.25 0 0 1 4.5 17.25V8.188Z" /></svg>
+                </a>
+            </div>
         </header>
 
-        <!-- Social Links Section -->
-        <nav class="mt-12 flex gap-6">
-            <!-- GitHub Link (This one is yours!) -->
-            <a href="https://github.com/Haarshiith/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 text-lg font-medium text-gray-300 hover:text-white transition-colors">
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184-.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184-.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
-                GitHub
-            </a>
-
-            <!-- LinkedIn Link (Add your URL) -->
-            <a href="#" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 text-lg font-medium text-gray-300 hover:text-white transition-colors">
-                <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5h-17A2.5 2.5 0 0 0 1 5v14a2.5 2.5 0 0 0 2.5 2.5h17a2.5 2.5 0 0 0 2.5-2.5V5a2.5 2.5 0 0 0-2.5-2.5ZM8 19H5V8h3v11ZM6.5 6.73c-.966 0-1.75-.783-1.75-1.75S5.534 3.23 6.5 3.23s1.75.783 1.75 1.75S7.466 6.73 6.5 6.73ZM19 19h-3v-5.373c0-1.3-.024-2.98-1.815-2.98-1.815 0-2.093 1.417-2.093 2.887V19h-3V8h3v1.397h.044c.422-.8 1.45-1.637 2.912-1.637 3.117 0 3.692 2.05 3.692 4.71V19Z"/></svg>
-                LinkedIn
-            </a>
-
-            <!-- Email Link (Add your email) -->
-            <a href="mailto:your-email@example.com" class="group flex items-center gap-2 text-lg font-medium text-gray-300 hover:text-white transition-colors">
-                 <svg class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75ZM5.75 6a.75.75 0 0 0-.75.75v.204l6.28 4.71a.75.75 0 0 0 .94 0l6.28-4.71V6.75a.75.75 0 0 0-.75-.75H5.75Z" /><path d="m4.5 8.188 5.74 4.305a2.25 2.25 0 0 0 2.82 0L18.8 8.188V17.25a1.25 1.25 0 0 1-1.25 1.25H5.75A1.25 1.25 0 0 1 4.5 17.25V8.188Z" /></svg>
-                Email
-            </a>
-        </nav>
-
-        <!-- Projects Section -->
-        <main class="mt-16">
-            <h2 class="text-3xl font-bold text-white">Projects</h2>
-
-            <!-- Grid for Project Cards -->
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                <!-- ===== PROJECT CARD 1 (TEMPLATE) ===== -->
-                <!-- Copy and paste this whole 'div' block for each new project -->
-                <div class="group bg-gray-800 p-6 rounded-lg shadow-lg hover:bg-gray-700 transition-all duration-300">
-                    <h3 class="text-2xl font-semibold text-white">
-                        Project Title 1
-                    </h3>
-                    <p class="mt-3 text-gray-400">
-                        A brief description of your project. What did it do? What technologies did you use? (e.g., "A web app built with React and Firebase to track personal expenses.")
+        <!-- 
+          COLUMN 2: MAIN CONTENT 
+          This column is scrollable on desktop.
+        -->
+        <main class="lg:w-2/3 p-8 sm:p-12 lg:p-16 lg:py-24">
+            
+            <!-- About Section -->
+            <section id="about" class="fade-in-section mb-16 sm:mb-24 scroll-mt-24">
+                <h2 class="text-2xl font-bold text-dark-text-primary mb-6">About Me</h2>
+                <div class="space-y-4">
+                    <p>
+                        Hello! I'm Haarshiith, a passionate developer based in [Your City/Country]. My journey in tech started with a curiosity for how things work, which quickly evolved into a passion for building software.
                     </p>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-blue-400 font-medium group-hover:underline">
-                        View on GitHub &rarr;
-                    </a>
-                </div>
-                <!-- ======================================= -->
-
-
-                <!-- ===== PROJECT CARD 2 (TEMPLATE) ===== -->
-                <div class="group bg-gray-800 p-6 rounded-lg shadow-lg hover:bg-gray-700 transition-all duration-300">
-                    <h3 class="text-2xl font-semibold text-white">
-                        Project Title 2
-                    </h3>
-                    <p class="mt-3 text-gray-400">
-                        This is a placeholder for your second project. Go to your GitHub profile and find your best work to feature here.
+                    <p>
+                        I'm currently focused on [Your Focus, e.g., cloud computing, AI, or full-stack development] and I'm always eager to learn new technologies and take on challenging projects. When I'm not coding, I enjoy [Your Hobby, e.g., hiking, reading, or gaming].
                     </p>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-blue-400 font-medium group-hover:underline">
-                        View on GitHub &rarr;
-                    </a>
                 </div>
-                <!-- ======================================= -->
 
-
-                <!-- ===== PROJECT CARD 3 (TEMPLATE) ===== -->
-                <div class="group bg-gray-800 p-6 rounded-lg shadow-lg hover:bg-gray-700 transition-all duration-300">
-                    <h3 class="text-2xl font-semibold text-white">
-                        Project Title 3
-                    </h3>
-                    <p class="mt-3 text-gray-400">
-                        Add another project here. You can add as many as you like, and they will stack and form new rows.
-                    </p>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-blue-400 font-medium group-hover:underline">
-                        View on GitHub &rarr;
-                    </a>
+                <!-- Skills Sub-section -->
+                <h3 class="text-xl font-bold text-dark-text-primary mt-12 mb-4">Core Skills</h3>
+                <div class="flex flex-wrap gap-3">
+                    <!-- Add your skills here -->
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Salesforce</span>
+                    <span class="skill-tag">HTML & (S)CSS</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">Git & GitHub</span>
                 </div>
-                <!-- ======================================= -->
+            </section>
 
-            </div>
+            <!-- Projects Section -->
+            <section id="projects" class="fade-in-section scroll-mt-24">
+                <h2 class="text-2xl font-bold text-dark-text-primary mb-8">Projects</h2>
+                
+                <!-- Project Card Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    <!-- ===== PROJECT CARD 1 (TEMPLATE) ===== -->
+                    <!-- Copy and paste this whole 'div' block for each new project -->
+                    <div class="fade-in-section group bg-dark-card p-6 rounded-lg shadow-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-2xl">
+                        <h3 class="text-xl font-semibold text-dark-text-primary mb-3">
+                            Project Title 1
+                        </h3>
+                        <p class="mb-4">
+                            A brief description of your project. What did it do? What problem did it solve?
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Tech 1</span>
+                            <span class="tech-tag">Tech 2</span>
+                            <span class="tech-tag">Tech 3</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-medium text-dark-accent hover:underline">
+                            View on GitHub
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                    <!-- ======================================= -->
+
+                    <!-- ===== PROJECT CARD 2 (TEMPLATE) ===== -->
+                    <div class="fade-in-section group bg-dark-card p-6 rounded-lg shadow-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-2xl">
+                        <h3 class="text-xl font-semibold text-dark-text-primary mb-3">
+                            Project Title 2
+                        </h3>
+                        <p class="mb-4">
+                            This is a placeholder for your second project. Go to your GitHub profile and find your best work.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">AI/ML</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-medium text-dark-accent hover:underline">
+                            View on GitHub
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                    <!-- ======================================= -->
+
+                    <!-- ===== PROJECT CARD 3 (TEMPLATE) ===== -->
+                    <div class="fade-in-section group bg-dark-card p-6 rounded-lg shadow-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-2xl">
+                        <h3 class="text-xl font-semibold text-dark-text-primary mb-3">
+                            Project Title 3
+                        </h3>
+                        <p class="mb-4">
+                            Add another project here. You can add as many as you like.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Tailwind</span>
+                        </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-medium text-dark-accent hover:underline">
+                            View on GitHub
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                    <!-- ======================================= -->
+
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="mt-24 text-center text-slate-500">
+                <p>&copy; 2025 Haarshiith. All rights reserved.</p>
+                <p class="mt-1 text-sm">Built with HTML & Tailwind CSS.</p>
+            </footer>
+
         </main>
-
-        <!-- Footer -->
-        <footer class="mt-24 text-center text-gray-500">
-            <p>&copy; 2025 Haarshiith. All rights reserved.</p>
-            <p class="mt-1">Built with HTML & Tailwind CSS</p>
-        </footer>
-
     </div>
+
+
+    <!-- 4. JavaScript for Animations and Scrolling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- SMOOTH SCROLLING ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // --- FADE-IN ANIMATION ON SCROLL ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Triggers when 10% of the element is visible
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+            
+            // Add custom classes to your skill/tech tags
+            // Find all skill-tag and tech-tag elements and apply Tailwind classes
+            const addTailwindClasses = (selector, classes) => {
+                 document.querySelectorAll(selector).forEach(el => {
+                    el.classList.add(...classes.split(' '));
+                });
+            }
+            
+            // Style for the tags in "Core Skills"
+            addTailwindClasses('.skill-tag', 
+                'inline-block', 'bg-dark-card', 'text-dark-accent', 'font-medium', 
+                'px-4', 'py-1.5', 'rounded-full', 'text-sm'
+            );
+            
+             // Style for the tags in "Project Cards"
+            addTailwindClasses('.tech-tag', 
+                'inline-block', 'bg-sky-900/50', 'text-dark-accent', 'font-medium', 
+                'px-3', 'py-1', 'rounded-full', 'text-xs'
+            );
+
+
+            // --- ACTIVE NAV LINK ON SCROLL ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('main section');
+
+            const navObserverOptions = {
+                root: null,
+                rootMargin: '-30% 0px -70% 0px', // Triggers when section is in the middle 30% of viewport
+                threshold: 0
+            };
+
+            const navObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, navObserverOptions);
+
+            contentSections.forEach(section => {
+                navObserver.observe(section);
+            });
+
+        });
+    </script>
 
 </body>
 </html>
+
