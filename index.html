@@ -36,7 +36,9 @@
                         }
                     },
                     animation: {
-                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        // Updated animation names
+                        'load-in': 'fade-in-up 0.6s ease-out forwards',
+                        'scroll-in': 'fade-in-up 0.6s ease-out forwards',
                         'border-pulse': 'border-pulse 2s infinite ease-in-out',
                     }
                 }
@@ -51,14 +53,19 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        .fade-in-section {
+        /* Base animation state (hidden) */
+        .animate-on-load,
+        .fade-in-section,
+        .stagger-child {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .fade-in-section.is-visible {
+
+        /* Class added by JS when element is visible */
+        .is-visible {
             opacity: 1;
             transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         
         .nav-link.active {
@@ -72,6 +79,7 @@
             background: #ffffff; /* beige-card */
             border-radius: 0.75rem; /* Tailwind rounded-xl */
             overflow: hidden;
+            /* Added transform to transitions */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
@@ -96,7 +104,8 @@
         }
 
         .skill-card:hover {
-            transform: translateY(-5px);
+            /* Added scale transform */
+            transform: translateY(-5px) scale(1.03);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
     </style>
@@ -147,13 +156,14 @@
         <!-- 
           HERO SECTION 
         --><section id="hero" class="py-24 sm:py-32 text-center">
-            <h1 class="text-4xl sm:text-6xl font-bold text-beige-text">
+            <!-- Added animate-on-load classes for staggered load animation -->
+            <h1 class="animate-on-load text-4xl sm:text-6xl font-bold text-beige-text" style="transition-delay: 100ms;">
                 Harshith Babu Prakash Babu
             </h1>
-            <p class="mt-4 text-2xl sm:text-3xl font-medium text-beige-accent">
+            <p class="animate-on-load mt-4 text-2xl sm:text-3xl font-medium text-beige-accent" style="transition-delay: 200ms;">
                 Masters in Artificial Intelligence | AI & ML Engineer
             </p>
-            <div class="mt-8 flex justify-center gap-6">
+            <div class="animate-on-load mt-8 flex justify-center gap-6" style="transition-delay: 300ms;">
                 <!-- Social Icons --><a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
                     <i class="fa-brands fa-github text-3xl"></i>
                 </a>
@@ -184,9 +194,10 @@
           EXPERIENCE SECTION 
         --><section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Experience</h2>
-            <div class="space-y-12">
+            <!-- Added stagger-container for JS to find and animate children -->
+            <div class="space-y-12 stagger-container">
                 
-                <!-- Experience 1 --><div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
+                <!-- Experience 1 --><div class="stagger-child flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
                     <div class="md:w-1/3">
                         <a href="#" target="_blank" rel="noopener noreferrer" class="group">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
@@ -211,7 +222,7 @@
                     </div>
                 </div>
 
-                <!-- Experience 2 --><div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
+                <!-- Experience 2 --><div class="stagger-child flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
                     <div class="md:w-1/3">
                         <a href="#" target="_blank" rel="noopener noreferrer" class="group">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
@@ -241,9 +252,10 @@
           PROJECTS SECTION 
         --><section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Added stagger-container for JS to find and animate children -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-container">
 
-                <!-- Project 1 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
+                <!-- Project 1 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
                     <div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
@@ -262,7 +274,7 @@
                     </div>
                 </div>
 
-                <!-- Project 2 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
+                <!-- Project 2 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
                     <div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
@@ -281,7 +293,7 @@
                     </div>
                 </div>
 
-                <!-- Project 3 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
+                <!-- Project 3 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
                     <div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
@@ -300,7 +312,7 @@
                     </div>
                 </div>
 
-                <!-- Project 4 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
+                <!-- Project 4 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
                     <div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
@@ -327,9 +339,10 @@
           EDUCATION SECTION 
         --><section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Education</h2>
-            <div class="space-y-8">
+            <!-- Added stagger-container for JS to find and animate children -->
+            <div class="space-y-8 stagger-container">
                 
-                <!-- Education 1 --><div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
+                <!-- Education 1 --><div class="stagger-child flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
                     <div class="sm:w-1/3">
                         <h3 class="text-lg font-semibold text-beige-text">Masters in Artificial Intelligence</h3>
                         <p class="mt-1 text-sm text-beige-subtext">Technische Hochschule Würzburg-Schweinfurt</p>
@@ -342,7 +355,7 @@
                     </div>
                 </div>
 
-                <!-- Education 2 --><div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
+                <!-- Education 2 --><div class="stagger-child flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
                     <div class="sm:w-1/3">
                         <h3 class="text-lg font-semibold text-beige-text">B.Tech, Electronics & Computer Eng.</h3>
                         <p class="mt-1 text-sm text-beige-subtext">SRM Institute of Science and Technology</p>
@@ -362,52 +375,52 @@
           SKILLS SECTION (Redesigned like the image)
         --><section id="skills" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Technical Skills</h2>
-            <!-- Grid updated to 4 columns on large screens for 8 items -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Added stagger-container for JS to find and animate children -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-container">
                 
-                <!-- Skill Card 1: Python --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 1: Python --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-brands fa-python text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">Python</h3>
                     <p class="text-sm text-beige-subtext">Advanced</p>
                 </div>
 
-                <!-- Skill Card 2: MySQL --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 2: MySQL --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-database text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">MySQL</h3>
                     <p class="text-sm text-beige-subtext">Advanced</p>
                 </div>
 
-                <!-- Skill Card 3: Machine Learning --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 3: Machine Learning --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-brain text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">Machine Learning</h3>
                     <p class="text-sm text-beige-subtext">Advanced</p>
                 </div>
 
-                <!-- Skill Card 4: Deep Learning --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 4: Deep Learning --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-robot text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">Deep Learning</h3>
                     <p class="text-sm text-beige-subtext">Intermediate</p>
                 </div>
 
-                <!-- Skill Card 5: NLP --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 5: NLP --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-language text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">NLP</h3>
                     <p class="text-sm text-beige-subtext">Intermediate</p>
                 </div>
 
-                <!-- Skill Card 6: Data Analysis --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 6: Data Analysis --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-chart-line text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">Data Analysis</h3>
                     <p class="text-sm text-beige-subtext">Advanced</p>
                 </div>
                 
-                <!-- Skill Card 8: React.js --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 8: React.js --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-brands fa-react text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">React.js</h3>
                     <p class="text-sm text-beige-subtext">Intermediate</p>
                 </div>
 
-                <!-- Skill Card 10: C --><div class="skill-card p-6 flex flex-col items-center text-center">
+                <!-- Skill Card 10: C --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-c text-5xl text-beige-accent mb-4"></i>
                     <h3 class="text-xl font-semibold text-beige-text">C</h3>
                     <p class="text-sm text-beige-subtext">Advanced</p>
@@ -420,23 +433,24 @@
           CONTACT SECTION
         --><section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Get in Touch</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <!-- Added stagger-container for JS to find and animate children -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center stagger-container">
                 
-                <!-- Email Card --><div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
+                <!-- Email Card --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
                     <i class="fa-solid fa-envelope text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Email</h3>
                     <p class="text-beige-subtext mt-1 truncate">harshithbabu.prakashbabu@study.thws.de</p>
                     <a href="mailto:harshithbabu.prakashbabu@study.thws.de" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Send an email</a>
                 </div>
 
-                <!-- Phone Card --><div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
+                <!-- Phone Card --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
                     <i class="fa-solid fa-phone text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Phone</h3>
                     <p class="text-beige-subtext mt-1">+49 15210692931</p>
                     <a href="tel:+4915210692931" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Call me</a>
                 </div>
 
-                <!-- Location Card --><div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
+                <!-- Location Card --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
                     <i class="fa-solid fa-map-marker-alt text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Location</h3>
                     <p class="text-beige-subtext mt-1">Würzburg, Germany</p>
@@ -502,36 +516,61 @@
                 });
             });
 
-            // --- FADE-IN ANIMATION ON SCROLL ---
-            const sections = document.querySelectorAll('.fade-in-section');
+            // --- ANIMATE ON LOAD (HERO SECTION) ---
+            document.querySelectorAll('.animate-on-load').forEach((el, index) => {
+                // Use a timeout to apply the visible class after a short delay
+                setTimeout(() => {
+                    el.classList.add('is-visible');
+                }, 100 * index); // Stagger the load-in animation
+            });
+
+
+            // --- FADE-IN & STAGGER ANIMATION ON SCROLL ---
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.1 
+                threshold: 0.1 // Triggers when 10% of the element is visible
             };
+            
             const sectionObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
+                        // For simple fade-ins
+                        if (entry.target.classList.contains('fade-in-section')) {
+                            entry.target.classList.add('is-visible');
+                        }
+                        
+                        // For staggered animations
+                        if (entry.target.classList.contains('stagger-container')) {
+                            entry.target.querySelectorAll('.stagger-child').forEach((child, index) => {
+                                // Apply a delay to each child
+                                child.style.transitionDelay = `${index * 100}ms`;
+                                child.classList.add('is-visible');
+                            });
+                        }
+                        
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
-            sections.forEach(section => {
+
+            // Observe all sections with fade-in or stagger effects
+            document.querySelectorAll('.fade-in-section, .stagger-container').forEach(section => {
                 sectionObserver.observe(section);
             });
             
+
             // --- DYNAMICALLY STYLE TECH TAGS ---
             const addTailwindClasses = (selector, classes) => {
                  document.querySelectorAll(selector).forEach(el => {
                     el.classList.add(...classes.split(' '));
                 });
             }
-            // Reverted to beige theme for tech tags
             addTailwindClasses('.tech-tag', 
                 'inline-block', 'bg-beige-accent-light', 'text-beige-accent', 'font-medium', 
                 'px-3', 'py-1', 'rounded-full', 'text-xs'
             );
+
 
             // --- ACTIVE NAV LINK ON SCROLL ---
             const navLinks = document.querySelectorAll('.nav-link');
@@ -540,7 +579,7 @@
             
             const navObserverOptions = {
                 root: null,
-                rootMargin: '-20% 0px -60% 0px', // Adjust these values to control when the link becomes active
+                rootMargin: '-20% 0px -60% 0px', // Active when section is in the middle 20% of viewport
                 threshold: 0
             };
             
@@ -570,6 +609,18 @@
             
             contentSections.forEach(section => {
                 navObserver.observe(section);
+            });
+
+            // --- HERO PARALLAX ON SCROLL ---
+            const hero = document.getElementById('hero');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if (scrollY < 1000) { // Only run effect when near the top
+                    // Move hero content up at half the scroll speed
+                    hero.style.transform = `translateY(${scrollY * 0.4}px)`;
+                    // You can also add an opacity fade
+                    // hero.style.opacity = 1 - (scrollY / 800);
+                }
             });
 
         });
