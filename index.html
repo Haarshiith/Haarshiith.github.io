@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haarshiith's Portfolio</title>
+    <title>Harshith Babu Prakash Babu - AI & ML Engineer</title>
     
-    <!-- 1. We're loading Tailwind CSS, which handles all the styling -->
+    <!-- 1. Loading Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. This configures Tailwind to use the 'Inter' font and our new light theme -->
+    <!-- 2. Configuring Tailwind for the new Beige Theme -->
     <script>
         tailwind.config = {
             theme: {
@@ -17,36 +17,21 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        // Using 'stone' for a modern, classy light theme
-                        'light-bg': '#fafaf9', // stone-50 (a warm, light beige/off-white)
-                        'light-card': '#ffffff', // white
-                        'light-text-primary': '#1e293b', // slate-800 (strong dark text)
-                        'light-text-secondary': '#475569', // slate-600 (softer gray text)
-                        'light-accent': '#0369a1', // sky-700 (a deep, professional blue)
+                        // A classy, professional beige theme
+                        'beige-bg': '#fcfaf6',      // A very light, warm beige
+                        'beige-card': '#ffffff',     // Clean white for cards
+                        'beige-text': '#1e293b',     // Dark slate for primary text
+                        'beige-subtext': '#475569',   // Softer slate for secondary text
+                        'beige-accent': '#2563eb',    // A strong, professional blue accent
+                        'beige-accent-light': '#dbeafe', // Light blue for tags
                     }
                 }
-            },
-            // We removed darkMode: 'class' since this is now a light-theme site
+            }
         }
     </script>
     
-    <!-- 3. Custom styles for scrollbar and animations -->
+    <!-- 3. Custom styles for animations and header -->
     <style>
-        /* A more subtle custom scrollbar for light mode */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--tw-bg-light-bg, #fafaf9); 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; /* slate-300 */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; /* slate-400 */
-        }
-
         /* Base font style */
         body {
             font-family: 'Inter', sans-serif;
@@ -64,211 +49,369 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Style for the active nav link */
+        
+        /* Active state for nav links */
         .nav-link.active {
-            color: #1e293b; /* light-text-primary */
+            color: #2563eb; /* beige-accent */
             font-weight: 600;
-        }
-        .nav-link.active .nav-indicator {
-            width: 3rem; /* 12 */
-            height: 2px;
-            background-color: #1e293b; /* light-text-primary */
         }
     </style>
 </head>
 
-<body class="bg-light-bg text-light-text-secondary">
+<body class="bg-beige-bg text-beige-subtext">
 
-    <!-- Main Container: Uses Flexbox for the two-column layout on large screens -->
-    <div class="lg:flex min-h-screen">
+    <!-- 
+      HEADER / NAVIGATION 
+      This is the new "proper header" you requested.
+      It's sticky, so it stays at the top when you scroll.
+    -->
+    <header class="sticky top-0 z-50 w-full bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
+        <nav class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Your Name (Left Side) -->
+                <a href="#" class="text-xl font-bold text-beige-text">
+                    Harshith Babu Prakash Babu
+                </a>
+                
+                <!-- Navigation Links (Right Side) - Hidden on mobile -->
+                <ul class="hidden md:flex space-x-6 lg:space-x-8">
+                    <li><a href="#about" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">About</a></li>
+                    <li><a href="#experience" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Experience</a></li>
+                    <li><a href="#projects" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Projects</a></li>
+                    <li><a href="#education" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Education</a></li>
+                    <li><a href="#skills" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Skills</a></li>
+                    <!-- NEW: Contact Link Added -->
+                    <li><a href="#contact" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Contact</a></li>
+                </ul>
+                
+                <!-- Mobile Menu Button (Hamburger Icon) -->
+                <button id="mobile-menu-button" class="md:hidden text-beige-text">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu (Dropdown) - Hidden by default -->
+        <div id="mobile-menu" class="hidden md:hidden bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
+            <ul class="flex flex-col items-center py-4 space-y-4">
+                <li><a href="#about" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">About</a></li>
+                <li><a href="#experience" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Experience</a></li>
+                <li><a href="#projects" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Projects</a></li>
+                <li><a href="#education" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Education</a></li>
+                <li><a href="#skills" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Skills</a></li>
+                <!-- NEW: Contact Link Added -->
+                <li><a href="#contact" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 
+      MAIN CONTENT AREA
+      This is a single-column layout.
+    -->
+    <main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
 
         <!-- 
-          COLUMN 1: HEADER & NAVIGATION 
-          This column is sticky on desktop (lg:sticky) so it stays put while you scroll.
+          HERO SECTION 
+          A short introduction with your name and title.
         -->
-        <header class="lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-1/3 lg:flex-col lg:justify-between p-8 sm:p-12 lg:p-16">
-            <div>
-                <!-- Your Name -->
-                <h1 class="text-4xl sm:text-5xl font-bold text-light-text-primary">
-                    Haarshiith
-                </h1>
-                
-                <!-- Your Title / Subtitle -->
-                <h2 class="mt-3 text-2xl font-medium text-light-text-primary">
-                    Student Developer
-                </h2>
-                
-                <!-- Your Bio -->
-                <p class="mt-4 max-w-xs">
-                    I build accessible and responsive web applications, turning ideas into digital experiences.
-                </p>
-
-                <!-- Navigation Links -->
-                <nav class="hidden lg:block mt-12">
-                    <ul class="space-y-4">
-                        <li>
-                            <a class="nav-link group flex items-center gap-3 text-lg font-medium transition-colors hover:text-light-text-primary" href="#about">
-                                <span class="nav-indicator h-px w-8 bg-slate-300 transition-all group-hover:w-16 group-hover:bg-light-text-primary"></span>
-                                <span class="nav-text">About</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link group flex items-center gap-3 text-lg font-medium transition-colors hover:text-light-text-primary" href="#projects">
-                                <span class="nav-indicator h-px w-8 bg-slate-300 transition-all group-hover:w-16 group-hover:bg-light-text-primary"></span>
-                                <span class="nav-text">Projects</span>
-                            </a>
-                        </li>
-                        <!-- Add more links here (e.g., Experience, Contact) -->
-                    </ul>
-                </nav>
-            </div>
-
-            <!-- Social Media Links (at the bottom of the column) -->
-            <div class="mt-8 flex gap-5">
+        <section id="hero" class="py-24 sm:py-32 text-center">
+            <h1 class="text-4xl sm:text-6xl font-bold text-beige-text">
+                Harshith Babu Prakash Babu
+            </h1>
+            <p class="mt-4 text-2xl sm:text-3xl font-medium text-beige-accent">
+                Masters in Artificial Intelligence | AI & ML Engineer
+            </p>
+            <div class="mt-8 flex justify-center gap-5">
                 <!-- GitHub -->
-                <a href="https://github.com/Haarshiith/" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-light-text-secondary hover:text-light-text-primary transition-colors">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184-.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184-.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
+                <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
                 </a>
-                <!-- LinkedIn (Add your URL) -->
-                <a href="#" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-light-text-secondary hover:text-light-text-primary transition-colors">
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5h-17A2.5 2.5 0 0 0 1 5v14a2.5 2.5 0 0 0 2.5 2.5h17a2.5 2.5 0 0 0 2.5-2.5V5a2.5 2.5 0 0 0-2.5-2.5ZM8 19H5V8h3v11ZM6.5 6.73c-.966 0-1.75-.783-1.75-1.75S5.534 3.23 6.5 3.23s1.75.783 1.75 1.75S7.466 6.73 6.5 6.73ZM19 19h-3v-5.373c0-1.3-.024-2.98-1.815-2.98-1.815 0-2.093 1.417-2.093 2.887V19h-3V8h3v1.397h.044c.422-.8 1.45-1.637 2.912-1.637 3.117 0 3.692 2.05 3.692 4.71V19Z"/></svg>
                 </a>
-                <!-- Email (Add your email) -->
-                <a href="mailto:your-email@example.com" title="Email" class="text-light-text-secondary hover:text-light-text-primary transition-colors">
+                <!-- Email -->
+                <a href="mailto:harshithbabu.prakashbabu@study.thws.de" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
                      <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75ZM5.75 6a.75.75 0 0 0-.75.75v.204l6.28 4.71a.75.75 0 0 0 .94 0l6.28-4.71V6.75a.75.75 0 0 0-.75-.75H5.75Z" /><path d="m4.5 8.188 5.74 4.305a2.25 2.25 0 0 0 2.82 0L18.8 8.188V17.25a1.25 1.25 0 0 1-1.25 1.25H5.75A1.25 1.25 0 0 1 4.5 17.25V8.188Z" /></svg>
                 </a>
             </div>
-        </header>
+        </section>
 
         <!-- 
-          COLUMN 2: MAIN CONTENT 
-          This column is scrollable on desktop.
+          ABOUT SECTION
         -->
-        <main class="lg:w-2/3 p-8 sm:p-12 lg:p-16 lg:py-24">
-            
-            <!-- About Section -->
-            <section id="about" class="fade-in-section mb-16 sm:mb-24 scroll-mt-24">
-                <h2 class="text-2xl font-bold text-light-text-primary mb-6">About Me</h2>
-                <div class="space-y-4">
-                    <p>
-                        Hello! I'm Haarshiith, a passionate developer based in [Your City/Country]. My journey in tech started with a curiosity for how things work, which quickly evolved into a passion for building software.
-                    </p>
-                    <p>
-                        I'm currently focused on [Your Focus, e.g., cloud computing, AI, or full-stack development] and I'm always eager to learn new technologies and take on challenging projects. When I'm not coding, I enjoy [Your Hobby, e.g., hiking, reading, or gaming].
-                    </p>
-                </div>
+        <section id="about" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-beige-text text-center mb-8">About Me</h2>
+            <div class="space-y-4 text-lg text-center">
+                <p>
+                    As an AI and Machine Learning Engineer, I specialize in integrating ML models into backend systems to automate data workflows and extract user behavior insights.
+                </p>
+                <p>
+                    I build and maintain scalable full-stack solutions using Python, React.js, MySQL, and MongoDB, delivering end-to-end web platforms for education and hospitality sectors.
+                </p>
+            </div>
+        </section>
 
-                <!-- Skills Sub-section -->
-                <h3 class="text-xl font-bold text-light-text-primary mt-12 mb-4">Core Skills</h3>
-                <div class="flex flex-wrap gap-3">
-                    <!-- Add your skills here -->
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">React</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">Salesforce</span>
-                    <span class="skill-tag">HTML & (S)CSS</span>
-                    <span class="skill-tag">Tailwind CSS</span>
-                    <span class="skill-tag">Git & GitHub</span>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects" class="fade-in-section scroll-mt-24">
-                <h2 class="text-2xl font-bold text-light-text-primary mb-8">Projects</h2>
+        <!-- 
+          EXPERIENCE SECTION 
+        -->
+        <section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Experience</h2>
+            <div class="space-y-12">
                 
-                <!-- Project Card Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                    <!-- ===== PROJECT CARD 1 (TEMPLATE) ===== -->
-                    <!-- Copy and paste this whole 'div' block for each new project -->
-                    <div class="fade-in-section group bg-light-card p-6 rounded-lg shadow-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-2xl">
-                        <h3 class="text-xl font-semibold text-light-text-primary mb-3">
-                            Project Title 1
-                        </h3>
-                        <p class="mb-4">
-                            A brief description of your project. What did it do? What problem did it solve?
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="tech-tag">Tech 1</span>
-                            <span class="tech-tag">Tech 2</span>
-                            <span class="tech-tag">Tech 3</span>
-                        </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-medium text-light-accent hover:underline">
-                            View on GitHub
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
+                <!-- Experience 1 -->
+                <div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                    <div class="md:w-1/3">
+                        <h3 class="text-xl font-semibold text-beige-text">Python Full Stack Developer</h3>
+                        <p class="mt-1 font-medium text-beige-accent">Izeon Innovative Private Limited</p>
+                        <p class="mt-1 text-sm text-beige-subtext">Oct 2023 – Mar 2024</p>
                     </div>
-                    <!-- ======================================= -->
-
-                    <!-- ===== PROJECT CARD 2 (TEMPLATE) ===== -->
-                    <div class="fade-in-section group bg-light-card p-6 rounded-lg shadow-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-2xl">
-                        <h3 class="text-xl font-semibold text-light-text-primary mb-3">
-                            Project Title 2
-                        </h3>
+                    <div class="md:w-2/3">
                         <p class="mb-4">
-                            This is a placeholder for your second project. Go to your GitHub profile and find your best work.
+                            Integrated ML models into backend systems to automate data workflows and extract user behavior insights, supporting the development of intelligent web applications.
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="flex flex-wrap gap-2">
                             <span class="tech-tag">Python</span>
-                            <span class="tech-tag">AI/ML</span>
+                            <span class="tech-tag">React.js</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">ML</span>
                         </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-medium text-light-accent hover:underline">
-                            View on GitHub
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
                     </div>
-                    <!-- ======================================= -->
-
-                    <!-- ===== PROJECT CARD 3 (TEMPLATE) ===== -->
-                    <div class="fade-in-section group bg-light-card p-6 rounded-lg shadow-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-2xl">
-                        <h3 class="text-xl font-semibold text-light-text-primary mb-3">
-                            Project Title 3
-                        </h3>
-                        <p class="mb-4">
-                            Add another project here. You can add as many as you like.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">Tailwind</span>
-                        </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-medium text-light-accent hover:underline">
-                            View on GitHub
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
-                    </div>
-                    <!-- ======================================= -->
-
                 </div>
-            </section>
 
-            <!-- Footer -->
-            <footer class="mt-24 text-center text-slate-500">
-                <p>&copy; 2025 Haarshiith. All rights reserved.</p>
-                <p class="mt-1 text-sm">Built with HTML & Tailwind CSS.</p>
-            </footer>
+                <!-- Experience 2 -->
+                <div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                    <div class="md:w-1/3">
+                        <h3 class="text-xl font-semibold text-beige-text">Software Developer Intern</h3>
+                        <p class="mt-1 font-medium text-beige-accent">ESAB India Limited R&D</p>
+                        <p class="mt-1 text-sm text-beige-subtext">Jul 2023 – Sep 2023</p>
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="mb-4">
+                            Developed and deployed efficient C-based software modules for the Welding Torch Project. Explored AI-driven optimization techniques to improve code structure and support intelligent system development.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">C</span>
+                            <span class="tech-tag">R&D</span>
+                            <span class="tech-tag">AI Optimization</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
 
-        </main>
-    </div>
+        <!-- 
+          PROJECTS SECTION 
+        -->
+        <section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
+                <!-- Project 1 -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                    <div>
+                        <h3 class="text-xl font-semibold text-beige-text">Optimizing Blackjack Policy (RL)</h3>
+                        <p class="mt-2 text-sm">
+                            Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an advanced state representation with card counting to outperform "Basic Strategy."
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag">Reinforcement Learning</span>
+                        <span class="tech-tag">Q-Learning</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
 
-    <!-- 4. JavaScript for Animations and Scrolling -->
+                <!-- Project 2 -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                    <div>
+                        <h3 class="text-xl font-semibold text-beige-text">Sensor Fusion - Particle Filter</h3>
+                        <p class="mt-2 text-sm">
+                            Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state estimation. Solved tracking problems using K-Means clustering.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag">Particle Filter</span>
+                        <span class="tech-tag">K-Means</span>
+                        <span class="tech-tag">Sensor Fusion</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                    <div>
+                        <h3 class="text-xl font-semibold text-beige-text">Driver Drowsiness Detection</h3>
+                        <p class="mt-2 text-sm">
+                            Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system using Maix Dock and C with geospatial logic.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag">CNN</span>
+                        <span class="tech-tag">Deep Learning</span>
+                        <span class="tech-tag">Embedded C</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                    <div>
+                        <h3 class="text-xl font-semibold text-beige-text">Voice Control Home Application</h3>
+                        <p class="mt-2 text-sm">
+                            Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with voice/motion/text commands for accessibility and energy saving.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag">IoT</span>
+                        <span class="tech-tag">Arduino</span>
+                        <span class="tech-tag">Android</span>
+                        <span class="tech-tag">C</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 
+          EDUCATION SECTION 
+        -->
+        <section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Education</h2>
+            <div class="space-y-8">
+                
+                <!-- Education 1 -->
+                <div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg">
+                    <div class="sm:w-1/3">
+                        <h3 class="text-lg font-semibold text-beige-text">Masters in Artificial Intelligence</h3>
+                        <p class="mt-1 text-sm text-beige-subtext">Technische Hochschule Würzburg-Schweinfurt</p>
+                        <p class="mt-1 text-xs text-beige-subtext">Mar 2025 – Present</p>
+                    </div>
+                    <div class="sm:w-2/3">
+                        <p class="text-sm">
+                            Relevant Courses: Artificial Intelligence and Machine Learning, Strong Artificial Intelligence, Introduction to Deep Learning, Reasoning and Decision Making.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Education 2 -->
+                <div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg">
+                    <div class="sm:w-1/3">
+                        <h3 class="text-lg font-semibold text-beige-text">B.Tech, Electronics & Computer Eng.</h3>
+                        <p class="mt-1 text-sm text-beige-subtext">SRM Institute of Science and Technology</p>
+                        <p class="mt-1 text-xs text-beige-subtext">Jun 2019 – May 2023</p>
+                    </div>
+                    <div class="sm:w-2/3">
+                        <p class="text-sm">
+                            Relevant Courses: Machine Learning, Data Analytics Using Open Source Tool, Deep Learning, Database Management System.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 
+          SKILLS SECTION 
+        -->
+        <section id="skills" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Technical Skills</h2>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="skill-tag">Python (Advanced)</span>
+                <span class="skill-tag">MySQL (Advanced)</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">Deep Learning</span>
+                <span class="skill-tag">NLP</span>
+                <span class="skill-tag">Data Analysis</span>
+                <span class="skill-tag">REST API Design</span>
+                <span class="skill-tag">React.js</span>
+                <span class="skill-tag">MongoDB</span>
+                <span class="skill-tag">C</span>
+            </div>
+        </section>
+
+        <!-- 
+          NEW CONTACT SECTION 
+        -->
+        <section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Get in Touch</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                
+                <!-- Email Card -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                    <svg class="w-10 h-10 text-beige-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <h3 class="text-lg font-semibold text-beige-text">Email</h3>
+                    <p class="text-beige-subtext mt-1 truncate">harshithbabu.prakashbabu@study.thws.de</G>
+                    <a href="mailto:harshithbabu.prakashbabu@study.thws.de" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Send an email</a>
+                </div>
+
+                <!-- Phone Card -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                    <svg class="w-10 h-10 text-beige-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    <h3 class="text-lg font-semibold text-beige-text">Phone</h3>
+                    <p class="text-beige-subtext mt-1">+49 15210692931</p>
+                    <a href="tel:+4915210692931" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Call me</a>
+                </div>
+
+                <!-- Location Card -->
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                    <svg class="w-10 h-10 text-beige-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+    
+                    <h3 class="text-lg font-semibold text-beige-text">Location</h3>
+                    <p class="text-beige-subtext mt-1">Würzburg, Germany</p>
+                    <p class="mt-2 text-sm text-beige-subtext">(Currently based here)</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 
+      FOOTER 
+    -->
+    <footer class="border-t border-stone-200 bg-beige-card">
+        <div class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-8 text-center">
+            <div class="flex justify-center gap-6 mb-4">
+                <!-- GitHub -->
+                <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5h-17A2.5 2.5 0 0 0 1 5v14a2.5 2.5 0 0 0 2.5 2.5h17a2.5 2.5 0 0 0 2.5-2.5V5a2.5 2.5 0 0 0-2.5-2.5ZM8 19H5V8h3v11ZM6.5 6.73c-.966 0-1.75-.783-1.75-1.75S5.534 3.23 6.5 3.23s1.75.783 1.75 1.75S7.466 6.73 6.5 6.73ZM19 19h-3v-5.373c0-1.3-.024-2.98-1.815-2.98-1.815 0-2.093 1.417-2.093 2.887V19h-3V8h3v1.397h.044c.422-.8 1.45-1.637 2.912-1.637 3.117 0 3.692 2.05 3.692 4.71V19Z"/></svg>
+                </a>
+                <!-- Email -->
+                <a href="mailto:harshithbabu.prakashbabu@study.thws.de" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
+                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75ZM5.75 6a.75.75 0 0 0-.75.75v.204l6.28 4.71a.75.75 0 0 0 .94 0l6.28-4.71V6.75a.75.75 0 0 0-.75-.75H5.75Z" /><path d="m4.5 8.188 5.74 4.305a2.25 2.25 0 0 0 2.82 0L18.8 8.188V17.25a1.25 1.25 0 0 1-1.25 1.25H5.75A1.25 1.25 0 0 1 4.5 17.25V8.188Z" /></svg>
+                </a>
+            </div>
+            <p class="text-sm text-beige-subtext">
+                &copy; 2025 Harshith Babu Prakash Babu. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- 
+      JavaScript for interactivity
+    -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- SMOOTH SCROLLING ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
+            // --- MOBILE MENU TOGGLE ---
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+            
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
                 });
             });
 
@@ -279,56 +422,59 @@
                 rootMargin: '0px',
                 threshold: 0.1 // Triggers when 10% of the element is visible
             };
-
             const sectionObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Stop observing once animated
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
-
             sections.forEach(section => {
                 sectionObserver.observe(section);
             });
             
-            // Add custom classes to your skill/tech tags
-            // Find all skill-tag and tech-tag elements and apply Tailwind classes
+            // --- DYNAMICALLY STYLE TAGS ---
             const addTailwindClasses = (selector, classes) => {
                  document.querySelectorAll(selector).forEach(el => {
                     el.classList.add(...classes.split(' '));
                 });
             }
-            
-            // Style for the tags in "Core Skills"
-            addTailwindClasses('.skill-tag', 
-                'inline-block', 'bg-sky-100', 'text-sky-700', 'font-medium', 
-                'px-4', 'py-1.5', 'rounded-full', 'text-sm'
-            );
-            
-             // Style for the tags in "Project Cards"
             addTailwindClasses('.tech-tag', 
-                'inline-block', 'bg-sky-100', 'text-sky-700', 'font-medium', 
+                'inline-block', 'bg-beige-accent-light', 'text-beige-accent', 'font-medium', 
                 'px-3', 'py-1', 'rounded-full', 'text-xs'
             );
-
+            addTailwindClasses('.skill-tag', 
+                'inline-block', 'bg-beige-card', 'text-beige-text', 'font-medium', 
+                'px-4', 'py-2', 'rounded-lg', 'text-sm', 'border', 'border-stone-200', 'shadow-sm'
+            );
 
             // --- ACTIVE NAV LINK ON SCROLL ---
             const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
             const contentSections = document.querySelectorAll('main section');
-
+            
             const navObserverOptions = {
                 root: null,
-                rootMargin: '-30% 0px -70% 0px', // Triggers when section is in the middle 30% of viewport
+                rootMargin: '-20% 0px -60% 0px',
                 threshold: 0
             };
-
+            
             const navObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const id = entry.target.getAttribute('id');
+                        
+                        // Update desktop links
                         navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+D                            }
+                        });
+                        
+                        // Update mobile links
+                        mobileNavLinks.forEach(link => {
                             link.classList.remove('active');
                             if (link.getAttribute('href') === `#${id}`) {
                                 link.classList.add('active');
@@ -337,7 +483,7 @@
                     }
                 });
             }, navObserverOptions);
-
+            
             contentSections.forEach(section => {
                 navObserver.observe(section);
             });
