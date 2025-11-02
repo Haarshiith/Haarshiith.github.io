@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harshith Babu Prakash Babu - AI & ML Engineer</title>
     
-    <!-- 1. Loading Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 1. Loading Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- NEW: 1.1 Loading Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 1.1 Loading Font Awesome for icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- 2. Configuring Tailwind for the new Beige Theme -->
-    <script>
+    <!-- 2. Configuring Tailwind with the Beige theme --><script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -27,22 +24,33 @@
                         'beige-subtext': '#475569',   // Softer slate for secondary text
                         'beige-accent': '#2563eb',    // A strong, professional blue accent
                         'beige-accent-light': '#dbeafe', // Light blue for tags
+                    },
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'border-pulse': {
+                            '0%, 100%': { 'border-color': 'rgba(229, 231, 235, 0.5)' }, // stone-200
+                            '50%': { 'border-color': '#2563eb' }, // beige-accent
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'border-pulse': 'border-pulse 2s infinite ease-in-out',
                     }
                 }
             }
         }
     </script>
     
-    <!-- 3. Custom styles for animations and header -->
-    <style>
-        /* Base font style */
+    <!-- 3. Custom styles for animations and header --><style>
         body {
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Subtle fade-in animation */
         .fade-in-section {
             opacity: 0;
             transform: translateY(20px);
@@ -53,10 +61,43 @@
             transform: translateY(0);
         }
         
-        /* Active state for nav links */
         .nav-link.active {
             color: #2563eb; /* beige-accent */
             font-weight: 600;
+        }
+
+        /* Gradient border for skill cards */
+        .skill-card {
+            position: relative;
+            background: #ffffff; /* beige-card */
+            border-radius: 0.75rem; /* Tailwind rounded-xl */
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 1px; /* width of the border */
+            background: linear-gradient(45deg, #fcfaf6, #e7e5e4, #2563eb); /* Initial border gradient */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 1;
+        }
+        
+        /* Hover effect for the border */
+        .skill-card:hover::before {
+            background: linear-gradient(45deg, #2563eb, #60a5fa, #2563eb); /* Hover border gradient */
+            animation: border-pulse 2s infinite ease-in-out;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -65,17 +106,14 @@
 
     <!-- 
       HEADER / NAVIGATION 
-    -->
-    <header class="sticky top-0 z-50 w-full bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
+    --><header class="sticky top-0 z-50 w-full bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
         <nav class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
             <div class="flex justify-between items-center">
-                <!-- Your Name (Left Side) -->
-                <a href="#" class="text-xl font-bold text-beige-text">
+                <!-- Your Name (Left Side) --><a href="#" class="text-xl font-bold text-beige-text">
                     Harshith Babu Prakash Babu
                 </a>
                 
-                <!-- Navigation Links (Right Side) - Hidden on mobile -->
-                <ul class="hidden md:flex space-x-6 lg:space-x-8">
+                <!-- Navigation Links (Right Side) - Hidden on mobile --><ul class="hidden md:flex space-x-6 lg:space-x-8">
                     <li><a href="#about" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">About</a></li>
                     <li><a href="#experience" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Experience</a></li>
                     <li><a href="#projects" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Projects</a></li>
@@ -84,15 +122,13 @@
                     <li><a href="#contact" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Contact</a></li>
                 </ul>
                 
-                <!-- Mobile Menu Button (Hamburger Icon) -->
-                <button id="mobile-menu-button" class="md:hidden text-beige-text">
+                <!-- Mobile Menu Button (Hamburger Icon) --><button id="mobile-menu-button" class="md:hidden text-beige-text">
                     <i class="fas fa-bars w-6 h-6"></i>
                 </button>
             </div>
         </nav>
         
-        <!-- Mobile Menu (Dropdown) - Hidden by default -->
-        <div id="mobile-menu" class="hidden md:hidden bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
+        <!-- Mobile Menu (Dropdown) - Hidden by default --><div id="mobile-menu" class="hidden md:hidden bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
             <ul class="flex flex-col items-center py-4 space-y-4">
                 <li><a href="#about" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">About</a></li>
                 <li><a href="#experience" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Experience</a></li>
@@ -106,13 +142,11 @@
 
     <!-- 
       MAIN CONTENT AREA
-    -->
-    <main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
+    --><main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
 
         <!-- 
           HERO SECTION 
-        -->
-        <section id="hero" class="py-24 sm:py-32 text-center">
+        --><section id="hero" class="py-24 sm:py-32 text-center">
             <h1 class="text-4xl sm:text-6xl font-bold text-beige-text">
                 Harshith Babu Prakash Babu
             </h1>
@@ -120,15 +154,12 @@
                 Masters in Artificial Intelligence | AI & ML Engineer
             </p>
             <div class="mt-8 flex justify-center gap-6">
-                <!-- GitHub (ICON ADDED) -->
-                <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
+                <!-- Social Icons --><a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
                     <i class="fa-brands fa-github text-3xl"></i>
                 </a>
-                <!-- LinkedIn (ICON ADDED) -->
                 <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
                     <i class="fa-brands fa-linkedin text-3xl"></i>
                 </a>
-                <!-- Email (ICON ADDED) -->
                 <a href="mailto:harshithbabu.prakashbabu@study.thws.de" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
                      <i class="fa-solid fa-envelope text-3xl"></i>
                 </a>
@@ -137,10 +168,9 @@
 
         <!-- 
           ABOUT SECTION
-        -->
-        <section id="about" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="about" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-8">About Me</h2>
-            <div class="space-y-4 text-lg text-center">
+            <div class="space-y-4 text-lg text-center text-beige-subtext">
                 <p>
                     As an AI and Machine Learning Engineer, I specialize in integrating ML models into backend systems to automate data workflows and extract user behavior insights.
                 </p>
@@ -152,15 +182,12 @@
 
         <!-- 
           EXPERIENCE SECTION 
-        -->
-        <section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Experience</h2>
             <div class="space-y-12">
                 
-                <!-- Experience 1 -->
-                <div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                <!-- Experience 1 --><div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
                     <div class="md:w-1/3">
-                        <!-- LINK AND ICON ADDED -->
                         <a href="#" target="_blank" rel="noopener noreferrer" class="group">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Python Full Stack Developer
@@ -171,7 +198,7 @@
                         <p class="mt-1 text-sm text-beige-subtext">Oct 2023 – Mar 2024</p>
                     </div>
                     <div class="md:w-2/3">
-                        <p class="mb-4">
+                        <p class="mb-4 text-beige-subtext">
                             Integrated ML models into backend systems to automate data workflows and extract user behavior insights, supporting the development of intelligent web applications.
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -184,10 +211,8 @@
                     </div>
                 </div>
 
-                <!-- Experience 2 -->
-                <div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                <!-- Experience 2 --><div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
                     <div class="md:w-1/3">
-                        <!-- LINK AND ICON ADDED -->
                         <a href="#" target="_blank" rel="noopener noreferrer" class="group">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Software Developer Intern
@@ -198,7 +223,7 @@
                         <p class="mt-1 text-sm text-beige-subtext">Jul 2023 – Sep 2023</p>
                     </div>
                     <div class="md:w-2/3">
-                        <p class="mb-4">
+                        <p class="mb-4 text-beige-subtext">
                             Developed and deployed efficient C-based software modules for the Welding Torch Project. Explored AI-driven optimization techniques to improve code structure and support intelligent system development.
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -214,22 +239,19 @@
 
         <!-- 
           PROJECTS SECTION 
-        -->
-        <section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                <!-- Project 1 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
+                <!-- Project 1 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
                     <div>
-                        <!-- LINK AND ICON ADDED -->
-                        <a href="https://github.com/Haarshiith/Black-Jack-using-Reinforcement-Learning" target="_blank" rel="noopener noreferrer">
+                        <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Optimizing Blackjack Policy (RL)
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
                             </h3>
                         </a>
-                        <p class="mt-2 text-sm">
+                        <p class="mt-2 text-sm text-beige-subtext">
                             Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an advanced state representation with card counting to outperform "Basic Strategy."
                         </p>
                     </div>
@@ -240,17 +262,15 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
+                <!-- Project 2 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
                     <div>
-                        <!-- LINK AND ICON ADDED -->
-                        <a href="https://github.com/Haarshiith/Sensor-Fusion---Particle-Filter" target="_blank" rel="noopener noreferrer">
+                        <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Sensor Fusion - Particle Filter
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
                             </h3>
                         </a>
-                        <p class="mt-2 text-sm">
+                        <p class="mt-2 text-sm text-beige-subtext">
                             Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state estimation. Solved tracking problems using K-Means clustering.
                         </p>
                     </div>
@@ -261,17 +281,15 @@
                     </div>
                 </div>
 
-                <!-- Project 3 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
+                <!-- Project 3 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
                     <div>
-                        <!-- LINK AND ICON ADDED -->
-                        <a href="https://github.com/Haarshiith/MAIX-DOCK-BASED-DRIVER-DROWSINESS-DETECTION-SYSTEM-USING-CNN" target="_blank" rel="noopener noreferrer">
+                        <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Driver Drowsiness Detection
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
                             </h3>
                         </a>
-                        <p class="mt-2 text-sm">
+                        <p class="mt-2 text-sm text-beige-subtext">
                             Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system using Maix Dock and C with geospatial logic.
                         </p>
                     </div>
@@ -282,17 +300,15 @@
                     </div>
                 </div>
 
-                <!-- Project 4 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
+                <!-- Project 4 --><div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl border border-stone-200 group">
                     <div>
-                        <!-- LINK AND ICON ADDED -->
-                        <a href="https://github.com/Haarshiith/Voice-Control-Home-Appliance-Using-IOT" target="_blank" rel="noopener noreferrer">
+                        <a href="#" target="_blank" rel="noopener noreferrer">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Voice Control Home Application
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
                             </h3>
                         </a>
-                        <p class="mt-2 text-sm">
+                        <p class="mt-2 text-sm text-beige-subtext">
                             Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with voice/motion/text commands for accessibility and energy saving.
                         </p>
                     </div>
@@ -309,34 +325,31 @@
 
         <!-- 
           EDUCATION SECTION 
-        -->
-        <section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Education</h2>
             <div class="space-y-8">
                 
-                <!-- Education 1 -->
-                <div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg">
+                <!-- Education 1 --><div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
                     <div class="sm:w-1/3">
                         <h3 class="text-lg font-semibold text-beige-text">Masters in Artificial Intelligence</h3>
                         <p class="mt-1 text-sm text-beige-subtext">Technische Hochschule Würzburg-Schweinfurt</p>
                         <p class="mt-1 text-xs text-beige-subtext">Mar 2025 – Present</p>
                     </div>
                     <div class="sm:w-2/3">
-                        <p class="text-sm">
+                        <p class="text-sm text-beige-subtext">
                             Relevant Courses: Artificial Intelligence and Machine Learning, Strong Artificial Intelligence, Introduction to Deep Learning, Reasoning and Decision Making.
                         </p>
                     </div>
                 </div>
 
-                <!-- Education 2 -->
-                <div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg">
+                <!-- Education 2 --><div class="flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
                     <div class="sm:w-1/3">
                         <h3 class="text-lg font-semibold text-beige-text">B.Tech, Electronics & Computer Eng.</h3>
                         <p class="mt-1 text-sm text-beige-subtext">SRM Institute of Science and Technology</p>
                         <p class="mt-1 text-xs text-beige-subtext">Jun 2019 – May 2023</p>
                     </div>
                     <div class="sm:w-2/3">
-                        <p class="text-sm">
+                        <p class="text-sm text-beige-subtext">
                             Relevant Courses: Machine Learning, Data Analytics Using Open Source Tool, Deep Learning, Database Management System.
                         </p>
                     </div>
@@ -346,49 +359,84 @@
         </section>
 
         <!-- 
-          SKILLS SECTION 
-        -->
-        <section id="skills" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+          SKILLS SECTION (Redesigned like the image)
+        --><section id="skills" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Technical Skills</h2>
-            <div class="flex flex-wrap justify-center gap-3">
-                <span class="skill-tag">Python (Advanced)</span>
-                <span class="skill-tag">MySQL (Advanced)</span>
-                <span class="skill-tag">Machine Learning</span>
-                <span class="skill-tag">Deep Learning</span>
-                <span class="skill-tag">NLP</span>
-                <span class="skill-tag">Data Analysis</span>
-                <span class="skill-tag">REST API Design</span>
-                <span class="skill-tag">React.js</span>
-                <span class="skill-tag">MongoDB</span>
-                <span class="skill-tag">C</span>
+            <!-- Grid updated to 4 columns on large screens for 8 items -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Skill Card 1: Python --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-brands fa-python text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">Python</h3>
+                    <p class="text-sm text-beige-subtext">Advanced</p>
+                </div>
+
+                <!-- Skill Card 2: MySQL --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-database text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">MySQL</h3>
+                    <p class="text-sm text-beige-subtext">Advanced</p>
+                </div>
+
+                <!-- Skill Card 3: Machine Learning --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-brain text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">Machine Learning</h3>
+                    <p class="text-sm text-beige-subtext">Advanced</p>
+                </div>
+
+                <!-- Skill Card 4: Deep Learning --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-robot text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">Deep Learning</h3>
+                    <p class="text-sm text-beige-subtext">Intermediate</p>
+                </div>
+
+                <!-- Skill Card 5: NLP --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-language text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">NLP</h3>
+                    <p class="text-sm text-beige-subtext">Intermediate</p>
+                </div>
+
+                <!-- Skill Card 6: Data Analysis --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-chart-line text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">Data Analysis</h3>
+                    <p class="text-sm text-beige-subtext">Advanced</p>
+                </div>
+                
+                <!-- Skill Card 8: React.js --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-brands fa-react text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">React.js</h3>
+                    <p class="text-sm text-beige-subtext">Intermediate</p>
+                </div>
+
+                <!-- Skill Card 10: C --><div class="skill-card p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-c text-5xl text-beige-accent mb-4"></i>
+                    <h3 class="text-xl font-semibold text-beige-text">C</h3>
+                    <p class="text-sm text-beige-subtext">Advanced</p>
+                </div>
+
             </div>
         </section>
 
         <!-- 
-          CONTACT SECTION (ICONS UPDATED)
-        -->
-        <section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+          CONTACT SECTION
+        --><section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Get in Touch</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 
-                <!-- Email Card -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                <!-- Email Card --><div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
                     <i class="fa-solid fa-envelope text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Email</h3>
-                    <p class="text-beige-subtext mt-1 truncate">harshithbabu.prakashbabu@study.thws.de</G>
+                    <p class="text-beige-subtext mt-1 truncate">harshithbabu.prakashbabu@study.thws.de</p>
                     <a href="mailto:harshithbabu.prakashbabu@study.thws.de" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Send an email</a>
                 </div>
 
-                <!-- Phone Card -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                <!-- Phone Card --><div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
                     <i class="fa-solid fa-phone text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Phone</h3>
                     <p class="text-beige-subtext mt-1">+49 15210692931</p>
                     <a href="tel:+4915210692931" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Call me</a>
                 </div>
 
-                <!-- Location Card -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
+                <!-- Location Card --><div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl border border-stone-200">
                     <i class="fa-solid fa-map-marker-alt text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Location</h3>
                     <p class="text-beige-subtext mt-1">Würzburg, Germany</p>
@@ -401,20 +449,16 @@
     </main>
 
     <!-- 
-      FOOTER (ICONS UPDATED)
-    -->
-    <footer class="border-t border-stone-200 bg-beige-card">
+      FOOTER 
+    --><footer class="border-t border-stone-200 bg-beige-card">
         <div class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-8 text-center">
             <div class="flex justify-center gap-6 mb-4">
-                <!-- GitHub -->
-                <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
+                <!-- Social Icons --><a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
                     <i class="fa-brands fa-github text-2xl"></i>
                 </a>
-                <!-- LinkedIn -->
                 <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
                     <i class="fa-brands fa-linkedin text-2xl"></i>
                 </a>
-                <!-- Email -->
                 <a href="mailto:harshithbabu.prakashbabu@study.thws.de" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
                      <i class="fa-solid fa-envelope text-2xl"></i>
                 </a>
@@ -427,8 +471,7 @@
 
     <!-- 
       JavaScript for interactivity
-    -->
-    <script>
+    --><script>
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- MOBILE MENU TOGGLE ---
@@ -464,7 +507,7 @@
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.1 // Triggers when 10% of the element is visible
+                threshold: 0.1 
             };
             const sectionObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -478,19 +521,16 @@
                 sectionObserver.observe(section);
             });
             
-            // --- DYNAMICALLY STYLE TAGS ---
+            // --- DYNAMICALLY STYLE TECH TAGS ---
             const addTailwindClasses = (selector, classes) => {
                  document.querySelectorAll(selector).forEach(el => {
                     el.classList.add(...classes.split(' '));
                 });
             }
+            // Reverted to beige theme for tech tags
             addTailwindClasses('.tech-tag', 
                 'inline-block', 'bg-beige-accent-light', 'text-beige-accent', 'font-medium', 
                 'px-3', 'py-1', 'rounded-full', 'text-xs'
-            );
-            addTailwindClasses('.skill-tag', 
-                'inline-block', 'bg-beige-card', 'text-beige-text', 'font-medium', 
-                'px-4', 'py-2', 'rounded-lg', 'text-sm', 'border', 'border-stone-200', 'shadow-sm'
             );
 
             // --- ACTIVE NAV LINK ON SCROLL ---
@@ -500,7 +540,7 @@
             
             const navObserverOptions = {
                 root: null,
-                rootMargin: '-20% 0px -60% 0px',
+                rootMargin: '-20% 0px -60% 0px', // Adjust these values to control when the link becomes active
                 threshold: 0
             };
             
