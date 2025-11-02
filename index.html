@@ -8,6 +8,9 @@
     <!-- 1. Loading Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- NEW: 1.1 Loading Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <!-- 2. Configuring Tailwind for the new Beige Theme -->
     <script>
         tailwind.config = {
@@ -62,8 +65,6 @@
 
     <!-- 
       HEADER / NAVIGATION 
-      This is the new "proper header" you requested.
-      It's sticky, so it stays at the top when you scroll.
     -->
     <header class="sticky top-0 z-50 w-full bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
         <nav class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
@@ -80,13 +81,12 @@
                     <li><a href="#projects" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Projects</a></li>
                     <li><a href="#education" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Education</a></li>
                     <li><a href="#skills" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Skills</a></li>
-                    <!-- NEW: Contact Link Added -->
                     <li><a href="#contact" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Contact</a></li>
                 </ul>
                 
                 <!-- Mobile Menu Button (Hamburger Icon) -->
                 <button id="mobile-menu-button" class="md:hidden text-beige-text">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <i class="fas fa-bars w-6 h-6"></i>
                 </button>
             </div>
         </nav>
@@ -99,7 +99,6 @@
                 <li><a href="#projects" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Projects</a></li>
                 <li><a href="#education" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Education</a></li>
                 <li><a href="#skills" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Skills</a></li>
-                <!-- NEW: Contact Link Added -->
                 <li><a href="#contact" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Contact</a></li>
             </ul>
         </div>
@@ -107,13 +106,11 @@
 
     <!-- 
       MAIN CONTENT AREA
-      This is a single-column layout.
     -->
     <main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
 
         <!-- 
           HERO SECTION 
-          A short introduction with your name and title.
         -->
         <section id="hero" class="py-24 sm:py-32 text-center">
             <h1 class="text-4xl sm:text-6xl font-bold text-beige-text">
@@ -122,18 +119,18 @@
             <p class="mt-4 text-2xl sm:text-3xl font-medium text-beige-accent">
                 Masters in Artificial Intelligence | AI & ML Engineer
             </p>
-            <div class="mt-8 flex justify-center gap-5">
-                <!-- GitHub -->
+            <div class="mt-8 flex justify-center gap-6">
+                <!-- GitHub (ICON ADDED) -->
                 <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
+                    <i class="fa-brands fa-github text-3xl"></i>
                 </a>
-                <!-- LinkedIn -->
+                <!-- LinkedIn (ICON ADDED) -->
                 <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5h-17A2.5 2.5 0 0 0 1 5v14a2.5 2.5 0 0 0 2.5 2.5h17a2.5 2.5 0 0 0 2.5-2.5V5a2.5 2.5 0 0 0-2.5-2.5ZM8 19H5V8h3v11ZM6.5 6.73c-.966 0-1.75-.783-1.75-1.75S5.534 3.23 6.5 3.23s1.75.783 1.75 1.75S7.466 6.73 6.5 6.73ZM19 19h-3v-5.373c0-1.3-.024-2.98-1.815-2.98-1.815 0-2.093 1.417-2.093 2.887V19h-3V8h3v1.397h.044c.422-.8 1.45-1.637 2.912-1.637 3.117 0 3.692 2.05 3.692 4.71V19Z"/></svg>
+                    <i class="fa-brands fa-linkedin text-3xl"></i>
                 </a>
-                <!-- Email -->
+                <!-- Email (ICON ADDED) -->
                 <a href="mailto:harshithbabu.prakashbabu@study.thws.de" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
-                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75ZM5.75 6a.75.75 0 0 0-.75.75v.204l6.28 4.71a.75.75 0 0 0 .94 0l6.28-4.71V6.75a.75.75 0 0 0-.75-.75H5.75Z" /><path d="m4.5 8.188 5.74 4.305a2.25 2.25 0 0 0 2.82 0L18.8 8.188V17.25a1.25 1.25 0 0 1-1.25 1.25H5.75A1.25 1.25 0 0 1 4.5 17.25V8.188Z" /></svg>
+                     <i class="fa-solid fa-envelope text-3xl"></i>
                 </a>
             </div>
         </section>
@@ -163,7 +160,13 @@
                 <!-- Experience 1 -->
                 <div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl">
                     <div class="md:w-1/3">
-                        <h3 class="text-xl font-semibold text-beige-text">Python Full Stack Developer</h3>
+                        <!-- LINK AND ICON ADDED -->
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="group">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                Python Full Stack Developer
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
                         <p class="mt-1 font-medium text-beige-accent">Izeon Innovative Private Limited</p>
                         <p class="mt-1 text-sm text-beige-subtext">Oct 2023 – Mar 2024</p>
                     </div>
@@ -184,7 +187,13 @@
                 <!-- Experience 2 -->
                 <div class="flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-shadow hover:shadow-xl">
                     <div class="md:w-1/3">
-                        <h3 class="text-xl font-semibold text-beige-text">Software Developer Intern</h3>
+                        <!-- LINK AND ICON ADDED -->
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="group">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                Software Developer Intern
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
                         <p class="mt-1 font-medium text-beige-accent">ESAB India Limited R&D</p>
                         <p class="mt-1 text-sm text-beige-subtext">Jul 2023 – Sep 2023</p>
                     </div>
@@ -211,9 +220,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                 <!-- Project 1 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
                     <div>
-                        <h3 class="text-xl font-semibold text-beige-text">Optimizing Blackjack Policy (RL)</h3>
+                        <!-- LINK AND ICON ADDED -->
+                        <a href="https://github.com/Haarshiith/Black-Jack-using-Reinforcement-Learning" target="_blank" rel="noopener noreferrer">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                Optimizing Blackjack Policy (RL)
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
                         <p class="mt-2 text-sm">
                             Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an advanced state representation with card counting to outperform "Basic Strategy."
                         </p>
@@ -226,9 +241,15 @@
                 </div>
 
                 <!-- Project 2 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
                     <div>
-                        <h3 class="text-xl font-semibold text-beige-text">Sensor Fusion - Particle Filter</h3>
+                        <!-- LINK AND ICON ADDED -->
+                        <a href="https://github.com/Haarshiith/Sensor-Fusion---Particle-Filter" target="_blank" rel="noopener noreferrer">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                Sensor Fusion - Particle Filter
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
                         <p class="mt-2 text-sm">
                             Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state estimation. Solved tracking problems using K-Means clustering.
                         </p>
@@ -241,9 +262,15 @@
                 </div>
 
                 <!-- Project 3 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
                     <div>
-                        <h3 class="text-xl font-semibold text-beige-text">Driver Drowsiness Detection</h3>
+                        <!-- LINK AND ICON ADDED -->
+                        <a href="https://github.com/Haarshiith/MAIX-DOCK-BASED-DRIVER-DROWSINESS-DETECTION-SYSTEM-USING-CNN" target="_blank" rel="noopener noreferrer">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                Driver Drowsiness Detection
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
                         <p class="mt-2 text-sm">
                             Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system using Maix Dock and C with geospatial logic.
                         </p>
@@ -256,9 +283,15 @@
                 </div>
 
                 <!-- Project 4 -->
-                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl">
+                <div class="bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-shadow hover:shadow-xl group">
                     <div>
-                        <h3 class="text-xl font-semibold text-beige-text">Voice Control Home Application</h3>
+                        <!-- LINK AND ICON ADDED -->
+                        <a href="https://github.com/Haarshiith/Voice-Control-Home-Appliance-Using-IOT" target="_blank" rel="noopener noreferrer">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                Voice Control Home Application
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
                         <p class="mt-2 text-sm">
                             Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with voice/motion/text commands for accessibility and energy saving.
                         </p>
@@ -332,7 +365,7 @@
         </section>
 
         <!-- 
-          NEW CONTACT SECTION 
+          CONTACT SECTION (ICONS UPDATED)
         -->
         <section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Get in Touch</h2>
@@ -340,7 +373,7 @@
                 
                 <!-- Email Card -->
                 <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
-                    <svg class="w-10 h-10 text-beige-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <i class="fa-solid fa-envelope text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Email</h3>
                     <p class="text-beige-subtext mt-1 truncate">harshithbabu.prakashbabu@study.thws.de</G>
                     <a href="mailto:harshithbabu.prakashbabu@study.thws.de" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Send an email</a>
@@ -348,7 +381,7 @@
 
                 <!-- Phone Card -->
                 <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
-                    <svg class="w-10 h-10 text-beige-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    <i class="fa-solid fa-phone text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Phone</h3>
                     <p class="text-beige-subtext mt-1">+49 15210692931</p>
                     <a href="tel:+4915210692931" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Call me</a>
@@ -356,8 +389,7 @@
 
                 <!-- Location Card -->
                 <div class="bg-beige-card p-6 rounded-xl shadow-lg transition-shadow hover:shadow-xl">
-                    <svg class="w-10 h-10 text-beige-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-    
+                    <i class="fa-solid fa-map-marker-alt text-4xl text-beige-accent mx-auto mb-4"></i>
                     <h3 class="text-lg font-semibold text-beige-text">Location</h3>
                     <p class="text-beige-subtext mt-1">Würzburg, Germany</p>
                     <p class="mt-2 text-sm text-beige-subtext">(Currently based here)</p>
@@ -369,22 +401,22 @@
     </main>
 
     <!-- 
-      FOOTER 
+      FOOTER (ICONS UPDATED)
     -->
     <footer class="border-t border-stone-200 bg-beige-card">
         <div class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-8 text-center">
             <div class="flex justify-center gap-6 mb-4">
                 <!-- GitHub -->
                 <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.25 6.065c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29H10.404c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm8.006 4.422c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Zm-3.12-6.528c.164-.184.394-.29.654-.29h1.996c.26 0 .49.106.654.29.585.655.585 2.682 0 3.337-.164.184.394.29-.654.29h-1.996c-.26 0-.49-.106-.654-.29-.585-.655-.585-2.682 0-3.337Zm-3.121 6.528c.26-.183.395-.446.395-.73v-1.996c0-.284-.135-.547-.395-.73-.585-.412-2.126-.412-2.71 0-.26.183-.395.446-.395.73v1.996c0 .284.135.547.395.73.585.412 2.126.412 2.71 0Z" clip-rule="evenodd" /></svg>
+                    <i class="fa-brands fa-github text-2xl"></i>
                 </a>
                 <!-- LinkedIn -->
                 <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 2.5h-17A2.5 2.5 0 0 0 1 5v14a2.5 2.5 0 0 0 2.5 2.5h17a2.5 2.5 0 0 0 2.5-2.5V5a2.5 2.5 0 0 0-2.5-2.5ZM8 19H5V8h3v11ZM6.5 6.73c-.966 0-1.75-.783-1.75-1.75S5.534 3.23 6.5 3.23s1.75.783 1.75 1.75S7.466 6.73 6.5 6.73ZM19 19h-3v-5.373c0-1.3-.024-2.98-1.815-2.98-1.815 0-2.093 1.417-2.093 2.887V19h-3V8h3v1.397h.044c.422-.8 1.45-1.637 2.912-1.637 3.117 0 3.692 2.05 3.692 4.71V19Z"/></svg>
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
                 </a>
                 <!-- Email -->
                 <a href="mailto:harshithbabu.prakashbabu@study.thws.de" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
-                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75ZM5.75 6a.75.75 0 0 0-.75.75v.204l6.28 4.71a.75.75 0 0 0 .94 0l6.28-4.71V6.75a.75.75 0 0 0-.75-.75H5.75Z" /><path d="m4.5 8.188 5.74 4.305a2.25 2.25 0 0 0 2.82 0L18.8 8.188V17.25a1.25 1.25 0 0 1-1.25 1.25H5.75A1.25 1.25 0 0 1 4.5 17.25V8.188Z" /></svg>
+                     <i class="fa-solid fa-envelope text-2xl"></i>
                 </a>
             </div>
             <p class="text-sm text-beige-subtext">
@@ -406,12 +438,24 @@
             
             menuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
+                // Toggle icon
+                const icon = menuButton.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
             });
             
             // Close mobile menu when a link is clicked
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
+                    const icon = menuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 });
             });
 
@@ -470,7 +514,7 @@
                             link.classList.remove('active');
                             if (link.getAttribute('href') === `#${id}`) {
                                 link.classList.add('active');
-D                            }
+                            }
                         });
                         
                         // Update mobile links
