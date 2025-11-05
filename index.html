@@ -237,6 +237,27 @@
             <!-- Added stagger-container for JS to find and animate children -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-container">
 
+                <!-- NEW Project: BMW --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                    <div>
+                        <a href="#" target="_blank" rel="noopener noreferrer">
+                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
+                                BMW Group Quality Management Challenge
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
+                            </h3>
+                        </a>
+                        <p class="mt-2 text-sm text-beige-subtext">
+                            Participated in a university-industry hackathon with BMW Group, developing a framework using AI and analytics to identify, track, and predict potential quality issues, turning past "mistakes" into actionable, data-driven insights.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag">Data Analytics</span>
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">BMW</span>
+                        <span class="tech-tag">Hackathon</span>
+                        <span class="tech-tag">Quality Management</span>
+                    </div>
+                </div>
+
                 <!-- Project 1 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
                     <div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
@@ -671,13 +692,13 @@
             window.addEventListener('scroll', updateScrollProgress);
 
 
-            // --- LIVE CONSTELLATION & ACTIVE NEURON SCRIPT ---
+            // --- LIVE CONSTELLATION & GRAVITATIONAL WELL SCRIPT ---
             
-            // NEW: Mouse tracking object
+            // Mouse tracking object
             const mouse = {
                 x: null,
                 y: null,
-                maxConnections: 3 // Number of lines to draw from the cursor
+                radius: 150 // Radius of the gravitational well
             };
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX;
@@ -687,13 +708,13 @@
                 mouse.x = null;
                 mouse.y = null;
             });
-            // NEW: Add touch support for mobile (moves neuron to last touch point)
+            // Add touch support
             window.addEventListener('touchmove', (e) => {
                  if (e.touches.length > 0) {
                     mouse.x = e.touches[0].clientX;
                     mouse.y = e.touches[0].clientY;
                  }
-            }, { passive: false }); // { passive: false } can prevent scrolling, let's test. Default is fine.
+            });
              window.addEventListener('touchstart', (e) => {
                  if (e.touches.length > 0) {
                     mouse.x = e.touches[0].clientX;
@@ -701,7 +722,8 @@
                  }
             });
             window.addEventListener('touchend', () => {
-                // optional: mouse.x = null; mouse.y = null;
+                mouse.x = null;
+                mouse.y = null;
             });
 
 
@@ -719,7 +741,8 @@
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+                    // Start with a small random velocity
+                    this.vx = (Math.random() - 0.5) * 0.5; 
                     this.vy = (Math.random() - 0.5) * 0.5;
                     this.radius = 2;
                 }
@@ -733,12 +756,42 @@
                 }
 
                 update() {
+                    // NEW: Gravitational Well (Repulsion) Logic
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = this.x - mouse.x;
+                        const dy = this.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < mouse.radius) {
+                            const forceDirectionX = dx / dist;
+                            const forceDirectionY = dy / dist;
+                            // Force is stronger the closer the mouse is
+                            const force = (mouse.radius - dist) / mouse.radius;
+                            const maxForce = 2.5; // Strength of repulsion
+                            
+                            // Add force to velocity
+                            this.vx += forceDirectionX * force * maxForce;
+                            this.vy += forceDirectionY * force * maxForce;
+                        }
+                    }
+
+                    // Apply damping (friction) to slow particles down over time
+                    this.vx *= 0.97;
+                    this.vy *= 0.97;
+
+                    // Apply final velocity to position
                     this.x += this.vx;
                     this.y += this.vy;
 
                     // Bounce off edges
-                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    if (this.x < 0 || this.x > canvas.width) {
+                        this.vx *= -1;
+                        this.x = (this.x < 0) ? 0 : canvas.width; // Prevent sticking
+                    }
+                    if (this.y < 0 || this.y > canvas.height) {
+                        this.vy *= -1;
+                        this.y = (this.y < 0) ? 0 : canvas.height; // Prevent sticking
+                    }
                 }
             }
 
@@ -757,37 +810,9 @@
             function drawConstellation() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // NEW: Active Neuron (Cursor) Logic
-                if (mouse.x !== null && mouse.y !== null) {
-                    // 1. Find all particles with their distance to the mouse
-                    let particlesWithDist = particles.map(particle => {
-                        const dx = particle.x - mouse.x;
-                        const dy = particle.y - mouse.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        return { ...particle, dist: dist };
-                    });
-
-                    // 2. Sort by distance (closest first)
-                    particlesWithDist.sort((a, b) => a.dist - b.dist);
-
-                    // 3. Take the closest ones
-                    let closestParticles = particlesWithDist.slice(0, mouse.maxConnections);
-
-                    // 4. Draw lines from mouse to them
-                    for (let p of closestParticles) {
-                        ctx.beginPath();
-                        ctx.moveTo(mouse.x, mouse.y);
-                        ctx.lineTo(p.x, p.y);
-                        // Style for the "active" lines (slightly more visible)
-                        ctx.strokeStyle = `rgba(170, 180, 190, 0.5)`; // 0.5 opacity
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-                
                 // Original constellation logic
                 for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
+                    particles[i].update(); // Update now includes repulsion
                     particles[i].draw();
 
                     for (let j = i + 1; j < particles.length; j++) {
