@@ -33,13 +33,17 @@
                         'border-pulse': {
                             '0%, 100%': { 'border-color': 'rgba(229, 231, 235, 0.5)' }, // stone-200
                             '50%': { 'border-color': '#2563eb' }, // beige-accent
+                        },
+                        'soft-pulse': {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '.8' },
                         }
                     },
                     animation: {
-                        // Updated animation names
                         'load-in': 'fade-in-up 0.6s ease-out forwards',
                         'scroll-in': 'fade-in-up 0.6s ease-out forwards',
                         'border-pulse': 'border-pulse 2s infinite ease-in-out',
+                        'soft-pulse': 'soft-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -51,6 +55,42 @@
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            /* Set the beige background here */
+            background-color: #fcfaf6;
+        }
+
+        /* Live Canvas Background */
+        #live-background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Sits behind all content */
+            pointer-events: none;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: #2563eb; /* beige-accent */
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s linear;
+        }
+        
+        /* Ensure header has a background to hide particles behind it */
+        header {
+             background-color: rgba(252, 250, 246, 0.8); /* Slightly transparent beige */
+        }
+        
+        /* Ensure body content is on top of the canvas */
+        main, footer {
+            position: relative;
+            z-index: 1;
         }
 
         /* Base animation state (hidden) */
@@ -79,7 +119,6 @@
             background: #ffffff; /* beige-card */
             border-radius: 0.75rem; /* Tailwind rounded-xl */
             overflow: hidden;
-            /* Added transform to transitions */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
@@ -97,25 +136,28 @@
             z-index: 1;
         }
         
-        /* Hover effect for the border */
         .skill-card:hover::before {
             background: linear-gradient(45deg, #2563eb, #60a5fa, #2563eb); /* Hover border gradient */
             animation: border-pulse 2s infinite ease-in-out;
         }
 
         .skill-card:hover {
-            /* Added scale transform */
             transform: translateY(-5px) scale(1.03);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 
-<body class="bg-beige-bg text-beige-subtext">
+<body class="text-beige-subtext">
+
+    <!-- Live Canvas Background -->
+    <canvas id="live-background-canvas"></canvas>
 
     <!-- 
       HEADER / NAVIGATION 
-    --><header class="sticky top-0 z-50 w-full bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
+    --><header class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-stone-200">
+        <!-- Scroll Progress Bar Added -->
+        <div id="scroll-progress-bar"></div>
         <nav class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
             <div class="flex justify-between items-center">
                 <!-- Your Name (Left Side) --><a href="#" class="text-xl font-bold text-beige-text">
@@ -126,7 +168,7 @@
                     <li><a href="#about" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">About</a></li>
                     <li><a href="#projects" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Projects</a></li>
                     <li><a href="#experience" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Experience</a></li>
-                    <li><a href="#skills" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Skills</a></li>          
+                    <li><a href="#skills" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Skills</a></li>
                     <li><a href="#education" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Education</a></li>
                     <li><a href="#contact" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Contact</a></li>
                 </ul>
@@ -139,12 +181,12 @@
         
         <!-- Mobile Menu (Dropdown) - Hidden by default --><div id="mobile-menu" class="hidden md:hidden bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
             <ul class="flex flex-col items-center py-4 space-y-4">
-                    <li><a href="#about" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">About</a></li>
-                    <li><a href="#projects" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Projects</a></li>
-                    <li><a href="#experience" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Experience</a></li>
-                    <li><a href="#skills" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Skills</a></li>          
-                    <li><a href="#education" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Education</a></li>
-                    <li><a href="#contact" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Contact</a></li>
+                <li><a href="#about" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">About</a></li>
+                <li><a href="#projects" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Projects</a></li>
+                <li><a href="#experience" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Experience</a></li>
+                <li><a href="#skills" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Skills</a></li>
+                <li><a href="#education" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Education</a></li>
+                <li><a href="#contact" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Contact</a></li>
             </ul>
         </div>
     </header>
@@ -155,13 +197,13 @@
 
         <!-- 
           HERO SECTION 
-        -->
-        <section id="hero" class="py-24 sm:py-32 text-center">
+        --><section id="hero" class="py-24 sm:py-32 text-center relative z-10">
             <!-- Added animate-on-load classes for staggered load animation -->
             <h1 class="animate-on-load text-4xl sm:text-6xl font-bold text-beige-text" style="transition-delay: 100ms;">
                 Harshith Babu Prakash Babu
             </h1>
-            <p class="animate-on-load mt-4 text-2xl sm:text-3xl font-medium text-beige-accent" style="transition-delay: 200ms;">
+            <!-- Added subtle pulse animation -->
+            <p class="animate-on-load animate-soft-pulse mt-4 text-2xl sm:text-3xl font-medium text-beige-accent" style="transition-delay: 200ms;">
                 Masters in Artificial Intelligence | AI & ML Engineer
             </p>
             <div class="animate-on-load mt-8 flex justify-center gap-6" style="transition-delay: 300ms;">
@@ -179,8 +221,7 @@
 
         <!-- 
           ABOUT SECTION
-        -->
-        <section id="about" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="about" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-8">About Me</h2>
             <div class="space-y-4 text-lg text-center text-beige-subtext">
                 <p>
@@ -191,8 +232,7 @@
 
         <!-- 
           PROJECTS SECTION 
-        -->
-        <section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Projects</h2>
             <!-- Added stagger-container for JS to find and animate children -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-container">
@@ -282,8 +322,7 @@
 
         <!-- 
           EXPERIENCE SECTION 
-        -->
-        <section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Experience</h2>
             <!-- Added stagger-container for JS to find and animate children -->
             <div class="space-y-12 stagger-container">
@@ -294,13 +333,13 @@
                                 Python Full Stack Developer
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
                             </h3>
-                       
+                        
                         <p class="mt-1 font-medium text-beige-accent">Izeon Innovative Private Limited</p>
                         <p class="mt-1 text-sm text-beige-subtext">Oct 2023 – Mar 2024</p>
                     </div>
                     <div class="md:w-2/3">
                         <p class="mb-4 text-beige-subtext">
-                            Integrated machine learning modules into backend systems to automate data workflows and extract user insights. Built and delivered scalable full-stack platforms for the education and hospitality sectors.            
+                            Integrated machine learning modules into backend systems to automate data workflows and extract user insights. Built and delivered scalable full-stack platforms for the education and hospitality sectors.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="tech-tag">Python</span>
@@ -312,7 +351,7 @@
                 </div>
 
                 <!-- Experience 2 --><div class="stagger-child flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
-                    <div class="md:w-1/3">
+                    <div class="md:w-1D/3">
                             <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
                                 Software Developer Intern
                                 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
@@ -336,8 +375,7 @@
 
         <!-- 
           SKILLS SECTION (Redesigned like the image)
-        -->
-        <section id="skills" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="skills" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Technical Skills</h2>
             <!-- Added stagger-container for JS to find and animate children -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-container">
@@ -396,8 +434,7 @@
 
         <!-- 
           EDUCATION SECTION 
-        -->
-        <section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Education</h2>
             <!-- Added stagger-container for JS to find and animate children -->
             <div class="space-y-8 stagger-container">
@@ -430,12 +467,11 @@
 
             </div>
         </section>
-   
+    
 
         <!-- 
           CONTACT SECTION
-        -->
-        <section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
+        --><section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
             <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Get in Touch</h2>
             <!-- Added stagger-container for JS to find and animate children -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center stagger-container">
@@ -522,7 +558,6 @@
 
             // --- ANIMATE ON LOAD (HERO SECTION) ---
             document.querySelectorAll('.animate-on-load').forEach((el, index) => {
-                // Use a timeout to apply the visible class after a short delay
                 setTimeout(() => {
                     el.classList.add('is-visible');
                 }, 100 * index); // Stagger the load-in animation
@@ -620,11 +655,171 @@
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 if (scrollY < 1000) { // Only run effect when near the top
-                    // Move hero content up at half the scroll speed
                     hero.style.transform = `translateY(${scrollY * 0.4}px)`;
-                    // You can also add an opacity fade
-                    // hero.style.opacity = 1 - (scrollY / 800);
                 }
+            });
+
+
+            // --- SCROLL PROGRESS BAR ---
+            const progressBar = document.getElementById('scroll-progress-bar');
+            function updateScrollProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = `${scrollPercent}%`;
+            }
+            window.addEventListener('scroll', updateScrollProgress);
+
+
+            // --- LIVE CONSTELLATION & ACTIVE NEURON SCRIPT ---
+            
+            // NEW: Mouse tracking object
+            const mouse = {
+                x: null,
+                y: null,
+                maxConnections: 3 // Number of lines to draw from the cursor
+            };
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+            // NEW: Add touch support for mobile (moves neuron to last touch point)
+            window.addEventListener('touchmove', (e) => {
+                 if (e.touches.length > 0) {
+                    mouse.x = e.touches[0].clientX;
+                    mouse.y = e.touches[0].clientY;
+                 }
+            }, { passive: false }); // { passive: false } can prevent scrolling, let's test. Default is fine.
+             window.addEventListener('touchstart', (e) => {
+                 if (e.touches.length > 0) {
+                    mouse.x = e.touches[0].clientX;
+                    mouse.y = e.touches[0].clientY;
+                 }
+            });
+            window.addEventListener('touchend', () => {
+                // optional: mouse.x = null; mouse.y = null;
+            });
+
+
+            const canvas = document.getElementById('live-background-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = 2;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    // Subtle light gray color for particles
+                    ctx.fillStyle = 'rgba(170, 180, 190, 0.3)'; 
+                    ctx.fill();
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // Bounce off edges
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                // More particles for larger screens, fewer for smaller
+                let particleCount = (canvas.width * canvas.height) / 10000;
+                if (particleCount > 150) particleCount = 150;
+                if (particleCount < 50) particleCount = 50;
+
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function drawConstellation() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // NEW: Active Neuron (Cursor) Logic
+                if (mouse.x !== null && mouse.y !== null) {
+                    // 1. Find all particles with their distance to the mouse
+                    let particlesWithDist = particles.map(particle => {
+                        const dx = particle.x - mouse.x;
+                        const dy = particle.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        return { ...particle, dist: dist };
+                    });
+
+                    // 2. Sort by distance (closest first)
+                    particlesWithDist.sort((a, b) => a.dist - b.dist);
+
+                    // 3. Take the closest ones
+                    let closestParticles = particlesWithDist.slice(0, mouse.maxConnections);
+
+                    // 4. Draw lines from mouse to them
+                    for (let p of closestParticles) {
+                        ctx.beginPath();
+                        ctx.moveTo(mouse.x, mouse.y);
+                        ctx.lineTo(p.x, p.y);
+                        // Style for the "active" lines (slightly more visible)
+                        ctx.strokeStyle = `rgba(170, 180, 190, 0.5)`; // 0.5 opacity
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+                
+                // Original constellation logic
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 120) { // Max distance for lines
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            // Very subtle line color
+                            ctx.strokeStyle = `rgba(170, 180, 190, ${0.4 * (1 - dist / 120)})`; // Made it even more subtle
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                drawConstellation();
+                requestAnimationFrame(animate);
+            }
+
+            initParticles();
+            animate();
+            
+            // Re-init particles on window resize
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initParticles();
             });
 
         });
@@ -632,4 +827,3 @@
 
 </body>
 </html>
-
