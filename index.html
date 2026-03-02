@@ -4,702 +4,877 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harshith Babu Prakash Babu - AI & ML Engineer</title>
-    
-    <!-- 1. Loading Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 1.1 Loading Font Awesome for icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- 2. Configuring Tailwind with the Beige theme --><script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        // A classy, professional beige theme
-                        'beige-bg': '#fcfaf6',      // A very light, warm beige
-                        'beige-card': '#ffffff',     // Clean white for cards
-                        'beige-text': '#1e293b',     // Dark slate for primary text
-                        'beige-subtext': '#475569',   // Softer slate for secondary text
-                        'beige-accent': '#2563eb',    // A strong, professional blue accent
-                        'beige-accent-light': '#dbeafe', // Light blue for tags
-                    },
-                    keyframes: {
-                        'fade-in-up': {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        'border-pulse': {
-                            '0%, 100%': { 'border-color': 'rgba(229, 231, 235, 0.5)' }, // stone-200
-                            '50%': { 'border-color': '#2563eb' }, // beige-accent
-                        },
-                        'soft-pulse': {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '.8' },
-                        }
-                    },
-                    animation: {
-                        'load-in': 'fade-in-up 0.6s ease-out forwards',
-                        'scroll-in': 'fade-in-up 0.6s ease-out forwards',
-                        'border-pulse': 'border-pulse 2s infinite ease-in-out',
-                        'soft-pulse': 'soft-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    }
-                }
-            }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --neon-green:  #00ff9d;
+            --neon-cyan:   #00e5ff;
+            --neon-purple: #b347ff;
+            --bg-dark:     #030a06;
+            --bg-card:     rgba(0,255,157,0.03);
+            --bg-card-hover: rgba(0,255,157,0.07);
+            --border:      rgba(0,255,157,0.2);
+            --border-bright: rgba(0,255,157,0.6);
+            --text-primary:  #e0ffe8;
+            --text-secondary: rgba(180,255,210,0.65);
+            --grid-color:  rgba(0,255,157,0.04);
         }
-    </script>
-    
-    <!-- 3. Custom styles for animations and header --><style>
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Custom Cursor */
+        *, *::before, *::after { cursor: none !important; }
+        #cursor {
+            position: fixed; width: 12px; height: 12px;
+            background: var(--neon-green); border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%,-50%);
+            transition: width .2s, height .2s; mix-blend-mode: screen;
+        }
+        #cursor-ring {
+            position: fixed; width: 36px; height: 36px;
+            border: 1px solid var(--neon-green); border-radius: 50%;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%,-50%);
+            transition: all .12s ease; opacity: .6;
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            /* Set the beige background here */
-            background-color: #fcfaf6;
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-secondary);
+            overflow-x: hidden; line-height: 1.6;
         }
 
-        /* Live Canvas Background */
+        /* Scanlines */
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.08) 2px, rgba(0,0,0,.08) 4px);
+            pointer-events: none; z-index: 9990;
+        }
+
+        /* Grid */
+        body::after {
+            content: ''; position: fixed; inset: 0;
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none; z-index: -1;
+        }
+
         #live-background-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Sits behind all content */
-            pointer-events: none;
+            position: fixed; inset: 0;
+            width: 100%; height: 100%;
+            z-index: -2; pointer-events: none;
         }
 
-        /* Scroll Progress Bar */
         #scroll-progress-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background-color: #2563eb; /* beige-accent */
-            width: 0%;
-            z-index: 100;
-            transition: width 0.1s linear;
+            position: absolute; top: 0; left: 0; height: 2px;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            width: 0%; z-index: 100;
+            box-shadow: 0 0 10px var(--neon-green);
+            transition: width .1s linear;
         }
-        
-        /* Ensure header has a background to hide particles behind it */
+
         header {
-             background-color: rgba(252, 250, 246, 0.8); /* Slightly transparent beige */
-        }
-        
-        /* Ensure body content is on top of the canvas */
-        main, footer {
-            position: relative;
-            z-index: 1;
+            background: rgba(3,10,6,.85);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
         }
 
-        /* Base animation state (hidden) */
-        .animate-on-load,
-        .fade-in-section,
-        .stagger-child {
-            opacity: 0;
-            transform: translateY(20px);
+        .logo-text {
+            font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.25rem;
+            color: var(--neon-green); text-shadow: 0 0 20px rgba(0,255,157,.7);
+            letter-spacing: .1em;
         }
 
-        /* Class added by JS when element is visible */
-        .is-visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        .nav-link {
+            font-family: 'Share Tech Mono', monospace; font-size: .75rem;
+            color: var(--text-secondary); letter-spacing: .12em; text-transform: uppercase;
+            transition: all .2s; position: relative; padding-bottom: 2px;
         }
-        
-        .nav-link.active {
-            color: #2563eb; /* beige-accent */
-            font-weight: 600;
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 1px; background: var(--neon-green);
+            box-shadow: 0 0 6px var(--neon-green); transition: width .3s;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--neon-green); text-shadow: 0 0 12px rgba(0,255,157,.6); }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        .section-title {
+            font-family: 'Orbitron', monospace; font-size: 1.4rem; font-weight: 700;
+            color: var(--text-primary); text-transform: uppercase; letter-spacing: .2em;
+        }
+        .section-title::before { content: '// '; color: var(--neon-green); font-family: 'Share Tech Mono', monospace; }
+        .section-title-wrap {
+            display: flex; align-items: center; justify-content: center;
+            gap: 16px; margin-bottom: 3rem;
+        }
+        .section-title-wrap::before,
+        .section-title-wrap::after {
+            content: ''; flex: 1; max-width: 100px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green));
+            box-shadow: 0 0 6px var(--neon-green);
+        }
+        .section-title-wrap::after { background: linear-gradient(90deg, var(--neon-green), transparent); }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 4px; transition: all .3s ease;
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            opacity: 0; transition: opacity .3s; box-shadow: 0 0 12px var(--neon-green);
+        }
+        .card:hover {
+            background: var(--bg-card-hover); border-color: var(--border-bright);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,255,157,.1), 0 0 0 1px rgba(0,255,157,.1);
+        }
+        .card:hover::before { opacity: 1; }
+
+        .card-corner { position: relative; }
+        .card-corner::after {
+            content: ''; position: absolute; bottom: 8px; right: 8px;
+            width: 12px; height: 12px;
+            border-bottom: 1px solid var(--border-bright);
+            border-right: 1px solid var(--border-bright);
+            opacity: 0; transition: opacity .3s;
+        }
+        .card-corner:hover::after { opacity: 1; }
+
+        .tech-tag {
+            font-family: 'Share Tech Mono', monospace; font-size: .7rem;
+            background: rgba(0,255,157,.08); color: var(--neon-green);
+            border: 1px solid rgba(0,255,157,.25);
+            padding: 2px 10px; border-radius: 2px; letter-spacing: .05em;
+            transition: all .2s; display: inline-block;
+        }
+        .tech-tag:hover {
+            background: rgba(0,255,157,.15); border-color: rgba(0,255,157,.6);
+            box-shadow: 0 0 8px rgba(0,255,157,.2);
         }
 
-        /* Gradient border for skill cards */
+        .proj-title {
+            font-family: 'Orbitron', monospace; font-size: .85rem; font-weight: 600;
+            color: var(--text-primary); line-height: 1.4; transition: color .2s;
+        }
+        .card:hover .proj-title { color: var(--neon-green); }
+
+        .link-arrow {
+            opacity: 0; transition: opacity .2s, transform .2s;
+            font-size: .65rem; color: var(--neon-green);
+            transform: translate(-4px, 4px);
+        }
+        .card:hover .link-arrow { opacity: 1; transform: translate(0,0); }
+
+        .exp-title { font-family: 'Orbitron', monospace; font-size: .8rem; font-weight: 600; color: var(--text-primary); }
+        .company-name { font-family: 'Share Tech Mono', monospace; font-size: .75rem; color: var(--neon-cyan); letter-spacing: .05em; }
+        .date-badge   { font-family: 'Share Tech Mono', monospace; font-size: .65rem; color: var(--text-secondary); }
+
         .skill-card {
-            position: relative;
-            background: #ffffff; /* beige-card */
-            border-radius: 0.75rem; /* Tailwind rounded-xl */
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 4px; transition: all .3s; position: relative; overflow: hidden;
         }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            padding: 1px; /* width of the border */
-            background: linear-gradient(45deg, #fcfaf6, #e7e5e4, #2563eb); /* Initial border gradient */
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            z-index: 1;
+        .skill-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at center, rgba(0,255,157,.05) 0%, transparent 70%);
+            opacity: 0; transition: opacity .3s;
         }
-        
-        .skill-card:hover::before {
-            background: linear-gradient(45deg, #2563eb, #60a5fa, #2563eb); /* Hover border gradient */
-            animation: border-pulse 2s infinite ease-in-out;
-        }
-
         .skill-card:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            border-color: var(--border-bright);
+            box-shadow: 0 0 20px rgba(0,255,157,.12), inset 0 0 20px rgba(0,255,157,.04);
+            transform: translateY(-6px) scale(1.03);
+        }
+        .skill-card:hover::after { opacity: 1; }
+        .skill-card .skill-icon { color: var(--neon-green); transition: all .3s; filter: drop-shadow(0 0 6px rgba(0,255,157,.4)); }
+        .skill-card:hover .skill-icon { filter: drop-shadow(0 0 14px rgba(0,255,157,.9)); }
+        .skill-level { font-family: 'Share Tech Mono', monospace; font-size: .65rem; color: var(--neon-cyan); letter-spacing: .1em; }
+        .skill-name  { font-family: 'Orbitron', monospace; font-size: .75rem; font-weight: 600; color: var(--text-primary); }
+
+        .edu-degree { font-family: 'Orbitron', monospace; font-size: .8rem; font-weight: 600; color: var(--text-primary); }
+        .edu-school { font-family: 'Share Tech Mono', monospace; font-size: .75rem; color: var(--neon-cyan); }
+        .edu-date   { font-family: 'Share Tech Mono', monospace; font-size: .65rem; color: var(--text-secondary); }
+
+        /* Achievement card accent variants */
+        .ach-purple { border-color: rgba(179,71,255,.25) !important; }
+        .ach-cyan   { border-color: rgba(0,229,255,.25) !important; }
+        .ach-green  { border-color: rgba(0,255,157,.25) !important; }
+        .ach-purple:hover { border-color: rgba(179,71,255,.55) !important; box-shadow: 0 8px 30px rgba(179,71,255,.1) !important; }
+        .ach-cyan:hover   { border-color: rgba(0,229,255,.55) !important;  box-shadow: 0 8px 30px rgba(0,229,255,.1)   !important; }
+        .ach-green:hover  { border-color: rgba(0,255,157,.55) !important;  box-shadow: 0 8px 30px rgba(0,255,157,.1)   !important; }
+
+        .hero-name {
+            font-family: 'Orbitron', monospace; font-weight: 900; line-height: 1.1;
+            color: var(--text-primary); text-shadow: 0 0 40px rgba(0,255,157,.2);
+        }
+        .hero-title { font-family: 'Share Tech Mono', monospace; color: var(--neon-green); text-shadow: 0 0 20px rgba(0,255,157,.7); }
+
+        @keyframes glitch {
+            0%   { clip-path: inset(0 0 95% 0); transform: translate(-4px,0); }
+            20%  { clip-path: inset(30% 0 60% 0); transform: translate(4px,0); color: var(--neon-cyan); }
+            40%  { clip-path: inset(60% 0 30% 0); transform: translate(-3px,0); }
+            60%  { clip-path: inset(80% 0 10% 0); transform: translate(3px,0); color: var(--neon-purple); }
+            80%  { clip-path: inset(10% 0 80% 0); transform: translate(-2px,0); }
+            100% { clip-path: inset(95% 0 0 0); transform: translate(0,0); }
+        }
+        .glitch-wrapper { position: relative; display: inline-block; }
+        .glitch-wrapper::before,
+        .glitch-wrapper::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            font-family: inherit; font-size: inherit; font-weight: inherit;
+            color: var(--neon-green);
+        }
+        .glitch-wrapper::before { animation: glitch 4s infinite; opacity: .7; }
+        .glitch-wrapper::after  { animation: glitch 4s infinite .1s reverse; opacity: .5; color: var(--neon-cyan); }
+
+        @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+        .cursor-blink { animation: blink 1s step-end infinite; color: var(--neon-green); }
+
+        @keyframes glow-pulse {
+            0%,100% { box-shadow: 0 0 8px rgba(0,255,157,.3); }
+            50%      { box-shadow: 0 0 20px rgba(0,255,157,.6), 0 0 40px rgba(0,255,157,.2); }
+        }
+        .glow-border { animation: glow-pulse 3s ease-in-out infinite; }
+
+        @keyframes soft-flicker {
+            0%,95%,100% { opacity:1; } 96% { opacity:.92; } 97% { opacity:1; } 98% { opacity:.95; }
+        }
+        .hero-name { animation: soft-flicker 6s infinite; }
+
+        .social-icon {
+            width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); transition: all .3s; font-size: 1.1rem;
+            background: var(--bg-card);
+        }
+        .social-icon:hover {
+            border-color: var(--neon-green); color: var(--neon-green);
+            box-shadow: 0 0 16px rgba(0,255,157,.3); transform: translateY(-2px);
+        }
+
+        .about-text {
+            font-family: 'Share Tech Mono', monospace; font-size: .85rem;
+            color: var(--text-secondary); line-height: 2;
+            border-left: 2px solid var(--neon-green); padding-left: 1.5rem;
+        }
+
+        .contact-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 4px; transition: all .3s; text-align: center;
+        }
+        .contact-card:hover { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0,229,255,.12); transform: translateY(-4px); }
+        .contact-label { font-family: 'Orbitron', monospace; font-size: .7rem; letter-spacing: .15em; color: var(--text-primary); }
+        .contact-value { font-family: 'Share Tech Mono', monospace; font-size: .8rem; color: var(--text-secondary); }
+        .contact-link  { font-family: 'Share Tech Mono', monospace; font-size: .7rem; color: var(--neon-cyan); }
+        .contact-link:hover { color: var(--neon-green); text-shadow: 0 0 8px rgba(0,255,157,.5); }
+
+        .mobile-menu-item {
+            font-family: 'Share Tech Mono', monospace; font-size: .8rem;
+            letter-spacing: .15em; text-transform: uppercase;
+            color: var(--text-secondary); transition: color .2s;
+        }
+        .mobile-menu-item:hover { color: var(--neon-green); }
+
+        .animate-on-load, .fade-in-section, .stagger-child { opacity: 0; transform: translateY(20px); }
+        .is-visible { opacity: 1; transform: translateY(0); transition: opacity .6s ease-out, transform .6s ease-out; }
+
+        footer { background: rgba(3,10,6,.9); border-top: 1px solid var(--border); }
+        .footer-text { font-family: 'Share Tech Mono', monospace; font-size: .7rem; color: var(--text-secondary); letter-spacing: .05em; }
+
+        #mobile-menu { background: rgba(3,10,6,.97); border-bottom: 1px solid var(--border); }
+
+        main, footer { position: relative; z-index: 1; }
+
+        section { padding-top: 5rem; padding-bottom: 5rem; }
+
+        .hex-label {
+            font-family: 'Share Tech Mono', monospace; font-size: .6rem;
+            color: rgba(0,255,157,.3); letter-spacing: .05em; user-select: none;
+        }
+
+        .neon-hr {
+            border: none; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            box-shadow: 0 0 8px var(--neon-green); margin: 2rem 0; opacity: .4;
         }
     </style>
 </head>
 
-<body class="text-beige-subtext">
-
-    <!-- Live Canvas Background -->
+<body>
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
     <canvas id="live-background-canvas"></canvas>
 
-    <!-- 
-      HEADER / NAVIGATION 
-    --><header class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-stone-200">
-        <!-- Scroll Progress Bar Added -->
+    <!-- ===================== HEADER ===================== -->
+    <header class="sticky top-0 z-50 w-full">
         <div id="scroll-progress-bar"></div>
         <nav class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
             <div class="flex justify-between items-center">
-                <!-- Your Name (Left Side) --><a href="#" class="text-xl font-bold text-beige-text">
-                    HB
-                </a>
-                
-                <!-- Navigation Links (Right Side) - Hidden on mobile --><ul class="hidden md:flex space-x-6 lg:space-x-8">
-                    <li><a href="#about" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">About</a></li>
-                    <li><a href="#projects" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Projects</a></li>
-                    <li><a href="#experience" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Experience</a></li>
-                    <li><a href="#skills" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Skills</a></li>
-                    <li><a href="#education" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Education</a></li>
-                    <li><a href="#contact" class="nav-link text-sm font-medium hover:text-beige-accent transition-colors">Contact</a></li>
+                <a href="#" class="logo-text">HB<span style="color:var(--neon-cyan)">_</span></a>
+                <ul class="hidden md:flex space-x-6 lg:space-x-8">
+                    <li><a href="#about"        class="nav-link">About</a></li>
+                    <li><a href="#projects"     class="nav-link">Projects</a></li>
+                    <li><a href="#experience"   class="nav-link">Experience</a></li>
+                    <li><a href="#skills"       class="nav-link">Skills</a></li>
+                    <li><a href="#education"    class="nav-link">Education</a></li>
+                    <li><a href="#achievements" class="nav-link">Achievements</a></li>
+                    <li><a href="#contact"      class="nav-link">Contact</a></li>
                 </ul>
-                
-                <!-- Mobile Menu Button (Hamburger Icon) --><button id="mobile-menu-button" class="md:hidden text-beige-text">
+                <button id="mobile-menu-button" class="md:hidden" style="color:var(--neon-green)">
                     <i class="fas fa-bars w-6 h-6"></i>
                 </button>
             </div>
         </nav>
-        
-        <!-- Mobile Menu (Dropdown) - Hidden by default --><div id="mobile-menu" class="hidden md:hidden bg-beige-bg/90 backdrop-blur-md border-b border-stone-200">
+        <div id="mobile-menu" class="hidden md:hidden">
             <ul class="flex flex-col items-center py-4 space-y-4">
-                <li><a href="#about" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">About</a></li>
-                <li><a href="#projects" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Projects</a></li>
-                <li><a href="#experience" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Experience</a></li>
-                <li><a href="#skills" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Skills</a></li>
-                <li><a href="#education" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Education</a></li>
-                <li><a href="#contact" class="nav-link-mobile text-base font-medium hover:text-beige-accent transition-colors">Contact</a></li>
+                <li><a href="#about"        class="nav-link-mobile mobile-menu-item">About</a></li>
+                <li><a href="#projects"     class="nav-link-mobile mobile-menu-item">Projects</a></li>
+                <li><a href="#experience"   class="nav-link-mobile mobile-menu-item">Experience</a></li>
+                <li><a href="#skills"       class="nav-link-mobile mobile-menu-item">Skills</a></li>
+                <li><a href="#education"    class="nav-link-mobile mobile-menu-item">Education</a></li>
+                <li><a href="#achievements" class="nav-link-mobile mobile-menu-item">Achievements</a></li>
+                <li><a href="#contact"      class="nav-link-mobile mobile-menu-item">Contact</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- 
-      MAIN CONTENT AREA
-    --><main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
+    <!-- ===================== MAIN ===================== -->
+    <main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
 
-        <!-- 
-          HERO SECTION 
-        --><section id="hero" class="py-24 sm:py-32 text-center relative z-10">
-            <!-- Added animate-on-load classes for staggered load animation -->
-            <h1 class="animate-on-load text-4xl sm:text-6xl font-bold text-beige-text" style="transition-delay: 100ms;">
-                Harshith Babu Prakash Babu
-            </h1>
-            <!-- Added subtle pulse animation -->
-            <p class="animate-on-load animate-soft-pulse mt-4 text-2xl sm:text-3xl font-medium text-beige-accent" style="transition-delay: 200ms;">
-                Masters in Artificial Intelligence | AI & ML Engineer
+        <!-- HERO -->
+        <section id="hero" class="py-24 sm:py-36 text-center relative z-10">
+            <div class="hex-label mb-4 animate-on-load" style="transition-delay:50ms">[ SYS_INIT :: PORTFOLIO_v2.0 ]</div>
+            <h1 class="animate-on-load hero-name text-4xl sm:text-6xl lg:text-7xl mb-2 glitch-wrapper"
+                data-text="Harshith Babu" style="transition-delay:100ms">Harshith Babu</h1>
+            <h1 class="animate-on-load hero-name text-4xl sm:text-6xl lg:text-7xl" style="transition-delay:150ms">
+                Prakash Babu</h1>
+            <p class="animate-on-load hero-title mt-6 text-lg sm:text-2xl" style="transition-delay:250ms">
+                &gt; Masters in Artificial Intelligence | AI &amp; ML Engineer<span class="cursor-blink">_</span>
             </p>
-            <div class="animate-on-load mt-8 flex justify-center gap-6" style="transition-delay: 300ms;">
-                <!-- Social Icons --><a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <i class="fa-brands fa-github text-3xl"></i>
-                </a>
-                <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <i class="fa-brands fa-linkedin text-3xl"></i>
-                </a>
-                <a href="mailto:harshith227@gmail.com" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
-                     <i class="fa-solid fa-envelope text-3xl"></i>
-                </a>
+            <div class="animate-on-load mt-10 flex justify-center gap-4" style="transition-delay:350ms">
+                <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" class="social-icon glow-border" title="GitHub">
+                    <i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:harshith227@gmail.com" class="social-icon" title="Email">
+                    <i class="fa-solid fa-envelope"></i></a>
             </div>
         </section>
 
-        <!-- 
-          ABOUT SECTION
-        --><section id="about" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-beige-text text-center mb-8">About Me</h2>
-            <div class="space-y-4 text-lg text-center text-beige-subtext">
-                <p>
-                    I am an AI and Machine Learning Engineer passionate about building end-to-end intelligent applications. My expertise lies in integrating machine learning models into scalable, full-stack solutions using Python, React.js, and SQL. Currently pursuing a Master's in Artificial Intelligence in Germany, I am focused on developing practical, data-driven systems that automate workflows and solve real-world business needs.
+        <!-- =========== ABOUT =========== -->
+        <section id="about" class="fade-in-section max-w-3xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">About</span></div>
+            <div class="card card-corner p-8">
+                <div class="hex-label mb-3">[ AGENT_PROFILE :: INITIALIZED ]</div>
+                <p class="about-text">
+                    I am an AI and Machine Learning Engineer passionate about building end-to-end intelligent applications.
+                    My expertise lies in integrating machine learning models into scalable, full-stack solutions using Python,
+                    React.js, and SQL. Currently pursuing a Master's in Artificial Intelligence in Germany, I am focused on
+                    developing practical, data-driven systems that automate workflows and solve real-world business needs.
                 </p>
             </div>
         </section>
 
-        <!-- 
-          PROJECTS SECTION 
-        --><section id="projects" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Projects</h2>
-            <!-- Added stagger-container for JS to find and animate children -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-container">
+        <!-- =========== PROJECTS =========== -->
+        <section id="projects" class="fade-in-section max-w-5xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">Projects</span></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
 
-                <!-- Project 1 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/BMW-hackathon" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                BMW Group Quality Management Challenge
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_01]</div>
+                        <a href="https://github.com/Haarshiith/BMW-hackathon" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">BMW Group Quality Management Challenge</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Participated in a university-industry hackathon with BMW Group, developing a framework using AI and analytics to identify, track, and predict potential quality issues, turning past "mistakes" into actionable, data-driven insights.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Participated in a university-industry hackathon with BMW Group, developing a framework using AI and analytics
+                            to identify, track, and predict potential quality issues, turning past "mistakes" into actionable, data-driven insights.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Data Analytics</span>
-                        <span class="tech-tag">Machine Learning</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">Data Analytics</span><span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">Python</span><span class="tech-tag">RAG</span>
                     </div>
                 </div>
 
-                <!-- Project 1 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/SECUR-AI-Vision-Pro-Surveillance" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                SECUR AI - Vision Pro Surveillance
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_02]</div>
+                        <a href="https://github.com/Haarshiith/SECUR-AI-Vision-Pro-Surveillance" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">SECUR AI — Vision Pro Surveillance</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            An advanced biometric security platform powered by Edge AI and Stereo Vision (Epipolar Geometry). It prevents 2D spoofing attacks using real-time depth analysis and features a decoupled cloud dashboard for secure, remote access management.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            An advanced biometric security platform powered by Edge AI and Stereo Vision (Epipolar Geometry).
+                            Prevents 2D spoofing attacks using real-time depth analysis and features a decoupled cloud dashboard
+                            for secure, remote access management.
+                        </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">OpenCV (YuNet & SFace)</span>
-                        <span class="tech-tag">Stereo Vision</span>
-                        <span class="tech-tag">Raspberry Pi 5</span>
-                        <span class="tech-tag">Flask & React.js</span>
+                        <span class="tech-tag">OpenCV (YuNet &amp; SFace)</span><span class="tech-tag">Stereo Vision</span>
+                        <span class="tech-tag">Raspberry Pi 5</span><span class="tech-tag">Flask &amp; React.js</span>
                         <span class="tech-tag">Cloudflare Tunnel</span>
                     </div>
                 </div>
 
-                <!-- Project 2 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/CareerForge_AI" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                CareerForge AI
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_03]</div>
+                        <a href="https://github.com/Haarshiith/CareerForge_AI" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">CareerForge AI</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            An intelligent career optimization platform powered by Llama-3 and Groq. It helps job seekers bridge the gap between their resume and their dream job using advanced RAG, live company intelligence, and interactive skill visualization.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            An intelligent career optimization platform powered by Llama-3 and Groq. Helps job seekers bridge
+                            the gap between their resume and their dream job using advanced RAG, live company intelligence,
+                            and interactive skill visualization.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Groq API</span>
-                        <span class="tech-tag">OpenAI Whisper</span>
-                        <span class="tech-tag">DuckDuckGo</span>
-                        <span class="tech-tag">Advanced RAG</span>
+                        <span class="tech-tag">Groq API</span><span class="tech-tag">OpenAI Whisper</span>
+                        <span class="tech-tag">DuckDuckGo</span><span class="tech-tag">Advanced RAG</span>
                         <span class="tech-tag">Python</span>
                     </div>
                 </div>
 
-                <!-- Project 3 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Face-Reconstruction-Latent-Analysis" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Variational Autoencoders (VAE) with β-VAE Variants - CelebA Dataset Analysis
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_04]</div>
+                        <a href="https://github.com/Haarshiith/Face-Reconstruction-Latent-Analysis" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Variational Autoencoders (VAE) with β-VAE Variants — CelebA Dataset Analysis</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Implemented and analyzed Variational Autoencoders (VAE) and β-VAE variants for image generation and representation learning on the CelebA dataset.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Implemented and analyzed Variational Autoencoders (VAE) and β-VAE variants for image generation
+                            and representation learning on the CelebA dataset.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Latent Dimensionality</span>
-                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Latent Dimensionality</span><span class="tech-tag">Python</span>
                         <span class="tech-tag">Computer Vision</span>
                     </div>
                 </div>
 
-                <!-- Project 4 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Pneumonia_Detection" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                XAI-based Pneumonia Detection
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_05]</div>
+                        <a href="https://github.com/Haarshiith/Pneumonia_Detection" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">XAI-based Pneumonia Detection</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Implemented Explainable AI (XAI) for medical diagnostics. Fine-tuned ResNet-18 for chest X-ray classification and integrated Grad-CAM and LIME for transparent visual explanations.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Implemented Explainable AI (XAI) for medical diagnostics. Fine-tuned ResNet-18 for chest X-ray
+                            classification and integrated Grad-CAM and LIME for transparent visual explanations.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">PyTorch</span>
-                        <span class="tech-tag">Explainable AI</span>
-                        <span class="tech-tag">Grad-CAM</span>
-                        <span class="tech-tag">LIME</span>
+                        <span class="tech-tag">PyTorch</span><span class="tech-tag">Explainable AI</span>
+                        <span class="tech-tag">Grad-CAM</span><span class="tech-tag">LIME</span>
                         <span class="tech-tag">ResNet-18</span>
                     </div>
                 </div>
 
-                <!-- Project 3 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/EdgeAI_Industry4.0" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Edge AI for Industry 4.0
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_06]</div>
+                        <a href="https://github.com/Haarshiith/EdgeAI_Industry4.0" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Edge AI for Industry 4.0</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Optimized MobileNet PPE detection models for resource-constrained devices using Magnitude-based, Iterative, and One-shot pruning strategies to reduce latency and size.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Optimized MobileNet PPE detection models for resource-constrained devices using Magnitude-based,
+                            Iterative, and One-shot pruning strategies to reduce latency and size.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Edge AI</span>
-                        <span class="tech-tag">Model Pruning</span>
-                        <span class="tech-tag">MobileNet</span>
-                        <span class="tech-tag">PyTorch Pruning</span>
+                        <span class="tech-tag">Edge AI</span><span class="tech-tag">Model Pruning</span>
+                        <span class="tech-tag">MobileNet</span><span class="tech-tag">PyTorch Pruning</span>
                     </div>
                 </div>
 
-                <!-- Project 4 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Waterfowl_Detection_CV" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Thermal Waterfowl Detection (UAV)
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_07]</div>
+                        <a href="https://github.com/Haarshiith/Waterfowl_Detection_CV" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Thermal Waterfowl Detection (UAV)</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Developed a real-time automated monitoring system using YOLOv8 on thermal imagery for wildlife conservation. Achieved 93.75% mAP@50 on wetland environment data.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Developed a real-time automated monitoring system using YOLOv8 on thermal imagery for wildlife
+                            conservation. Achieved 93.75% mAP@50 on wetland environment data.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">YOLOv8</span>
-                        <span class="tech-tag">Thermal CV</span>
-                        <span class="tech-tag">UAV Imaging</span>
-                        <span class="tech-tag">Ultralytics</span>
+                        <span class="tech-tag">YOLOv8</span><span class="tech-tag">Thermal CV</span>
+                        <span class="tech-tag">UAV Imaging</span><span class="tech-tag">Ultralytics</span>
                     </div>
                 </div>
 
-                <!-- Project 5 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Fine-Turning-NLP-" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Sentiment Analysis with Masked LM
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_08]</div>
+                        <a href="https://github.com/Haarshiith/Fine-Turning-NLP-" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Sentiment Analysis with Masked LM — Fine-tuning DistilBERT</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext font-medium text-beige-accent mb-2">Fine-tuning DistilBERT</p>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Fine-tuned a pre-trained DistilBERT model on the IMDB dataset using the Hugging Face Transformers library. Implemented Masked Language Modeling (MLM) to enhance sentiment classification accuracy.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Fine-tuned a pre-trained DistilBERT model on the IMDB dataset using the Hugging Face Transformers
+                            library. Implemented Masked Language Modeling (MLM) to enhance sentiment classification accuracy.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">NLP</span>
-                        <span class="tech-tag">DistilBERT</span>
-                        <span class="tech-tag">Hugging Face</span>
-                        <span class="tech-tag">Sentiment Analysis</span>
+                        <span class="tech-tag">NLP</span><span class="tech-tag">DistilBERT</span>
+                        <span class="tech-tag">Hugging Face</span><span class="tech-tag">Sentiment Analysis</span>
                     </div>
                 </div>
 
-                <!-- Project 6 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Poetry-generator" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Neural Text Generation (LSTM)
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_09]</div>
+                        <a href="https://github.com/Haarshiith/Poetry-generator" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Neural Text Generation (LSTM) — Bidirectional LSTM</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext font-medium text-beige-accent mb-2">Bidirectional LSTM</p>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Developed and trained a Bidirectional LSTM network in TensorFlow/Keras on a custom poetic corpus. Implemented tokenization and padding pipelines to generate novel text sequences from seed words.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Developed and trained a Bidirectional LSTM network in TensorFlow/Keras on a custom poetic corpus.
+                            Implemented tokenization and padding pipelines to generate novel text sequences from seed words.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">TensorFlow</span>
-                        <span class="tech-tag">LSTM</span>
-                        <span class="tech-tag">Keras</span>
-                        <span class="tech-tag">Deep Learning</span>
+                        <span class="tech-tag">TensorFlow</span><span class="tech-tag">LSTM</span>
+                        <span class="tech-tag">Keras</span><span class="tech-tag">Deep Learning</span>
                     </div>
                 </div>
 
-                <!-- Project 7 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Black-Jack-using-Reinforcement-Learning" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Optimizing Blackjack Policy (RL)
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_10]</div>
+                        <a href="https://github.com/Haarshiith/Black-Jack-using-Reinforcement-Learning" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Optimizing Blackjack Policy (RL)</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an advanced state representation with card counting to outperform "Basic Strategy."
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an
+                            advanced state representation with card counting to outperform "Basic Strategy."
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Reinforcement Learning</span>
-                        <span class="tech-tag">Q-Learning</span>
-                        <span class="tech-tag">SARSA</span>
-                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Reinforcement Learning</span><span class="tech-tag">Q-Learning</span>
+                        <span class="tech-tag">SARSA</span><span class="tech-tag">Python</span>
                     </div>
                 </div>
 
-                <!-- Project 8 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Sensor-Fusion---Particle-Filter" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Sensor Fusion - Particle Filter
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_11]</div>
+                        <a href="https://github.com/Haarshiith/Sensor-Fusion---Particle-Filter" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Sensor Fusion — Particle Filter</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state estimation. Solved tracking problems using K-Means clustering.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state
+                            estimation. Solved tracking problems using K-Means clustering.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Particle Filter</span>
-                        <span class="tech-tag">K-Means</span>
-                        <span class="tech-tag">Sensor Fusion</span>
-                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Particle Filter</span><span class="tech-tag">K-Means</span>
+                        <span class="tech-tag">Sensor Fusion</span><span class="tech-tag">Python</span>
                     </div>
                 </div>
 
-                <!-- Project 9 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Maix-Dock-Based-Driver-Drowsiness-Detection-System-Using-CNN" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Driver Drowsiness Detection
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_12]</div>
+                        <a href="https://github.com/Haarshiith/Maix-Dock-Based-Driver-Drowsiness-Detection-System-Using-CNN" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Driver Drowsiness Detection</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system using Maix Dock and C with geospatial logic.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system
+                            using Maix Dock and C with geospatial logic.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">CNN</span>
-                        <span class="tech-tag">Deep Learning</span>
-                        <span class="tech-tag">Raspberry Pi</span>
-                        <span class="tech-tag">Embedded C</span>
+                        <span class="tech-tag">CNN</span><span class="tech-tag">Deep Learning</span>
+                        <span class="tech-tag">Raspberry Pi</span><span class="tech-tag">Embedded C</span>
                     </div>
                 </div>
 
-                <!-- Project 10 --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200 group">
+                <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
-                        <a href="https://github.com/Haarshiith/Voice-Control-Home-Appliance-Using-IOT" target="_blank" rel="noopener noreferrer">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Voice Control Home Application
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
+                        <div class="hex-label mb-2">[PROJECT_13]</div>
+                        <a href="https://github.com/Haarshiith/Voice-Control-Home-Appliance-Using-IOT" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
+                            <h3 class="proj-title">Voice Control Home Application</h3>
+                            <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
-                        <p class="mt-2 text-sm text-beige-subtext">
-                            Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with voice/motion/text commands for accessibility and energy saving.
+                        <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with
+                            voice/motion/text commands for accessibility and energy saving.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">IoT</span>
-                        <span class="tech-tag">Arduino</span>
-                        <span class="tech-tag">Android</span>
-                        <span class="tech-tag">C</span>
+                        <span class="tech-tag">IoT</span><span class="tech-tag">Arduino</span>
+                        <span class="tech-tag">Android</span><span class="tech-tag">C</span>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- 
-          EXPERIENCE SECTION 
-        --><section id="experience" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Experience</h2>
-            <!-- Added stagger-container for JS to find and animate children -->
-            <div class="space-y-12 stagger-container">
+        <!-- =========== EXPERIENCE =========== -->
+        <section id="experience" class="fade-in-section max-w-4xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">Experience</span></div>
+            <div class="space-y-6 stagger-container">
 
-                <!-- Experience 1 --><div class="stagger-child flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
+                <div class="stagger-child card card-corner p-6 flex flex-col md:flex-row gap-6">
                     <div class="md:w-1/3">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Research Assistant (HiWi)
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
-                        
-                        <p class="mt-1 font-medium text-beige-accent">Technische Hochschule Würzburg-Schweinfurt (THWS)</p>
-                        <p class="mt-1 text-sm text-beige-subtext">Jan 2026 – Present</p>
+                        <div class="hex-label mb-1">[EXP_01]</div>
+                        <h3 class="exp-title">Research Assistant (HiWi)</h3>
+                        <p class="company-name mt-1">Technische Hochschule Würzburg-Schweinfurt (THWS)</p>
+                        <p class="date-badge mt-1">Jan 2026 – Present</p>
                     </div>
                     <div class="md:w-2/3">
-                        <p class="mb-4 text-beige-subtext">
-Development of an AI-powered chatbot for the senior care platform “Carebells” using Retrieval-Augmented Generation (RAG). Integration of the chatbot into the web frontend and connection to the backend architecture to ensure a seamless user experience. Implementation and optimization of AI models to improve context-sensitive dialogue for older target groups.                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">React.js</span>
-                            <span class="tech-tag">MySQL</span>
-                            <span class="tech-tag">ML</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Experience 2 --><div class="stagger-child flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
-                    <div class="md:w-1/3">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Python Full Stack Developer
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
-                        
-                        <p class="mt-1 font-medium text-beige-accent">Izeon Innovative Private Limited</p>
-                        <p class="mt-1 text-sm text-beige-subtext">Oct 2023 – Mar 2024</p>
-                    </div>
-                    <div class="md:w-2/3">
-                        <p class="mb-4 text-beige-subtext">
-                            Integrated machine learning modules into backend systems to automate data workflows and extract user insights. Built and delivered scalable full-stack platforms for the education and hospitality sectors.
+                        <p style="font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem">
+                            Development of an AI-powered chatbot for the senior care platform "Carebells" using Retrieval-Augmented Generation (RAG).
+                            Integration of the chatbot into the web frontend and connection to the backend architecture to ensure a seamless user experience.
+                            Implementation and optimization of AI models to improve context-sensitive dialogue for older target groups.
                         </p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">React.js</span>
-                            <span class="tech-tag">MySQL</span>
-                            <span class="tech-tag">ML</span>
+                            <span class="tech-tag">Python</span><span class="tech-tag">React.js</span>
+                            <span class="tech-tag">MySQL</span><span class="tech-tag">ML</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience 3 --><div class="stagger-child flex flex-col md:flex-row gap-6 p-6 bg-beige-card rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
-                    <div class="md:w-1D/3">
-                            <h3 class="text-xl font-semibold text-beige-text group-hover:text-beige-accent transition-colors">
-                                Software Developer Intern
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-0 group-hover:opacity-100 transition-opacity ml-1"></i>
-                            </h3>
-                        <p class="mt-1 font-medium text-beige-accent">ESAB India Limited R&D</p>
-                        <p class="mt-1 text-sm text-beige-subtext">Jul 2023 – Sep 2023</p>
+                <div class="stagger-child card card-corner p-6 flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <div class="hex-label mb-1">[EXP_02]</div>
+                        <h3 class="exp-title">Python Full Stack Developer</h3>
+                        <p class="company-name mt-1">Izeon Innovative Private Limited</p>
+                        <p class="date-badge mt-1">Oct 2023 – Mar 2024</p>
                     </div>
                     <div class="md:w-2/3">
-                        <p class="mb-4 text-beige-subtext">
-                            Developed and deployed efficient C-based software modules for an industrial welding project, ensuring performance and system reliability. Explored AI-driven optimization techniques to enhance code structure and support intelligent system development.
+                        <p style="font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem">
+                            Integrated machine learning modules into backend systems to automate data workflows and extract user insights.
+                            Built and delivered scalable full-stack platforms for the education and hospitality sectors.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">Python</span><span class="tech-tag">React.js</span>
+                            <span class="tech-tag">MySQL</span><span class="tech-tag">ML</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stagger-child card card-corner p-6 flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <div class="hex-label mb-1">[EXP_03]</div>
+                        <h3 class="exp-title">Software Developer Intern</h3>
+                        <p class="company-name mt-1">ESAB India Limited R&amp;D</p>
+                        <p class="date-badge mt-1">Jul 2023 – Sep 2023</p>
+                    </div>
+                    <div class="md:w-2/3">
+                        <p style="font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem">
+                            Developed and deployed efficient C-based software modules for an industrial welding project,
+                            ensuring performance and system reliability. Explored AI-driven optimization techniques to
+                            enhance code structure and support intelligent system development.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="tech-tag">C</span>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </section>
 
+        <!-- =========== SKILLS =========== -->
+        <section id="skills" class="fade-in-section max-w-5xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">Technical Skills</span></div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 stagger-container">
 
-        <!-- 
-          SKILLS SECTION (Redesigned like the image)
-        --><section id="skills" class="fade-in-section max-w-5xl mx-auto py-16 sm:py-24 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Technical Skills</h2>
-            <!-- Added stagger-container for JS to find and animate children -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-container">
-                
-                <!-- Skill Card 1: Python --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-brands fa-python text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">Python</h3>
-                    <p class="text-sm text-beige-subtext">Advanced</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-brands fa-python text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">Python</p><p class="skill-level mt-1">Advanced</p>
                 </div>
-
-                <!-- Skill Card 2: MySQL --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-database text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">MySQL</h3>
-                    <p class="text-sm text-beige-subtext">Advanced</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-database text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">MySQL</p><p class="skill-level mt-1">Advanced</p>
                 </div>
-
-                <!-- Skill Card 3: Machine Learning --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-brain text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">Machine Learning</h3>
-                    <p class="text-sm text-beige-subtext">Advanced</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-brain text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">Machine Learning</p><p class="skill-level mt-1">Advanced</p>
                 </div>
-
-                <!-- Skill Card 4: Deep Learning --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-robot text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">Deep Learning</h3>
-                    <p class="text-sm text-beige-subtext">Intermediate</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-robot text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">Deep Learning</p><p class="skill-level mt-1">Intermediate</p>
                 </div>
-
-                <!-- Skill Card 5: NLP --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-language text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">NLP</h3>
-                    <p class="text-sm text-beige-subtext">Intermediate</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-language text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">NLP</p><p class="skill-level mt-1">Intermediate</p>
                 </div>
-
-                <!-- Skill Card 6: Data Analysis --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-chart-line text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">Data Analysis</h3>
-                    <p class="text-sm text-beige-subtext">Advanced</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-eye text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">Computer Vision</p><p class="skill-level mt-1">Advanced</p>
                 </div>
-                
-                <!-- Skill Card 8: React.js --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-brands fa-react text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">React.js</h3>
-                    <p class="text-sm text-beige-subtext">Intermediate</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-brands fa-react text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">React.js</p><p class="skill-level mt-1">Intermediate</p>
                 </div>
-
-                <!-- Skill Card 10: C --><div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
-                    <i class="fa-solid fa-c text-5xl text-beige-accent mb-4"></i>
-                    <h3 class="text-xl font-semibold text-beige-text">C</h3>
-                    <p class="text-sm text-beige-subtext">Advanced</p>
+                <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-c text-4xl skill-icon mb-3"></i>
+                    <p class="skill-name">C</p><p class="skill-level mt-1">Advanced</p>
                 </div>
 
             </div>
         </section>
 
+        <!-- =========== EDUCATION =========== -->
+        <section id="education" class="fade-in-section max-w-4xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">Education</span></div>
+            <div class="space-y-6 stagger-container">
 
-        <!-- 
-          EDUCATION SECTION 
-        --><section id="education" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Education</h2>
-            <!-- Added stagger-container for JS to find and animate children -->
-            <div class="space-y-8 stagger-container">
-                
-                <!-- Education 1 --><div class="stagger-child flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
+                <div class="stagger-child card card-corner p-6 flex flex-col sm:flex-row gap-4">
                     <div class="sm:w-1/3">
-                        <h3 class="text-lg font-semibold text-beige-text">Masters in Artificial Intelligence</h3>
-                        <p class="mt-1 text-sm text-beige-subtext">Technische Hochschule Würzburg-Schweinfurt</p>
-                        <p class="mt-1 text-xs text-beige-subtext">Mar 2025 – Present</p>
+                        <div class="hex-label mb-1">[EDU_01]</div>
+                        <h3 class="edu-degree">Masters in Artificial Intelligence</h3>
+                        <p class="edu-school mt-1">Technische Hochschule Würzburg-Schweinfurt</p>
+                        <p class="edu-date mt-1">Mar 2025 – Present</p>
                     </div>
                     <div class="sm:w-2/3">
-                        <p class="text-sm text-beige-subtext">
-                            Relevant Courses: Artificial Intelligence and Machine Learning, Strong Artificial Intelligence, Introduction to Deep Learning, Reasoning and Decision Making.
+                        <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Relevant Courses: Artificial Intelligence and Machine Learning, Strong Artificial Intelligence,
+                            Introduction to Deep Learning, Reasoning and Decision Making.
                         </p>
                     </div>
                 </div>
 
-                <!-- Education 2 --><div class="stagger-child flex flex-col sm:flex-row gap-4 p-6 bg-beige-card rounded-xl shadow-lg border border-stone-200">
+                <div class="stagger-child card card-corner p-6 flex flex-col sm:flex-row gap-4">
                     <div class="sm:w-1/3">
-                        <h3 class="text-lg font-semibold text-beige-text">B.Tech, Electronics & Computer Eng.</h3>
-                        <p class="mt-1 text-sm text-beige-subtext">SRM Institute of Science and Technology</p>
-                        <p class="mt-1 text-xs text-beige-subtext">Jun 2019 – May 2023</p>
+                        <div class="hex-label mb-1">[EDU_02]</div>
+                        <h3 class="edu-degree">B.Tech, Electronics &amp; Computer Eng.</h3>
+                        <p class="edu-school mt-1">SRM Institute of Science and Technology</p>
+                        <p class="edu-date mt-1">Jun 2019 – May 2023</p>
                     </div>
                     <div class="sm:w-2/3">
-                        <p class="text-sm text-beige-subtext">
-                            Relevant Courses: Machine Learning, Data Analytics Using Open Source Tool, Deep Learning, Database Management System.
+                        <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
+                            Relevant Courses: Machine Learning, Data Analytics Using Open Source Tool, Deep Learning,
+                            Database Management System.
                         </p>
                     </div>
                 </div>
 
             </div>
         </section>
-    
 
-        <!-- 
-          CONTACT SECTION
-        --><section id="contact" class="fade-in-section max-w-4xl mx-auto py-16 sm:py-24 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-beige-text text-center mb-12">Get in Touch</h2>
-            <!-- Added stagger-container for JS to find and animate children -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center stagger-container">
-                
-                <!-- Email Card --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
-                    <i class="fa-solid fa-envelope text-4xl text-beige-accent mx-auto mb-4"></i>
-                    <h3 class="text-lg font-semibold text-beige-text">Email</h3>
-                    <p class="text-beige-subtext mt-1 truncate">harshith227@gmail.com</p>
-                    <a href="mailto:harshith227@gmail.com" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Send an email</a>
+        <!-- =========== ACHIEVEMENTS =========== -->
+        <section id="achievements" class="fade-in-section max-w-5xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">Achievements</span></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-container">
+
+                <!-- ACH 01 — SnackSnap -->
+                <div class="stagger-child card card-corner ach-purple p-6 flex flex-col">
+                    <div class="hex-label mb-3" style="color:rgba(179,71,255,.5)">[ACH_01 :: VENTURE]</div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-rocket text-2xl" style="color:var(--neon-purple);text-shadow:0 0 14px rgba(179,71,255,.6)"></i>
+                    </div>
+                    <h3 style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:.75rem;line-height:1.4">
+                        SnackSnap — Co-Founder
+                    </h3>
+                    <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary);line-height:1.75;flex:1">
+                        Co-founded and architected a digital food-ordering platform from concept to deployment. Engineered
+                        admin tooling with real-time sales analytics dashboards, enabling data-driven decision-making for
+                        restaurant operators and optimizing revenue workflows.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)">Entrepreneurship</span>
+                        <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)">Full Stack</span>
+                        <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)">Data Analytics</span>
+                    </div>
                 </div>
 
-                <!-- Phone Card --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
-                    <i class="fa-solid fa-phone text-4xl text-beige-accent mx-auto mb-4"></i>
-                    <h3 class="text-lg font-semibold text-beige-text">Phone</h3>
-                    <p class="text-beige-subtext mt-1">+49 152 10 692 931</p>
-                    <a href="tel:+4915210692931" class="mt-2 inline-block text-sm font-medium text-beige-accent hover:underline">Call me</a>
+                <!-- ACH 02 — SECUR AI Award -->
+                <div class="stagger-child card card-corner ach-cyan p-6 flex flex-col">
+                    <div class="hex-label mb-3" style="color:rgba(0,229,255,.5)">[ACH_02 :: AWARD]</div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-trophy text-2xl" style="color:var(--neon-cyan);text-shadow:0 0 14px rgba(0,229,255,.6)"></i>
+                    </div>
+                    <h3 style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:.75rem;line-height:1.4">
+                        Best Project Demo Award — SECUR AI
+                    </h3>
+                    <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary);line-height:1.75;flex:1">
+                        Won the top award at THWS for an outstanding mid-course demonstration of SECUR AI — an advanced
+                        biometric security platform combining Edge AI inference, Stereo Vision with Epipolar Geometry for
+                        2D spoof prevention, and a decoupled cloud dashboard for remote access management.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag" style="color:var(--neon-cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.08)">THWS Award</span>
+                        <span class="tech-tag" style="color:var(--neon-cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.08)">Edge AI</span>
+                        <span class="tech-tag" style="color:var(--neon-cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.08)">Computer Vision</span>
+                    </div>
                 </div>
 
-                <!-- Location Card --><div class="stagger-child bg-beige-card p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.03] border border-stone-200">
-                    <i class="fa-solid fa-map-marker-alt text-4xl text-beige-accent mx-auto mb-4"></i>
-                    <h3 class="text-lg font-semibold text-beige-text">Location</h3>
-                    <p class="text-beige-subtext mt-1">Würzburg, Germany</p>
-                    <p class="mt-2 text-sm text-beige-subtext">(Currently based here)</p>
+                <!-- ACH 03 — Bhojan -->
+                <div class="stagger-child card card-corner ach-green p-6 flex flex-col">
+                    <div class="hex-label mb-3" style="color:rgba(0,255,157,.5)">[ACH_03 :: DEPLOYMENT]</div>
+                    <div class="mb-4">
+                        <i class="fa-solid fa-medal text-2xl" style="color:var(--neon-green);text-shadow:0 0 14px rgba(0,255,157,.6)"></i>
+                    </div>
+                    <h3 style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:.75rem;line-height:1.4">
+                        App Development — Bhojan (1st Prize)
+                    </h3>
+                    <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary);line-height:1.75;flex:1">
+                        Designed, developed, and successfully deployed "Bhojan" — a socially conscious mobile application
+                        built to address food accessibility awareness. Achieved full platform compliance with security and
+                        publishing guidelines, and secured 1st Prize in a competitive inter-college app development event.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-tag">Mobile Dev</span>
+                        <span class="tech-tag">1st Prize</span>
+                        <span class="tech-tag">Social Impact</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========== CONTACT =========== -->
+        <section id="contact" class="fade-in-section max-w-4xl mx-auto scroll-mt-20">
+            <div class="section-title-wrap"><span class="section-title">Get in Touch</span></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-container">
+
+                <div class="stagger-child contact-card p-6">
+                    <div class="hex-label mb-3 text-center">[CHANNEL_01]</div>
+                    <i class="fa-solid fa-envelope text-3xl mb-4 block" style="color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,229,255,.5)"></i>
+                    <p class="contact-label mb-2">Email</p>
+                    <p class="contact-value mb-2" style="word-break:break-all">harshith227@gmail.com</p>
+                    <a href="mailto:harshith227@gmail.com" class="contact-link hover:underline">Send an email</a>
+                </div>
+
+                <div class="stagger-child contact-card p-6">
+                    <div class="hex-label mb-3 text-center">[CHANNEL_02]</div>
+                    <i class="fa-solid fa-phone text-3xl mb-4 block" style="color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,229,255,.5)"></i>
+                    <p class="contact-label mb-2">Phone</p>
+                    <p class="contact-value mb-2">+49 152 10 692 931</p>
+                    <a href="tel:+4915210692931" class="contact-link hover:underline">Call me</a>
+                </div>
+
+                <div class="stagger-child contact-card p-6">
+                    <div class="hex-label mb-3 text-center">[CHANNEL_03]</div>
+                    <i class="fa-solid fa-map-marker-alt text-3xl mb-4 block" style="color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,229,255,.5)"></i>
+                    <p class="contact-label mb-2">Location</p>
+                    <p class="contact-value mb-2">Würzburg, Germany</p>
+                    <p class="contact-link">(Currently based here)</p>
                 </div>
 
             </div>
@@ -707,329 +882,217 @@ Development of an AI-powered chatbot for the senior care platform “Carebells�
 
     </main>
 
-    <!-- 
-      FOOTER 
-    --><footer class="border-t border-stone-200 bg-beige-card">
-        <div class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-8 text-center">
-            <div class="flex justify-center gap-6 mb-4">
-                <!-- Social Icons --><a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <i class="fa-brands fa-github text-2xl"></i>
-                </a>
-                <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-beige-subtext hover:text-beige-text transition-colors">
-                    <i class="fa-brands fa-linkedin text-2xl"></i>
-                </a>
-                <a href="mailto:harshith227@gmail.com" title="Email" class="text-beige-subtext hover:text-beige-text transition-colors">
-                     <i class="fa-solid fa-envelope text-2xl"></i>
-                </a>
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="mt-12">
+        <div class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
+            <div class="neon-hr"></div>
+            <div class="flex justify-center gap-4 mb-4">
+                <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" class="social-icon">
+                    <i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" class="social-icon">
+                    <i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:harshith227@gmail.com" class="social-icon">
+                    <i class="fa-solid fa-envelope"></i></a>
             </div>
-            <p class="text-sm text-beige-subtext">
+            <p class="footer-text text-center">
                 &copy; 2025 Harshith Babu Prakash Babu. All rights reserved.
+                <span style="color:var(--neon-green)">//</span> Built with precision.
             </p>
         </div>
     </footer>
 
-    <!-- 
-      JavaScript for interactivity
-    --><script>
-        document.addEventListener('DOMContentLoaded', () => {
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-            // --- MOBILE MENU TOGGLE ---
-            const menuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = document.querySelectorAll('.nav-link-mobile');
-            
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                // Toggle icon
+        // ---- CUSTOM CURSOR ----
+        const cursor     = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top  = mouseY + 'px';
+        });
+
+        (function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top  = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        })();
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '18px'; cursor.style.height = '18px';
+                cursorRing.style.width = '52px'; cursorRing.style.height = '52px';
+                cursorRing.style.borderColor = 'var(--neon-cyan)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '12px'; cursor.style.height = '12px';
+                cursorRing.style.width = '36px'; cursorRing.style.height = '36px';
+                cursorRing.style.borderColor = 'var(--neon-green)';
+            });
+        });
+
+        // ---- MOBILE MENU ----
+        const menuButton  = document.getElementById('mobile-menu-button');
+        const mobileMenu  = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuButton.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
                 const icon = menuButton.querySelector('i');
-                if (mobileMenu.classList.contains('hidden')) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                } else {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // ---- HERO LOAD ANIMATION ----
+        document.querySelectorAll('.animate-on-load').forEach((el, i) => {
+            setTimeout(() => el.classList.add('is-visible'), 100 + 120 * i);
+        });
+
+        // ---- SCROLL FADE-IN & STAGGER ----
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                if (entry.target.classList.contains('fade-in-section')) {
+                    entry.target.classList.add('is-visible');
                 }
-            });
-            
-            // Close mobile menu when a link is clicked
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    const icon = menuButton.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                });
-            });
-
-            // --- ANIMATE ON LOAD (HERO SECTION) ---
-            document.querySelectorAll('.animate-on-load').forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('is-visible');
-                }, 100 * index); // Stagger the load-in animation
-            });
-
-
-            // --- FADE-IN & STAGGER ANIMATION ON SCROLL ---
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1 // Triggers when 10% of the element is visible
-            };
-            
-            const sectionObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // For simple fade-ins
-                        if (entry.target.classList.contains('fade-in-section')) {
-                            entry.target.classList.add('is-visible');
-                        }
-                        
-                        // For staggered animations
-                        if (entry.target.classList.contains('stagger-container')) {
-                            entry.target.querySelectorAll('.stagger-child').forEach((child, index) => {
-                                // Apply a delay to each child
-                                child.style.transitionDelay = `${index * 100}ms`;
-                                child.classList.add('is-visible');
-                            });
-                        }
-                        
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all sections with fade-in or stagger effects
-            document.querySelectorAll('.fade-in-section, .stagger-container').forEach(section => {
-                sectionObserver.observe(section);
-            });
-            
-
-            // --- DYNAMICALLY STYLE TECH TAGS ---
-            const addTailwindClasses = (selector, classes) => {
-                 document.querySelectorAll(selector).forEach(el => {
-                    el.classList.add(...classes.split(' '));
-                });
-            }
-            addTailwindClasses('.tech-tag', 
-                'inline-block', 'bg-beige-accent-light', 'text-beige-accent', 'font-medium', 
-                'px-3', 'py-1', 'rounded-full', 'text-xs'
-            );
-
-
-            // --- ACTIVE NAV LINK ON SCROLL ---
-            const navLinks = document.querySelectorAll('.nav-link');
-            const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
-            const contentSections = document.querySelectorAll('main section');
-            
-            const navObserverOptions = {
-                root: null,
-                rootMargin: '-20% 0px -60% 0px', // Active when section is in the middle 20% of viewport
-                threshold: 0
-            };
-            
-            const navObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        
-                        // Update desktop links
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                        
-                        // Update mobile links
-                        mobileNavLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, navObserverOptions);
-            
-            contentSections.forEach(section => {
-                navObserver.observe(section);
-            });
-
-            // --- HERO PARALLAX ON SCROLL ---
-            const hero = document.getElementById('hero');
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                if (scrollY < 1000) { // Only run effect when near the top
-                    hero.style.transform = `translateY(${scrollY * 0.4}px)`;
-                }
-            });
-
-
-            // --- SCROLL PROGRESS BAR ---
-            const progressBar = document.getElementById('scroll-progress-bar');
-            function updateScrollProgress() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollPercent = (scrollTop / docHeight) * 100;
-                progressBar.style.width = `${scrollPercent}%`;
-            }
-            window.addEventListener('scroll', updateScrollProgress);
-
-
-            // --- LIVE CONSTELLATION & ACTIVE NEURON SCRIPT ---
-            
-            // Mouse tracking object
-            const mouse = {
-                x: null,
-                y: null,
-                maxConnections: 3 // Number of lines to draw from the cursor
-            };
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-            window.addEventListener('mouseleave', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
-            // Add touch support for mobile
-            window.addEventListener('touchmove', (e) => {
-                 if (e.touches.length > 0) {
-                    mouse.x = e.touches[0].clientX;
-                    mouse.y = e.touches[0].clientY;
-                 }
-            });
-             window.addEventListener('touchstart', (e) => {
-                 if (e.touches.length > 0) {
-                    mouse.x = e.touches[0].clientX;
-                    mouse.y = e.touches[0].clientY;
-                 }
-            });
-            window.addEventListener('touchend', () => {
-                // Keep last touch point
-            });
-
-
-            const canvas = document.getElementById('live-background-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resizeCanvas();
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
-                    this.vy = (Math.random() - 0.5) * 0.5;
-                    this.radius = 2;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    // Subtle light gray color for particles
-                    ctx.fillStyle = 'rgba(170, 180, 190, 0.3)'; 
-                    ctx.fill();
-                }
-
-                // Reverted to simple update (no repulsion)
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    // Bounce off edges
-                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-                }
-            }
-
-            function initParticles() {
-                particles = [];
-                // More particles for larger screens, fewer for smaller
-                let particleCount = (canvas.width * canvas.height) / 10000;
-                if (particleCount > 150) particleCount = 150;
-                if (particleCount < 50) particleCount = 50;
-
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-
-            function drawConstellation() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Re-added Active Neuron (Cursor) Logic
-                if (mouse.x !== null && mouse.y !== null) {
-                    // 1. Find all particles with their distance to the mouse
-                    let particlesWithDist = particles.map(particle => {
-                        const dx = particle.x - mouse.x;
-                        const dy = particle.y - mouse.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        return { ...particle, dist: dist };
+                if (entry.target.classList.contains('stagger-container')) {
+                    entry.target.querySelectorAll('.stagger-child').forEach((child, i) => {
+                        child.style.transitionDelay = `${i * 80}ms`;
+                        child.classList.add('is-visible');
                     });
+                }
+                obs.unobserve(entry.target);
+            });
+        }, { threshold: 0.08 });
 
-                    // 2. Sort by distance (closest first)
-                    particlesWithDist.sort((a, b) => a.dist - b.dist);
+        document.querySelectorAll('.fade-in-section, .stagger-container').forEach(el => observer.observe(el));
 
-                    // 3. Take the closest ones
-                    let closestParticles = particlesWithDist.slice(0, mouse.maxConnections);
+        // ---- ACTIVE NAV LINK ----
+        const navLinks    = document.querySelectorAll('.nav-link');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+                });
+            });
+        }, { rootMargin: '-20% 0px -60% 0px' });
 
-                    // 4. Draw lines from mouse to them
-                    for (let p of closestParticles) {
+        document.querySelectorAll('main section').forEach(s => navObserver.observe(s));
+
+        // ---- SCROLL PROGRESS BAR ----
+        const progressBar = document.getElementById('scroll-progress-bar');
+        window.addEventListener('scroll', () => {
+            const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progressBar.style.width = pct + '%';
+        });
+
+        // ---- PARTICLE CANVAS ----
+        const canvas = document.getElementById('live-background-canvas');
+        const ctx    = canvas.getContext('2d');
+        let particles = [];
+        const mouse   = { x: null, y: null };
+
+        window.addEventListener('mousemove',  e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+        window.addEventListener('touchmove',  e => { if (e.touches[0]) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } }, { passive: true });
+        window.addEventListener('touchend',   () => { mouse.x = null; mouse.y = null; });
+
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resize();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x  = Math.random() * canvas.width;
+                this.y  = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.r  = Math.random() * 1.5 + 0.5;
+                this.a  = Math.random() * 0.4 + 0.1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,255,157,${this.a})`;
+                ctx.fill();
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width)  this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height)  this.vy *= -1;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(130, Math.max(40, Math.floor((canvas.width * canvas.height) / 12000)));
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function drawFrame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Mouse connections
+            if (mouse.x !== null) {
+                [...particles]
+                    .map(p => ({ p, d: Math.hypot(p.x - mouse.x, p.y - mouse.y) }))
+                    .sort((a, b) => a.d - b.d)
+                    .slice(0, 4)
+                    .forEach(({ p, d }) => {
+                        if (d < 220) {
+                            ctx.beginPath();
+                            ctx.moveTo(mouse.x, mouse.y);
+                            ctx.lineTo(p.x, p.y);
+                            ctx.strokeStyle = `rgba(0,229,255,${(1 - d / 220) * 0.65})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                    });
+            }
+
+            // Particle network
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                    if (d < 110) {
                         ctx.beginPath();
-                        ctx.moveTo(mouse.x, mouse.y);
-                        ctx.lineTo(p.x, p.y);
-                        // Style for the "active" lines (slightly more visible)
-                        ctx.strokeStyle = `rgba(170, 180, 190, 0.5)`; // 0.5 opacity
-                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0,255,157,${0.3 * (1 - d / 110)})`;
+                        ctx.lineWidth = 0.4;
                         ctx.stroke();
                     }
                 }
-                
-                // Original constellation logic
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < 120) { // Max distance for lines
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            // Very subtle line color
-                            ctx.strokeStyle = `rgba(170, 180, 190, ${0.4 * (1 - dist / 120)})`; // Made it even more subtle
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
             }
 
-            function animate() {
-                drawConstellation();
-                requestAnimationFrame(animate);
-            }
+            requestAnimationFrame(drawFrame);
+        }
 
-            initParticles();
-            animate();
-            
-            // Re-init particles on window resize
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                initParticles();
-            });
+        initParticles();
+        drawFrame();
 
-        });
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+
+    });
     </script>
-
 </body>
 </html>
