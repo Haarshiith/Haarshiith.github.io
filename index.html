@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harshith Babu Prakash Babu - AI & ML Engineer</title>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-02V6E9KQEH"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -34,6 +33,35 @@
             --text-secondary: rgba(180,255,210,0.65);
             --grid-color:  rgba(0,255,157,0.04);
         }
+
+        /* --- LANGUAGE TOGGLE CONTENT CSS --- */
+        html:not(:lang(de)) .lang-de { display: none !important; }
+        html:lang(de) .lang-en { display: none !important; }
+
+        /* --- LANGUAGE TOGGLE SWITCH UI --- */
+        .lang-toggle-btn {
+            display: flex; align-items: center; gap: 8px;
+            background: transparent; border: none; outline: none;
+        }
+        .lang-label {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.75rem;
+            color: var(--text-secondary); transition: color 0.3s, text-shadow 0.3s;
+        }
+        .toggle-track {
+            width: 36px; height: 18px; border-radius: 10px;
+            background: rgba(0, 255, 157, 0.1); border: 1px solid rgba(0, 255, 157, 0.3);
+            position: relative; transition: all 0.3s;
+        }
+        .toggle-thumb {
+            position: absolute; top: 2px; left: 2px; width: 12px; height: 12px;
+            border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green);
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), background 0.3s, box-shadow 0.3s;
+        }
+        /* Switch states based on html lang attribute */
+        html:not(:lang(de)) .en-label { color: var(--neon-green); text-shadow: 0 0 8px rgba(0, 255, 157, 0.6); }
+        html:lang(de) .de-label { color: var(--neon-cyan); text-shadow: 0 0 8px rgba(0, 229, 255, 0.6); }
+        html:lang(de) .toggle-track { border-color: rgba(0, 229, 255, 0.3); background: rgba(0, 229, 255, 0.1); }
+        html:lang(de) .toggle-thumb { transform: translateX(18px); background: var(--neon-cyan); box-shadow: 0 0 6px var(--neon-cyan); }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -326,55 +354,61 @@
     <div id="cursor-ring"></div>
     <canvas id="live-background-canvas"></canvas>
 
-    <!-- ===================== HEADER ===================== -->
     <header class="sticky top-0 z-50 w-full">
         <div id="scroll-progress-bar"></div>
         <nav class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-4">
             <div class="flex justify-between items-center">
                 <a href="#" class="logo-text">HB<span style="color:var(--neon-cyan)">_</span></a>
                 <ul class="hidden md:flex space-x-6 lg:space-x-8">
-                    <li><a href="#about"        class="nav-link">About</a></li>
-                    <li><a href="#experience"   class="nav-link">Experience</a></li>
-                    <li><a href="#projects"     class="nav-link">Projects</a></li>
-                    <li><a href="#skills"       class="nav-link">Skills</a></li>
-                    <li><a href="#education"    class="nav-link">Education</a></li>
-                    <li><a href="#achievements" class="nav-link">Achievements</a></li>
-                    <li><a href="#contact"      class="nav-link">Contact</a></li>
+                    <li><a href="#about" class="nav-link"><span class="lang-en">About</span><span class="lang-de">Über mich</span></a></li>
+                    <li><a href="#experience" class="nav-link"><span class="lang-en">Experience</span><span class="lang-de">Erfahrung</span></a></li>
+                    <li><a href="#projects" class="nav-link"><span class="lang-en">Projects</span><span class="lang-de">Projekte</span></a></li>
+                    <li><a href="#skills" class="nav-link"><span class="lang-en">Skills</span><span class="lang-de">Fähigkeiten</span></a></li>
+                    <li><a href="#education" class="nav-link"><span class="lang-en">Education</span><span class="lang-de">Ausbildung</span></a></li>
+                    <li><a href="#achievements" class="nav-link"><span class="lang-en">Achievements</span><span class="lang-de">Erfolge</span></a></li>
+                    <li><a href="#contact" class="nav-link"><span class="lang-en">Contact</span><span class="lang-de">Kontakt</span></a></li>
                 </ul>
-                <button id="mobile-menu-button" class="md:hidden" style="color:var(--neon-green)">
-                    <i class="fas fa-bars w-6 h-6"></i>
-                </button>
+                
+                <div class="flex items-center gap-4">
+                    <button id="lang-switch" class="lang-toggle-btn" style="cursor:none;">
+                        <span class="lang-label en-label">EN</span>
+                        <div class="toggle-track">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                        <span class="lang-label de-label">DE</span>
+                    </button>
+                    
+                    <button id="mobile-menu-button" class="md:hidden" style="color:var(--neon-green)">
+                        <i class="fas fa-bars w-6 h-6"></i>
+                    </button>
+                </div>
             </div>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden">
             <ul class="flex flex-col items-center py-4 space-y-4">
-                <li><a href="#about"        class="nav-link-mobile mobile-menu-item">About</a></li>
-                <li><a href="#experience"   class="nav-link-mobile mobile-menu-item">Experience</a></li>
-                <li><a href="#projects"     class="nav-link-mobile mobile-menu-item">Projects</a></li>
-                <li><a href="#skills"       class="nav-link-mobile mobile-menu-item">Skills</a></li>
-                <li><a href="#education"    class="nav-link-mobile mobile-menu-item">Education</a></li>
-                <li><a href="#achievements" class="nav-link-mobile mobile-menu-item">Achievements</a></li>
-                <li><a href="#contact"      class="nav-link-mobile mobile-menu-item">Contact</a></li>
+                <li><a href="#about" class="nav-link-mobile mobile-menu-item"><span class="lang-en">About</span><span class="lang-de">Über mich</span></a></li>
+                <li><a href="#experience" class="nav-link-mobile mobile-menu-item"><span class="lang-en">Experience</span><span class="lang-de">Erfahrung</span></a></li>
+                <li><a href="#projects" class="nav-link-mobile mobile-menu-item"><span class="lang-en">Projects</span><span class="lang-de">Projekte</span></a></li>
+                <li><a href="#skills" class="nav-link-mobile mobile-menu-item"><span class="lang-en">Skills</span><span class="lang-de">Fähigkeiten</span></a></li>
+                <li><a href="#education" class="nav-link-mobile mobile-menu-item"><span class="lang-en">Education</span><span class="lang-de">Ausbildung</span></a></li>
+                <li><a href="#achievements" class="nav-link-mobile mobile-menu-item"><span class="lang-en">Achievements</span><span class="lang-de">Erfolge</span></a></li>
+                <li><a href="#contact" class="nav-link-mobile mobile-menu-item"><span class="lang-en">Contact</span><span class="lang-de">Kontakt</span></a></li>
             </ul>
         </div>
     </header>
 
-    <!-- ===================== MAIN ===================== -->
     <main class="max-w-screen-xl mx-auto p-6 sm:p-8 lg:p-12">
 
-        <!-- HERO -->
         <section id="hero" class="py-24 sm:py-36 text-center relative z-10">
-            <!-- <div class="hex-label mb-4 animate-on-load" style="transition-delay:50ms">[ SYS_INIT :: PORTFOLIO_v2.0 ]</div> -->
             <h1 class="animate-on-load hero-name text-4xl sm:text-6xl lg:text-7xl mb-2 glitch-wrapper"
                 data-text="Harshith Babu" style="transition-delay:100ms">Harshith Babu</h1>
             <h1 class="animate-on-load hero-name text-4xl sm:text-6xl lg:text-7xl" style="transition-delay:150ms">
                 Prakash Babu</h1>
             <p class="animate-on-load hero-title mt-6 text-lg sm:text-2xl" style="transition-delay:250ms">
-                &gt; Masters in Artificial Intelligence | AI &amp; ML Engineer<span class="cursor-blink">_</span>
+                &gt; <span class="lang-en">Masters in Artificial Intelligence | AI &amp; ML Engineer</span><span class="lang-de">Master in Künstlicher Intelligenz | KI &amp; ML Ingenieur</span><span class="cursor-blink">_</span>
             </p>
 
-        <!-- =========== SOCIAL =========== -->
-            <div class="animate-on-load mt-10 flex justify-center gap-4" style="transition-delay:350ms">
+        <div class="animate-on-load mt-10 flex justify-center gap-4" style="transition-delay:350ms">
                 <a href="https://github.com/Haarshiith" target="_blank" rel="noopener noreferrer" class="social-icon glow-border" title="GitHub">
                     <i class="fa-brands fa-github"></i></a>
                 <a href="https://linkedin.com/in/harshith28" target="_blank" rel="noopener noreferrer" class="social-icon glow-border" title="LinkedIn">
@@ -384,37 +418,50 @@
             </div>
         </section>
 
-        <!-- =========== ABOUT =========== -->
         <section id="about" class="fade-in-section max-w-3xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">About</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">About</span><span class="lang-de">Über mich</span></span></div>
             <div class="card card-corner p-8">
                 <div class="hex-label mb-3">[ AGENT_PROFILE :: INITIALIZED ]</div>
                 <p class="about-text">
-                    I am an AI and Machine Learning Engineer passionate about building end-to-end intelligent applications.
-                    My expertise lies in integrating machine learning models into scalable, full-stack solutions using Python,
-                    React.js, and SQL. Currently pursuing a Master's in Artificial Intelligence in Germany, I am focused on
-                    developing practical, data-driven systems that automate workflows and solve real-world business needs.
+                    <span class="lang-en">
+                        I am an AI and Machine Learning Engineer passionate about building end-to-end intelligent applications.
+                        My expertise lies in integrating machine learning models into scalable, full-stack solutions using Python,
+                        React.js, and SQL. Currently pursuing a Master's in Artificial Intelligence in Germany, I am focused on
+                        developing practical, data-driven systems that automate workflows and solve real-world business needs.
+                    </span>
+                    <span class="lang-de">
+                        Ich bin ein KI- und Machine-Learning-Ingenieur mit einer Leidenschaft für die Entwicklung intelligenter End-to-End-Anwendungen. 
+                        Meine Expertise liegt in der Integration von Machine-Learning-Modellen in skalierbare Full-Stack-Lösungen mithilfe von Python, 
+                        React.js und SQL. Derzeit absolviere ich meinen Master in Künstlicher Intelligenz in Deutschland und konzentriere mich auf die 
+                        Entwicklung praktischer, datengesteuerter Systeme, die Workflows automatisieren und reale geschäftliche Anforderungen lösen.
+                    </span>
                 </p>
             </div>
         </section>
 
-        <!-- =========== EXPERIENCE =========== -->
         <section id="experience" class="fade-in-section max-w-4xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">Experience</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">Experience</span><span class="lang-de">Erfahrung</span></span></div>
             <div class="space-y-6 stagger-container">
 
                 <div class="stagger-child card card-corner p-6 flex flex-col md:flex-row gap-6">
                     <div class="md:w-1/3">
                         <div class="hex-label mb-1">[EXP_01]</div>
-                        <h3 class="exp-title">Research Assistant (HiWi)</h3>
+                        <h3 class="exp-title"><span class="lang-en">Research Assistant (HiWi)</span><span class="lang-de">Wissenschaftliche Hilfskraft (HiWi)</span></h3>
                         <p class="company-name mt-1">Technische Hochschule Würzburg-Schweinfurt (THWS)</p>
-                        <p class="date-badge mt-1">Jan 2026 – Present</p>
+                        <p class="date-badge mt-1"><span class="lang-en">Jan 2026 – Present</span><span class="lang-de">Jan 2026 – Heute</span></p>
                     </div>
                     <div class="md:w-2/3">
                         <p style="font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem">
-                            Development of an AI-powered chatbot for the senior care platform "Carebells" using Retrieval-Augmented Generation (RAG).
-                            Integration of the chatbot into the web frontend and connection to the backend architecture to ensure a seamless user experience.
-                            Implementation and optimization of AI models to improve context-sensitive dialogue for older target groups.
+                            <span class="lang-en">
+                                Development of an AI-powered chatbot for the senior care platform "Carebells" using Retrieval-Augmented Generation (RAG).
+                                Integration of the chatbot into the web frontend and connection to the backend architecture to ensure a seamless user experience.
+                                Implementation and optimization of AI models to improve context-sensitive dialogue for older target groups.
+                            </span>
+                            <span class="lang-de">
+                                Entwicklung eines KI-gestützten Chatbots für die Seniorenpflege-Plattform "Carebells" mithilfe von Retrieval-Augmented Generation (RAG). 
+                                Integration des Chatbots in das Web-Frontend und Anbindung an die Backend-Architektur, um eine nahtlose Benutzererfahrung zu gewährleisten. 
+                                Implementierung und Optimierung von KI-Modellen zur Verbesserung kontextsensitiver Dialoge für ältere Zielgruppen.
+                            </span>
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="tech-tag">Python</span><span class="tech-tag">React.js</span>
@@ -426,14 +473,20 @@
                 <div class="stagger-child card card-corner p-6 flex flex-col md:flex-row gap-6">
                     <div class="md:w-1/3">
                         <div class="hex-label mb-1">[EXP_02]</div>
-                        <h3 class="exp-title">Python Full Stack Developer</h3>
+                        <h3 class="exp-title"><span class="lang-en">Python Full Stack Developer</span><span class="lang-de">Python Full-Stack Entwickler</span></h3>
                         <p class="company-name mt-1">Izeon Innovative Private Limited</p>
-                        <p class="date-badge mt-1">Oct 2023 – Mar 2024</p>
+                        <p class="date-badge mt-1"><span class="lang-en">Oct 2023 – Mar 2024</span><span class="lang-de">Okt 2023 – Mär 2024</span></p>
                     </div>
                     <div class="md:w-2/3">
                         <p style="font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem">
-                            Integrated machine learning modules into backend systems to automate data workflows and extract user insights.
-                            Built and delivered scalable full-stack platforms for the education and hospitality sectors.
+                            <span class="lang-en">
+                                Integrated machine learning modules into backend systems to automate data workflows and extract user insights.
+                                Built and delivered scalable full-stack platforms for the education and hospitality sectors.
+                            </span>
+                            <span class="lang-de">
+                                Integration von Machine-Learning-Modulen in Backend-Systeme zur Automatisierung von Daten-Workflows und Extraktion von Nutzer-Erkenntnissen. 
+                                Aufbau und Bereitstellung skalierbarer Full-Stack-Plattformen für den Bildungs- und Gastgewerbesektor.
+                            </span>
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="tech-tag">Python</span><span class="tech-tag">React.js</span>
@@ -445,15 +498,22 @@
                 <div class="stagger-child card card-corner p-6 flex flex-col md:flex-row gap-6">
                     <div class="md:w-1/3">
                         <div class="hex-label mb-1">[EXP_03]</div>
-                        <h3 class="exp-title">Software Developer Intern</h3>
+                        <h3 class="exp-title"><span class="lang-en">Software Developer Intern</span><span class="lang-de">Softwareentwickler-Praktikant</span></h3>
                         <p class="company-name mt-1">ESAB India Limited R&amp;D</p>
                         <p class="date-badge mt-1">Jul 2023 – Sep 2023</p>
                     </div>
                     <div class="md:w-2/3">
                         <p style="font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem">
-                            Developed and deployed efficient C-based software modules for an industrial welding project,
-                            ensuring performance and system reliability. Explored AI-driven optimization techniques to
-                            enhance code structure and support intelligent system development.
+                            <span class="lang-en">
+                                Developed and deployed efficient C-based software modules for an industrial welding project,
+                                ensuring performance and system reliability. Explored AI-driven optimization techniques to
+                                enhance code structure and support intelligent system development.
+                            </span>
+                            <span class="lang-de">
+                                Entwicklung und Bereitstellung effizienter C-basierter Softwaremodule für ein industrielles Schweißprojekt 
+                                zur Gewährleistung von Leistung und Systemzuverlässigkeit. Erforschung KI-gesteuerter Optimierungstechniken zur 
+                                Verbesserung der Codestruktur und Unterstützung intelligenter Systementwicklung.
+                            </span>
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="tech-tag">C</span>
@@ -464,21 +524,26 @@
             </div>
         </section>
 
-        <!-- =========== PROJECTS =========== -->
         <section id="projects" class="fade-in-section max-w-5xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">Projects</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">Projects</span><span class="lang-de">Projekte</span></span></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
 
                 <div class="stagger-child card card-corner p-6 flex flex-col justify-between">
                     <div>
                         <div class="hex-label mb-2">[PROJECT_01]</div>
                         <a href="https://github.com/Haarshiith/BMW-hackathon" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">BMW Group Quality Management Challenge</h3>
+                            <h3 class="proj-title"><span class="lang-en">BMW Group Quality Management Challenge</span><span class="lang-de">BMW Group Qualitätsmanagement-Challenge</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Participated in a university-industry hackathon with BMW Group, developing a framework using AI and analytics
-                            to identify, track, and predict potential quality issues, turning past "mistakes" into actionable, data-driven insights.
+                            <span class="lang-en">
+                                Participated in a university-industry hackathon with BMW Group, developing a framework using AI and analytics
+                                to identify, track, and predict potential quality issues, turning past "mistakes" into actionable, data-driven insights.
+                            </span>
+                            <span class="lang-de">
+                                Teilnahme an einem universitären Industrie-Hackathon mit der BMW Group. Entwicklung eines Frameworks, das KI und Analytik nutzt, 
+                                um potenzielle Qualitätsprobleme zu identifizieren und vorherzusagen, und so vergangene Fehler in datengesteuerte Erkenntnisse umwandelt.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -491,13 +556,19 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_02]</div>
                         <a href="https://github.com/Haarshiith/SECUR-AI-Vision-Pro-Surveillance" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">SECUR AI — Vision Pro Surveillance</h3>
+                            <h3 class="proj-title"><span class="lang-en">SECUR AI — Vision Pro Surveillance</span><span class="lang-de">SECUR AI — Vision Pro Überwachung</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            An advanced biometric security platform powered by Edge AI and Stereo Vision (Epipolar Geometry).
-                            Prevents 2D spoofing attacks using real-time depth analysis and features a decoupled cloud dashboard
-                            for secure, remote access management.
+                            <span class="lang-en">
+                                An advanced biometric security platform powered by Edge AI and Stereo Vision (Epipolar Geometry).
+                                Prevents 2D spoofing attacks using real-time depth analysis and features a decoupled cloud dashboard
+                                for secure, remote access management.
+                            </span>
+                            <span class="lang-de">
+                                Eine fortschrittliche biometrische Sicherheitsplattform, basierend auf Edge AI und Stereo-Vision (Epipolargeometrie). 
+                                Verhindert 2D-Spoofing-Angriffe durch Echtzeit-Tiefenanalyse und bietet ein entkoppeltes Cloud-Dashboard für sicheres Remote-Management.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -515,9 +586,15 @@
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            An intelligent career optimization platform powered by Llama-3 and Groq. Helps job seekers bridge
-                            the gap between their resume and their dream job using advanced RAG, live company intelligence,
-                            and interactive skill visualization.
+                            <span class="lang-en">
+                                An intelligent career optimization platform powered by Llama-3 and Groq. Helps job seekers bridge
+                                the gap between their resume and their dream job using advanced RAG, live company intelligence,
+                                and interactive skill visualization.
+                            </span>
+                            <span class="lang-de">
+                                Eine intelligente Karriereoptimierungsplattform, angetrieben von Llama-3 und Groq. Hilft Arbeitssuchenden, die Lücke 
+                                zwischen Lebenslauf und Traumjob durch fortschrittliches RAG, Live-Unternehmensdaten und interaktive Skill-Visualisierung zu schließen.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -531,12 +608,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_04]</div>
                         <a href="https://github.com/Haarshiith/Face-Reconstruction-Latent-Analysis" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Variational Autoencoders (VAE) with β-VAE Variants — CelebA Dataset Analysis</h3>
+                            <h3 class="proj-title"><span class="lang-en">Variational Autoencoders (VAE) with β-VAE Variants — CelebA Dataset Analysis</span><span class="lang-de">Variational Autoencoders (VAE) mit β-VAE-Varianten — CelebA-Datensatz</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Implemented and analyzed Variational Autoencoders (VAE) and β-VAE variants for image generation
-                            and representation learning on the CelebA dataset.
+                            <span class="lang-en">
+                                Implemented and analyzed Variational Autoencoders (VAE) and β-VAE variants for image generation
+                                and representation learning on the CelebA dataset.
+                            </span>
+                            <span class="lang-de">
+                                Implementierung und Analyse von Variational Autoencoders (VAE) und β-VAE-Varianten zur Bilderzeugung und 
+                                Repräsentationslernen auf dem CelebA-Datensatz.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -549,12 +632,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_05]</div>
                         <a href="https://github.com/Haarshiith/Pneumonia_Detection" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">XAI-based Pneumonia Detection</h3>
+                            <h3 class="proj-title"><span class="lang-en">XAI-based Pneumonia Detection</span><span class="lang-de">XAI-basierte Lungenentzündungserkennung</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Implemented Explainable AI (XAI) for medical diagnostics. Fine-tuned ResNet-18 for chest X-ray
-                            classification and integrated Grad-CAM and LIME for transparent visual explanations.
+                            <span class="lang-en">
+                                Implemented Explainable AI (XAI) for medical diagnostics. Fine-tuned ResNet-18 for chest X-ray
+                                classification and integrated Grad-CAM and LIME for transparent visual explanations.
+                            </span>
+                            <span class="lang-de">
+                                Implementierung von Explainable AI (XAI) für medizinische Diagnostik. Feinabstimmung von ResNet-18 für 
+                                Röntgenbildklassifizierung und Integration von Grad-CAM und LIME für visuelle Erklärungen.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -568,12 +657,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_06]</div>
                         <a href="https://github.com/Haarshiith/EdgeAI_Industry4.0" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Edge AI for Industry 4.0</h3>
+                            <h3 class="proj-title"><span class="lang-en">Edge AI for Industry 4.0</span><span class="lang-de">Edge AI für Industrie 4.0</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Optimized MobileNet PPE detection models for resource-constrained devices using Magnitude-based,
-                            Iterative, and One-shot pruning strategies to reduce latency and size.
+                            <span class="lang-en">
+                                Optimized MobileNet PPE detection models for resource-constrained devices using Magnitude-based,
+                                Iterative, and One-shot pruning strategies to reduce latency and size.
+                            </span>
+                            <span class="lang-de">
+                                Optimierung von MobileNet-Schutzausrüstung-Erkennungsmodellen für ressourcenbeschränkte Geräte unter Verwendung 
+                                von Magnitude-basierten, iterativen und One-Shot-Pruning-Strategien.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -586,12 +681,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_07]</div>
                         <a href="https://github.com/Haarshiith/Waterfowl_Detection_CV" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Thermal Waterfowl Detection (UAV)</h3>
+                            <h3 class="proj-title"><span class="lang-en">Thermal Waterfowl Detection (UAV)</span><span class="lang-de">Thermische Wasservogelerkennung (UAV)</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Developed a real-time automated monitoring system using YOLOv8 on thermal imagery for wildlife
-                            conservation. Achieved 93.75% mAP@50 on wetland environment data.
+                            <span class="lang-en">
+                                Developed a real-time automated monitoring system using YOLOv8 on thermal imagery for wildlife
+                                conservation. Achieved 93.75% mAP@50 on wetland environment data.
+                            </span>
+                            <span class="lang-de">
+                                Entwicklung eines automatisierten Echtzeit-Überwachungssystems mit YOLOv8 auf Wärmebildern für den Artenschutz. 
+                                Erreichte 93,75% mAP@50 auf Feuchtgebietsdaten.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -604,12 +705,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_08]</div>
                         <a href="https://github.com/Haarshiith/Fine-Turning-NLP-" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Sentiment Analysis with Masked LM — Fine-tuning DistilBERT</h3>
+                            <h3 class="proj-title"><span class="lang-en">Sentiment Analysis with Masked LM — Fine-tuning DistilBERT</span><span class="lang-de">Sentiment-Analyse mit Masked LM — DistilBERT</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Fine-tuned a pre-trained DistilBERT model on the IMDB dataset using the Hugging Face Transformers
-                            library. Implemented Masked Language Modeling (MLM) to enhance sentiment classification accuracy.
+                            <span class="lang-en">
+                                Fine-tuned a pre-trained DistilBERT model on the IMDB dataset using the Hugging Face Transformers
+                                library. Implemented Masked Language Modeling (MLM) to enhance sentiment classification accuracy.
+                            </span>
+                            <span class="lang-de">
+                                Feinabstimmung eines vortrainierten DistilBERT-Modells auf dem IMDB-Datensatz mittels Hugging Face. 
+                                Implementierung von Masked Language Modeling (MLM) zur Erhöhung der Klassifizierungsgenauigkeit.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -622,12 +729,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_09]</div>
                         <a href="https://github.com/Haarshiith/Poetry-generator" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Neural Text Generation (LSTM) — Bidirectional LSTM</h3>
+                            <h3 class="proj-title"><span class="lang-en">Neural Text Generation (LSTM) — Bidirectional LSTM</span><span class="lang-de">Neuronale Textgenerierung (LSTM)</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Developed and trained a Bidirectional LSTM network in TensorFlow/Keras on a custom poetic corpus.
-                            Implemented tokenization and padding pipelines to generate novel text sequences from seed words.
+                            <span class="lang-en">
+                                Developed and trained a Bidirectional LSTM network in TensorFlow/Keras on a custom poetic corpus.
+                                Implemented tokenization and padding pipelines to generate novel text sequences from seed words.
+                            </span>
+                            <span class="lang-de">
+                                Entwicklung und Training eines bidirektionalen LSTM-Netzwerks in TensorFlow/Keras auf einem poetischen Korpus. 
+                                Implementierung von Tokenisierungs- und Padding-Pipelines zur Generierung neuer Textsequenzen.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -640,12 +753,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_10]</div>
                         <a href="https://github.com/Haarshiith/Black-Jack-using-Reinforcement-Learning" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Optimizing Blackjack Policy (RL)</h3>
+                            <h3 class="proj-title"><span class="lang-en">Optimizing Blackjack Policy (RL)</span><span class="lang-de">Optimierung der Blackjack-Richtlinie (RL)</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an
-                            advanced state representation with card counting to outperform "Basic Strategy."
+                            <span class="lang-en">
+                                Implemented RL algorithms (SARSA, Double Q-Learning) from scratch to train agents. Designed an
+                                advanced state representation with card counting to outperform "Basic Strategy."
+                            </span>
+                            <span class="lang-de">
+                                Implementierung von RL-Algorithmen (SARSA, Double Q-Learning) zum Trainieren von Agenten. 
+                                Entwurf einer fortschrittlichen Zustandsrepräsentation mit Kartenzählen.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -658,12 +777,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_11]</div>
                         <a href="https://github.com/Haarshiith/Sensor-Fusion---Particle-Filter" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Sensor Fusion — Particle Filter</h3>
+                            <h3 class="proj-title"><span class="lang-en">Sensor Fusion — Particle Filter</span><span class="lang-de">Sensorfusion — Partikelfilter</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state
-                            estimation. Solved tracking problems using K-Means clustering.
+                            <span class="lang-en">
+                                Implemented a Particle Filter from scratch to fuse noisy sensor data for multi-object state
+                                estimation. Solved tracking problems using K-Means clustering.
+                            </span>
+                            <span class="lang-de">
+                                Implementierung eines Partikelfilters zur Fusion verrauschter Sensordaten für die Zustandsschätzung 
+                                mehrerer Objekte. Lösung von Verfolgungsproblemen mithilfe von K-Means-Clustering.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -676,12 +801,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_12]</div>
                         <a href="https://github.com/Haarshiith/Maix-Dock-Based-Driver-Drowsiness-Detection-System-Using-CNN" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Driver Drowsiness Detection</h3>
+                            <h3 class="proj-title"><span class="lang-en">Driver Drowsiness Detection</span><span class="lang-de">Fahrer-Müdigkeitserkennung</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system
-                            using Maix Dock and C with geospatial logic.
+                            <span class="lang-en">
+                                Developed a CNN-based fatigue detection system (98% accuracy) and built an embedded alert system
+                                using Maix Dock and C with geospatial logic.
+                            </span>
+                            <span class="lang-de">
+                                Entwicklung eines CNN-basierten Müdigkeitserkennungssystems (98% Genauigkeit) und Aufbau eines 
+                                eingebetteten Warnsystems mit Maix Dock und C.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -694,12 +825,18 @@
                     <div>
                         <div class="hex-label mb-2">[PROJECT_13]</div>
                         <a href="https://github.com/Haarshiith/Voice-Control-Home-Appliance-Using-IOT" target="_blank" rel="noopener noreferrer" class="flex items-start gap-1">
-                            <h3 class="proj-title">Voice Control Home Application</h3>
+                            <h3 class="proj-title"><span class="lang-en">Voice Control Home Application</span><span class="lang-de">Sprachgesteuerte Heimanwendung</span></h3>
                             <i class="fa-solid fa-arrow-up-right-from-square link-arrow mt-1 flex-shrink-0"></i>
                         </a>
                         <p class="mt-3" style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with
-                            voice/motion/text commands for accessibility and energy saving.
+                            <span class="lang-en">
+                                Designed a low-cost IoT solution using Arduino, Bluetooth, and C. Built an Android app with
+                                voice/motion/text commands for accessibility and energy saving.
+                            </span>
+                            <span class="lang-de">
+                                Entwurf einer kostengünstigen IoT-Lösung unter Verwendung von Arduino, Bluetooth und C. Entwicklung 
+                                einer Android-App mit Sprach-/Bewegungs-/Textbefehlen für Barrierefreiheit und Energieeinsparung.
+                            </span>
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-4">
@@ -711,63 +848,67 @@
             </div>
         </section>
 
-        <!-- =========== SKILLS =========== -->
         <section id="skills" class="fade-in-section max-w-5xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">Technical Skills</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">Technical Skills</span><span class="lang-de">Technische Fähigkeiten</span></span></div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 stagger-container">
 
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-brands fa-python text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">Python</p><p class="skill-level mt-1">Advanced</p>
+                    <p class="skill-name">Python</p><p class="skill-level mt-1"><span class="lang-en">Advanced</span><span class="lang-de">Fortgeschritten</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-database text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">MySQL</p><p class="skill-level mt-1">Advanced</p>
+                    <p class="skill-name">MySQL</p><p class="skill-level mt-1"><span class="lang-en">Advanced</span><span class="lang-de">Fortgeschritten</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-brain text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">Machine Learning</p><p class="skill-level mt-1">Advanced</p>
+                    <p class="skill-name"><span class="lang-en">Machine Learning</span><span class="lang-de">Maschinelles Lernen</span></p><p class="skill-level mt-1"><span class="lang-en">Advanced</span><span class="lang-de">Fortgeschritten</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-robot text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">Deep Learning</p><p class="skill-level mt-1">Intermediate</p>
+                    <p class="skill-name">Deep Learning</p><p class="skill-level mt-1"><span class="lang-en">Intermediate</span><span class="lang-de">Mittelstufe</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-language text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">NLP</p><p class="skill-level mt-1">Intermediate</p>
+                    <p class="skill-name">NLP</p><p class="skill-level mt-1"><span class="lang-en">Intermediate</span><span class="lang-de">Mittelstufe</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-eye text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">Computer Vision</p><p class="skill-level mt-1">Advanced</p>
+                    <p class="skill-name">Computer Vision</p><p class="skill-level mt-1"><span class="lang-en">Advanced</span><span class="lang-de">Fortgeschritten</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-brands fa-react text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">React.js</p><p class="skill-level mt-1">Intermediate</p>
+                    <p class="skill-name">React.js</p><p class="skill-level mt-1"><span class="lang-en">Intermediate</span><span class="lang-de">Mittelstufe</span></p>
                 </div>
                 <div class="skill-card stagger-child p-6 flex flex-col items-center text-center">
                     <i class="fa-solid fa-c text-4xl skill-icon mb-3"></i>
-                    <p class="skill-name">C</p><p class="skill-level mt-1">Advanced</p>
+                    <p class="skill-name">C</p><p class="skill-level mt-1"><span class="lang-en">Advanced</span><span class="lang-de">Fortgeschritten</span></p>
                 </div>
 
             </div>
         </section>
 
-        <!-- =========== EDUCATION =========== -->
         <section id="education" class="fade-in-section max-w-4xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">Education</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">Education</span><span class="lang-de">Ausbildung</span></span></div>
             <div class="space-y-6 stagger-container">
 
                 <div class="stagger-child card card-corner p-6 flex flex-col sm:flex-row gap-4">
                     <div class="sm:w-1/3">
                         <div class="hex-label mb-1">[EDU_01]</div>
-                        <h3 class="edu-degree">Masters in Artificial Intelligence</h3>
+                        <h3 class="edu-degree"><span class="lang-en">Masters in Artificial Intelligence</span><span class="lang-de">Master in Künstlicher Intelligenz</span></h3>
                         <p class="edu-school mt-1">Technische Hochschule Würzburg-Schweinfurt</p>
-                        <p class="edu-date mt-1">Mar 2025 – Present</p>
+                        <p class="edu-date mt-1"><span class="lang-en">Mar 2025 – Present</span><span class="lang-de">Mär 2025 – Heute</span></p>
                     </div>
                     <div class="sm:w-2/3">
                         <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Relevant Courses: Artificial Intelligence and Machine Learning, Strong Artificial Intelligence,
-                            Introduction to Deep Learning, Reasoning and Decision Making.
+                            <span class="lang-en">
+                                Relevant Courses: Artificial Intelligence and Machine Learning, Introduction to Deep Learning,
+                                Reinforcement Learning, Natural Language Processing, Computer Vision.
+                            </span>
+                            <span class="lang-de">
+                                Relevante Kurse: Künstliche Intelligenz und Maschinelles Lernen, Einführung in Deep Learning, 
+                                Reinforcement Learning, Verarbeitung Natürlicher Sprache, Computer Vision.
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -775,14 +916,20 @@
                 <div class="stagger-child card card-corner p-6 flex flex-col sm:flex-row gap-4">
                     <div class="sm:w-1/3">
                         <div class="hex-label mb-1">[EDU_02]</div>
-                        <h3 class="edu-degree">B.Tech, Electronics &amp; Computer Eng.</h3>
+                        <h3 class="edu-degree"><span class="lang-en">B.Tech, Electronics &amp; Computer Eng.</span><span class="lang-de">B.Tech, Elektronik &amp; Computertechnik</span></h3>
                         <p class="edu-school mt-1">SRM Institute of Science and Technology</p>
-                        <p class="edu-date mt-1">Jun 2019 – May 2023</p>
+                        <p class="edu-date mt-1"><span class="lang-en">Jun 2019 – May 2023</span><span class="lang-de">Jun 2019 – Mai 2023</span></p>
                     </div>
                     <div class="sm:w-2/3">
                         <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary)">
-                            Relevant Courses: Machine Learning, Data Analytics Using Open Source Tool, Deep Learning,
-                            Database Management System.
+                            <span class="lang-en">
+                                Relevant Courses: Machine Learning, Data Analytics Using Open Source Tool, Deep Learning,
+                                Database Management System.
+                            </span>
+                            <span class="lang-de">
+                                Relevante Kurse: Maschinelles Lernen, Datenanalyse mit Open-Source-Tools, Deep Learning, 
+                                Datenbankmanagementsysteme.
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -790,45 +937,54 @@
             </div>
         </section>
 
-        <!-- =========== ACHIEVEMENTS =========== -->
         <section id="achievements" class="fade-in-section max-w-5xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">Achievements</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">Achievements</span><span class="lang-de">Erfolge</span></span></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-container">
 
-                <!-- ACH 01 — SnackSnap -->
                 <div class="stagger-child card card-corner ach-purple p-6 flex flex-col">
                     <div class="hex-label mb-3" style="color:rgba(179,71,255,.5)">[ACH_01 :: VENTURE]</div>
                     <div class="mb-4">
                         <i class="fa-solid fa-rocket text-2xl" style="color:var(--neon-purple);text-shadow:0 0 14px rgba(179,71,255,.6)"></i>
                     </div>
                     <h3 style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:.75rem;line-height:1.4">
-                        SnackSnap — Co-Founder
+                        <span class="lang-en">SnackSnap — Co-Founder</span><span class="lang-de">SnackSnap — Mitgründer</span>
                     </h3>
                     <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary);line-height:1.75;flex:1">
-                        Co-founded and architected a digital food-ordering platform from concept to deployment. Engineered
-                        admin tooling with real-time sales analytics dashboards, enabling data-driven decision-making for
-                        restaurant operators and optimizing revenue workflows.
+                        <span class="lang-en">
+                            Co-founded and architected a digital food-ordering platform from concept to deployment. Engineered
+                            admin tooling with real-time sales analytics dashboards, enabling data-driven decision-making for
+                            restaurant operators and optimizing revenue workflows.
+                        </span>
+                        <span class="lang-de">
+                            Mitgründung und Architektur einer digitalen Plattform für Essensbestellungen vom Konzept bis zur Bereitstellung. 
+                            Entwicklung von Admin-Tools mit Echtzeit-Dashboards für Verkaufsanalysen.
+                        </span>
                     </p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)">Entrepreneurship</span>
+                        <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)"><span class="lang-en">Entrepreneurship</span><span class="lang-de">Unternehmertum</span></span>
                         <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)">Full Stack</span>
                         <span class="tech-tag" style="color:var(--neon-purple);border-color:rgba(179,71,255,.3);background:rgba(179,71,255,.08)">Data Analytics</span>
                     </div>
                 </div>
 
-                <!-- ACH 02 — SECUR AI Award -->
                 <div class="stagger-child card card-corner ach-cyan p-6 flex flex-col">
                     <div class="hex-label mb-3" style="color:rgba(0,229,255,.5)">[ACH_02 :: AWARD]</div>
                     <div class="mb-4">
                         <i class="fa-solid fa-trophy text-2xl" style="color:var(--neon-cyan);text-shadow:0 0 14px rgba(0,229,255,.6)"></i>
                     </div>
                     <h3 style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:.75rem;line-height:1.4">
-                        Best Project Demo Award — SECUR AI
+                        <span class="lang-en">Best Project Demo Award — SECUR AI</span><span class="lang-de">Auszeichnung: Beste Projektdemo — SECUR AI</span>
                     </h3>
                     <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary);line-height:1.75;flex:1">
-                        Won the top award at THWS for an outstanding mid-course demonstration of SECUR AI — an advanced
-                        biometric security platform combining Edge AI inference, Stereo Vision with Epipolar Geometry for
-                        2D spoof prevention, and a decoupled cloud dashboard for remote access management.
+                        <span class="lang-en">
+                            Won the top award at THWS for an outstanding mid-course demonstration of SECUR AI — an advanced
+                            biometric security platform combining Edge AI inference, Stereo Vision with Epipolar Geometry for
+                            2D spoof prevention, and a decoupled cloud dashboard for remote access management.
+                        </span>
+                        <span class="lang-de">
+                            Gewinner der höchsten Auszeichnung an der THWS für eine herausragende Projektpräsentation von SECUR AI — 
+                            einer biometrischen Sicherheitsplattform mit Edge-AI-Inferenz und Stereo-Vision zur Verhinderung von 2D-Spoofing.
+                        </span>
                     </p>
                     <div class="flex flex-wrap gap-2 mt-4">
                         <span class="tech-tag" style="color:var(--neon-cyan);border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.08)">THWS Award</span>
@@ -837,33 +993,37 @@
                     </div>
                 </div>
 
-                <!-- ACH 03 — Bhojan -->
                 <div class="stagger-child card card-corner ach-green p-6 flex flex-col">
                     <div class="hex-label mb-3" style="color:rgba(0,255,157,.5)">[ACH_03 :: DEPLOYMENT]</div>
                     <div class="mb-4">
                         <i class="fa-solid fa-medal text-2xl" style="color:var(--neon-green);text-shadow:0 0 14px rgba(0,255,157,.6)"></i>
                     </div>
                     <h3 style="font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:.75rem;line-height:1.4">
-                        App Development — Bhojan (1st Prize)
+                        <span class="lang-en">App Development — Bhojan (1st Prize)</span><span class="lang-de">App-Entwicklung — Bhojan (1. Preis)</span>
                     </h3>
                     <p style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--text-secondary);line-height:1.75;flex:1">
-                        Designed, developed, and successfully deployed "Bhojan" — a socially conscious mobile application
-                        built to address food accessibility awareness. Achieved full platform compliance with security and
-                        publishing guidelines, and secured 1st Prize in a competitive inter-college app development event.
+                        <span class="lang-en">
+                            Designed, developed, and successfully deployed "Bhojan" — a socially conscious mobile application
+                            built to address food accessibility awareness. Achieved full platform compliance with security and
+                            publishing guidelines, and secured 1st Prize in a competitive inter-college app development event.
+                        </span>
+                        <span class="lang-de">
+                            Entwurf, Entwicklung und erfolgreiche Bereitstellung von "Bhojan" — einer sozial bewussten mobilen Anwendung 
+                            zur Förderung des Bewusstseins für Lebensmittelzugänglichkeit. Gewann den 1. Platz bei einem App-Entwicklungs-Event.
+                        </span>
                     </p>
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="tech-tag">Mobile Dev</span>
-                        <span class="tech-tag">1st Prize</span>
-                        <span class="tech-tag">Social Impact</span>
+                        <span class="tech-tag"><span class="lang-en">Mobile Dev</span><span class="lang-de">Mobile Dev</span></span>
+                        <span class="tech-tag"><span class="lang-en">1st Prize</span><span class="lang-de">1. Preis</span></span>
+                        <span class="tech-tag"><span class="lang-en">Social Impact</span><span class="lang-de">Sozialer Einfluss</span></span>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- =========== CONTACT =========== -->
         <section id="contact" class="fade-in-section max-w-4xl mx-auto scroll-mt-20">
-            <div class="section-title-wrap"><span class="section-title">Get in Touch</span></div>
+            <div class="section-title-wrap"><span class="section-title"><span class="lang-en">Get in Touch</span><span class="lang-de">Kontakt aufnehmen</span></span></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-container">
 
                 <div class="stagger-child contact-card p-6">
@@ -871,23 +1031,23 @@
                     <i class="fa-solid fa-envelope text-3xl mb-4 block" style="color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,229,255,.5)"></i>
                     <p class="contact-label mb-2">Email</p>
                     <p class="contact-value mb-2" style="word-break:break-all">harshith227@gmail.com</p>
-                    <a href="mailto:harshith227@gmail.com" class="contact-link hover:underline">Send an email</a>
+                    <a href="mailto:harshith227@gmail.com" class="contact-link hover:underline"><span class="lang-en">Send an email</span><span class="lang-de">E-Mail senden</span></a>
                 </div>
 
                 <div class="stagger-child contact-card p-6">
                     <div class="hex-label mb-3 text-center">[CHANNEL_02]</div>
                     <i class="fa-solid fa-phone text-3xl mb-4 block" style="color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,229,255,.5)"></i>
-                    <p class="contact-label mb-2">Phone</p>
+                    <p class="contact-label mb-2"><span class="lang-en">Phone</span><span class="lang-de">Telefon</span></p>
                     <p class="contact-value mb-2">+49 152 10 692 931</p>
-                    <a href="tel:+4915210692931" class="contact-link hover:underline">Call me</a>
+                    <a href="tel:+4915210692931" class="contact-link hover:underline"><span class="lang-en">Call me</span><span class="lang-de">Mich anrufen</span></a>
                 </div>
 
                 <div class="stagger-child contact-card p-6">
                     <div class="hex-label mb-3 text-center">[CHANNEL_03]</div>
                     <i class="fa-solid fa-map-marker-alt text-3xl mb-4 block" style="color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,229,255,.5)"></i>
-                    <p class="contact-label mb-2">Location</p>
+                    <p class="contact-label mb-2"><span class="lang-en">Location</span><span class="lang-de">Standort</span></p>
                     <p class="contact-value mb-2">Würzburg, Germany</p>
-                    <p class="contact-link">(Currently based here)</p>
+                    <p class="contact-link"><span class="lang-en">(Currently based here)</span><span class="lang-de">(Derzeitiger Wohnsitz)</span></p>
                 </div>
 
             </div>
@@ -895,7 +1055,6 @@
 
     </main>
 
-    <!-- ===================== FOOTER ===================== -->
     <footer class="mt-12">
         <div class="max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
             <div class="neon-hr"></div>
@@ -908,13 +1067,12 @@
                     <i class="fa-solid fa-envelope"></i></a>
             </div>
             <p class="footer-text text-center">
-                &copy; 2025 Harshith Babu Prakash Babu. All rights reserved.
-                <span style="color:var(--neon-green)">//</span> Built with precision.
+                &copy; 2025 Harshith Babu Prakash Babu. <span class="lang-en">All rights reserved.</span><span class="lang-de">Alle Rechte vorbehalten.</span>
+                <span style="color:var(--neon-green)">//</span> <span class="lang-en">Built with precision.</span><span class="lang-de">Mit Präzision gebaut.</span>
             </p>
         </div>
     </footer>
 
-    <!-- ===================== JAVASCRIPT ===================== -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -937,7 +1095,7 @@
             requestAnimationFrame(animateRing);
         })();
 
-        document.querySelectorAll('a, button').forEach(el => {
+        document.querySelectorAll('a, button, .toggle-track').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.width = '18px'; cursor.style.height = '18px';
                 cursorRing.style.width = '52px'; cursorRing.style.height = '52px';
@@ -948,6 +1106,17 @@
                 cursorRing.style.width = '36px'; cursorRing.style.height = '36px';
                 cursorRing.style.borderColor = 'var(--neon-green)';
             });
+        });
+
+        // ---- LANGUAGE TOGGLE SWITCH ----
+        const langSwitch = document.getElementById('lang-switch');
+        langSwitch.addEventListener('click', () => {
+            const html = document.documentElement;
+            if (html.getAttribute('lang') === 'de') {
+                html.setAttribute('lang', 'en');
+            } else {
+                html.setAttribute('lang', 'de');
+            }
         });
 
         // ---- MOBILE MENU ----
